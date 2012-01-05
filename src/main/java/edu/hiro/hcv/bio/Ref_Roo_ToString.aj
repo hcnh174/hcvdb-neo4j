@@ -3,14 +3,30 @@
 
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.bio.Ref;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect Ref_Roo_ToString {
     
     public String Ref.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Abbreviation: ").append(getAbbreviation()).append(", ");
+        sb.append("Abstrct: ").append(getAbstrct()).append(", ");
+        sb.append("Authors: ").append(getAuthors()).append(", ");
+        sb.append("Citation: ").append(getCitation()).append(", ");
+        sb.append("City: ").append(getCity()).append(", ");
+        sb.append("Html: ").append(getHtml()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Identifier: ").append(getIdentifier()).append(", ");
+        sb.append("Journal: ").append(getJournal()).append(", ");
+        sb.append("Name: ").append(getName()).append(", ");
+        sb.append("Pages: ").append(getPages()).append(", ");
+        sb.append("Pmid: ").append(getPmid()).append(", ");
+        sb.append("Publisher: ").append(getPublisher()).append(", ");
+        sb.append("Title: ").append(getTitle()).append(", ");
+        sb.append("Type: ").append(getType()).append(", ");
+        sb.append("Volume: ").append(getVolume()).append(", ");
+        sb.append("Year: ").append(getYear());
+        return sb.toString();
     }
     
 }

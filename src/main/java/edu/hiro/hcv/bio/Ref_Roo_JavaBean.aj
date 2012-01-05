@@ -3,7 +3,8 @@
 
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.bio.Ref;
+import java.lang.Integer;
+import java.lang.String;
 
 privileged aspect Ref_Roo_JavaBean {
     

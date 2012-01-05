@@ -3,14 +3,27 @@
 
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.bio.Taxon;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect Taxon_Roo_ToString {
     
     public String Taxon.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Description: ").append(getDescription()).append(", ");
+        sb.append("Haschildren: ").append(getHaschildren()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Identifier: ").append(getIdentifier()).append(", ");
+        sb.append("Initialized: ").append(getInitialized()).append(", ");
+        sb.append("Left: ").append(getLeft()).append(", ");
+        sb.append("Level: ").append(getLevel()).append(", ");
+        sb.append("Lineage: ").append(getLineage() == null ? "null" : getLineage().size()).append(", ");
+        sb.append("Name: ").append(getName()).append(", ");
+        sb.append("Parent_id: ").append(getParent_id()).append(", ");
+        sb.append("Right: ").append(getRight()).append(", ");
+        sb.append("Taxa: ").append(getTaxa() == null ? "null" : getTaxa().size()).append(", ");
+        sb.append("Taxid: ").append(getTaxid()).append(", ");
+        sb.append("Xml: ").append(getXml());
+        return sb.toString();
     }
     
 }

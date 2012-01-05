@@ -4,7 +4,9 @@
 package edu.hiro.hcv.bio;
 
 import edu.hiro.hcv.bio.CChain;
-import edu.hiro.hcv.bio.CStructure;
+import java.lang.Float;
+import java.lang.Integer;
+import java.lang.String;
 import java.util.List;
 
 privileged aspect CStructure_Roo_JavaBean {

@@ -3,7 +3,8 @@
 
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.bio.CChain;
+import java.lang.Integer;
+import java.lang.String;
 
 privileged aspect CChain_Roo_JavaBean {
     

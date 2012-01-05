@@ -3,11 +3,12 @@
 
 package edu.hiro.hcv.sequences;
 
-import edu.hiro.hcv.sequences.Sequence;
+import edu.hiro.hcv.sequences.Feature;
 import edu.hiro.hcv.tags.Tag;
+import java.lang.Integer;
+import java.lang.Long;
+import java.lang.String;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 privileged aspect Sequence_Roo_JavaBean {
@@ -92,19 +93,19 @@ privileged aspect Sequence_Roo_JavaBean {
         this.ref = ref;
     }
     
-    public Map<String, Object> Sequence.getSource() {
+    public Feature Sequence.getSource() {
         return this.source;
     }
     
-    public void Sequence.setSource(Map<String, Object> source) {
+    public void Sequence.setSource(Feature source) {
         this.source = source;
     }
     
-    public List<Feature> Sequence.getFeatures() {
+    public Set<Feature> Sequence.getFeatures() {
         return this.features;
     }
     
-    public void Sequence.setFeatures(List<Feature> features) {
+    public void Sequence.setFeatures(Set<Feature> features) {
         this.features = features;
     }
     

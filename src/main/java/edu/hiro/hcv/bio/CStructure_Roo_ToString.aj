@@ -3,14 +3,21 @@
 
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.bio.CStructure;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect CStructure_Roo_ToString {
     
     public String CStructure.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Chains: ").append(getChains() == null ? "null" : getChains().size()).append(", ");
+        sb.append("Description: ").append(getDescription()).append(", ");
+        sb.append("Identifier: ").append(getIdentifier()).append(", ");
+        sb.append("Name: ").append(getName()).append(", ");
+        sb.append("Numchains: ").append(getNumchains()).append(", ");
+        sb.append("Numsequences: ").append(getNumsequences()).append(", ");
+        sb.append("Resolution: ").append(getResolution()).append(", ");
+        sb.append("Technique: ").append(getTechnique());
+        return sb.toString();
     }
     
 }

@@ -13,7 +13,8 @@
         <spring-security.version>3.1.0.RELEASE</spring-security.version> <!-- 3.0.7.RELEASE -->
         <spring.batch.version>2.1.7.RELEASE</spring.batch.version>	
         <aspectj.version>1.6.11</aspectj.version>
-        <slf4j.version>1.6.1</slf4j.version>        
+        <slf4j.version>1.6.1</slf4j.version>
+        <spring.data.commons.version>1.2.0.RELEASE</spring.data.commons.version>
         <spring.data.neo4j.version>2.0.0.RELEASE</spring.data.neo4j.version>
         <spring.data.mongodb.version>1.0.0.RELEASE</spring.data.mongodb.version>
         <thymeleaf.version>1.1.2</thymeleaf.version>
@@ -26,6 +27,11 @@
 		<weka.version>3.6.0</weka.version>
     </properties>
     <repositories>
+    	<repository>
+			<id>biojava-maven-repo</id>
+			<name>BioJava repository</name>
+			<url>http://www.biojava.org/download/maven/</url>	
+		</repository>
         <repository>
             <id>spring-maven-release</id>
             <name>Spring Maven Release Repository</name>
@@ -41,11 +47,7 @@
             <name>Spring Roo Repository</name>
             <url>http://spring-roo-repository.springsource.org/release</url>
         </repository>
-        <repository>
-			<id>biojava-maven-repo</id>
-			<name>BioJava repository</name>
-			<url>http://www.biojava.org/download/maven/</url>	
-		</repository>
+        
 		<repository>
 			<id>weka-maven-repo</id>
 			<name>Weka repository</name>
@@ -231,6 +233,14 @@
 			<artifactId>thymeleaf-spring3</artifactId>
 			<version>${thymeleaf.version}</version>
 		</dependency>
+		
+		<!-- 
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons-core</artifactId>
+			<version>${spring.data.commons.version}</version>
+		</dependency>
+		--> 
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j</artifactId>
@@ -241,6 +251,7 @@
             <artifactId>spring-data-mongodb</artifactId>
             <version>${spring.data.mongodb.version}</version>
         </dependency>
+        
 		<dependency>
 	      <groupId>com.google.guava</groupId>
 	      <artifactId>guava</artifactId>

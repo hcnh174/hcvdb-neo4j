@@ -4,7 +4,8 @@
 package edu.hiro.hcv.tags;
 
 import edu.hiro.hcv.sequences.Sequence;
-import edu.hiro.hcv.tags.AbstractTag;
+import java.lang.Long;
+import java.lang.String;
 import java.util.Set;
 
 privileged aspect AbstractTag_Roo_JavaBean {

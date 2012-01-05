@@ -3,8 +3,12 @@
 
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.bio.GenbankSequence;
 import edu.hiro.hcv.bio.StrandType;
+import java.lang.Boolean;
+import java.lang.Double;
+import java.lang.Float;
+import java.lang.Integer;
+import java.lang.String;
 import java.util.Date;
 
 privileged aspect GenbankSequence_Roo_JavaBean {

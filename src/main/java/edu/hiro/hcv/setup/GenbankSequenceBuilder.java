@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 
 import edu.hiro.hcv.bio.BiojavaHelper;
 import edu.hiro.hcv.sequences.Sequence;
+import edu.hiro.hcv.sequences.Feature;
 import edu.hiro.hcv.util.CException;
 import edu.hiro.hcv.util.FileHelper;
 import edu.hiro.hcv.util.StringHelper;
@@ -156,51 +157,50 @@ public class GenbankSequenceBuilder
 	private static void setSourceProperties(Sequence sequence, RichSequence richsequence, RichFeature richfeature,
 			Map<String,String> annotations)
 	{		
-		Map<String,Object> properties=sequence.getSource();
-		properties.put("start",richfeature.getLocation().getMin());
-		properties.put("end",richfeature.getLocation().getMax());
+		Feature source=sequence.getSource();
+		source.setProperty("start",richfeature.getLocation().getMin());
+		source.setProperty("end",richfeature.getLocation().getMax());
 		
 		for (String name : annotations.keySet())
 		{
 			String value=annotations.get(name);
 			name=BiojavaHelper.stripBiojavaPrefix(name);
 			if (name.equals("pseudogene"))
-				properties.put("pseudogene",BiojavaHelper.getPseudogene(annotations));
+				source.setProperty("pseudogene",BiojavaHelper.getPseudogene(annotations));
 			else if (name.equals("biojavax:note"))
-				properties.put("note",BiojavaHelper.getNote(annotations));
+				source.setProperty("note",BiojavaHelper.getNote(annotations));
 			else if (name.equals("biojavax:country"))
 			{
-				properties.put("country",BiojavaHelper.getCountry(value));
-				properties.put("subregion",BiojavaHelper.getSubregion(value));
+				source.setProperty("country",BiojavaHelper.getCountry(value));
+				source.setProperty("subregion",BiojavaHelper.getSubregion(value));
 			}
-			else properties.put(name,value);
+			else source.setProperty(name,value);
 		}
 		
-		properties.put("Subtype",BiojavaHelper.getSubtype(annotations));
-		properties.put("codedby",richsequence.getName());
-		properties.put("note",BiojavaHelper.getNote(annotations));		
+		source.setProperty("Subtype",BiojavaHelper.getSubtype(annotations));
+		source.setProperty("codedby",richsequence.getName());
+		source.setProperty("note",BiojavaHelper.getNote(annotations));		
 	}	
 	
 	private static void addGeneProperties(Sequence sequence, RichSequence richsequence, RichFeature richfeature,
 			Map<String,String> annotations, Map<String,String> crossrefs)
 	{
-		Sequence.Feature feature=sequence.createFeature("gene");
+		Feature feature=sequence.createFeature("gene");
 		feature.setName(annotations.get("biojavax:gene"));
 		feature.setStart(richfeature.getLocation().getMin());
 		feature.setEnd(richfeature.getLocation().getMax());
-		feature.setSequence(BiojavaHelper.extractSubsequence(richsequence,richfeature));
+		//feature.setSequence(BiojavaHelper.extractSubsequence(richsequence,richfeature));
 		//feature.setNtlength(sequence.getSequence().length());
 		
-		Map<String,Object> properties=feature.getProperties();
 		for (String name : annotations.keySet())
 		{
 			String value=annotations.get(name);
 			name=BiojavaHelper.stripBiojavaPrefix(name);
 			if (name.equals("pseudogene"))
-				properties.put("pseudogene",BiojavaHelper.getPseudogene(annotations));
+				feature.setProperty("pseudogene",BiojavaHelper.getPseudogene(annotations));
 			else if (name.equals("biojavax:note"))
-				properties.put("note",BiojavaHelper.getNote(annotations));
-			else properties.put(name,value);
+				feature.setProperty("note",BiojavaHelper.getNote(annotations));
+			else feature.setProperty(name,value);
 		}
 		
 		for (String name : crossrefs.keySet())
@@ -208,29 +208,29 @@ public class GenbankSequenceBuilder
 			String value=annotations.get(name);
 			name=BiojavaHelper.stripBiojavaPrefix(name);
 			if (name.equals("GeneID"))
-				properties.put("geneid",BiojavaHelper.getIntCrossRef(crossrefs,"GeneID"));
-			else properties.put(name,value);
+				feature.setProperty("geneid",BiojavaHelper.getIntCrossRef(crossrefs,"GeneID"));
+			else feature.setProperty(name,value);
 		}
 	}
 	
 	private static void addCdsProperties(Sequence sequence, RichSequence richsequence, RichFeature richfeature,
 			Map<String,String> annotations, Map<String,String> crossrefs)
 	{
-		Sequence.Feature feature=sequence.createFeature("CDS");
+		Feature feature=sequence.createFeature("CDS");
 		feature.setName(annotations.get("biojavax:product"));
 		feature.setStart(richfeature.getLocation().getMin());
 		feature.setEnd(richfeature.getLocation().getMax());
-		feature.setSequence(BiojavaHelper.extractSubsequence(richsequence,richfeature));
-		Map<String,Object> properties=feature.getProperties();
+		//feature.setSequence(BiojavaHelper.extractSubsequence(richsequence,richfeature));
+
 		for (String name : annotations.keySet())
 		{
 			String value=annotations.get(name);
 			name=BiojavaHelper.stripBiojavaPrefix(name);
 			if (name.equals("biojavax:codon_start"))
-				properties.put("codon_start",BiojavaHelper.getIntAnnotation(annotations,"biojavax:codon_start"));
+				feature.setProperty("codon_start",BiojavaHelper.getIntAnnotation(annotations,"biojavax:codon_start"));
 			else if (name.equals("biojavax:note"))
-				properties.put("note",BiojavaHelper.getNote(annotations));
-			else properties.put(name,value);
+				feature.setProperty("note",BiojavaHelper.getNote(annotations));
+			else feature.setProperty(name,value);
 		}
 		
 		for (String name : crossrefs.keySet())
@@ -238,16 +238,16 @@ public class GenbankSequenceBuilder
 			String value=annotations.get(name);
 			name=BiojavaHelper.stripBiojavaPrefix(name);
 			if (name.equals("GI"))
-				properties.put("protein_gi",BiojavaHelper.getIntCrossRef(crossrefs,"GI"));
-			else properties.put(name,value);
+				feature.setProperty("protein_gi",BiojavaHelper.getIntCrossRef(crossrefs,"GI"));
+			else feature.setProperty(name,value);
 		}
 		
-		properties.put("uniprot",BiojavaHelper.getUniprot(crossrefs));
-		properties.put("splicing",BiojavaHelper.getSplicing(richfeature.getLocation().getMin(),richfeature));
-		properties.put("spliced",BiojavaHelper.extractSubsequence(richsequence,richfeature));
-		properties.put("pseudogene",BiojavaHelper.getPseudogene(annotations));
-		properties.put("strand",BiojavaHelper.getStrand(richfeature));
-		properties.put("note",BiojavaHelper.getNote(annotations));	
+		feature.setProperty("uniprot",BiojavaHelper.getUniprot(crossrefs));
+		feature.setProperty("splicing",BiojavaHelper.getSplicing(richfeature.getLocation().getMin(),richfeature));
+		feature.setProperty("spliced",BiojavaHelper.extractSubsequence(richsequence,richfeature));
+		feature.setProperty("pseudogene",BiojavaHelper.getPseudogene(annotations));
+		feature.setProperty("strand",BiojavaHelper.getStrand(richfeature));
+		feature.setProperty("note",BiojavaHelper.getNote(annotations));	
 	}
 	
 	/*

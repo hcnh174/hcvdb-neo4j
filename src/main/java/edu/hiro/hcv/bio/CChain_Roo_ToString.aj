@@ -3,14 +3,21 @@
 
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.bio.CChain;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect CChain_Roo_ToString {
     
     public String CChain.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Identifier: ").append(getIdentifier()).append(", ");
+        sb.append("Length: ").append(getLength()).append(", ");
+        sb.append("Name: ").append(getName()).append(", ");
+        sb.append("Numsequences: ").append(getNumsequences()).append(", ");
+        sb.append("SecondaryStructure: ").append(getSecondaryStructure()).append(", ");
+        sb.append("Sequence: ").append(getSequence()).append(", ");
+        sb.append("Structure: ").append(getStructure()).append(", ");
+        sb.append("Swissprot: ").append(getSwissprot());
+        return sb.toString();
     }
     
 }

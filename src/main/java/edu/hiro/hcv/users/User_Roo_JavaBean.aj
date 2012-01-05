@@ -4,7 +4,9 @@
 package edu.hiro.hcv.users;
 
 import edu.hiro.hcv.tags.Tag;
-import edu.hiro.hcv.users.User;
+import java.lang.Boolean;
+import java.lang.Long;
+import java.lang.String;
 import java.util.Date;
 import java.util.Set;
 

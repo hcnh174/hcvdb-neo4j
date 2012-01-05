@@ -3,14 +3,104 @@
 
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.bio.GenbankSequence;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect GenbankSequence_Roo_ToString {
     
     public String GenbankSequence.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Aalength: ").append(getAalength()).append(", ");
+        sb.append("Abbreviation: ").append(getAbbreviation()).append(", ");
+        sb.append("Accession: ").append(getAccession()).append(", ");
+        sb.append("Allele: ").append(getAllele()).append(", ");
+        sb.append("Architecture: ").append(getArchitecture()).append(", ");
+        sb.append("Chromosome: ").append(getChromosome()).append(", ");
+        sb.append("Circular: ").append(getCircular()).append(", ");
+        sb.append("Clone: ").append(getClone()).append(", ");
+        sb.append("Codedby: ").append(getCodedby()).append(", ");
+        sb.append("CodingSequence: ").append(getCodingSequence()).append(", ");
+        sb.append("Codon_start: ").append(getCodon_start()).append(", ");
+        sb.append("Collection_date: ").append(getCollection_date()).append(", ");
+        sb.append("Comments: ").append(getComments()).append(", ");
+        sb.append("Conceptual: ").append(getConceptual()).append(", ");
+        sb.append("Country: ").append(getCountry()).append(", ");
+        sb.append("Created: ").append(getCreated()).append(", ");
+        sb.append("Defline: ").append(getDefline()).append(", ");
+        sb.append("Description: ").append(getDescription()).append(", ");
+        sb.append("Division: ").append(getDivision()).append(", ");
+        sb.append("Domainnum: ").append(getDomainnum()).append(", ");
+        sb.append("Domains: ").append(getDomains()).append(", ");
+        sb.append("Dust: ").append(getDust()).append(", ");
+        sb.append("Ec: ").append(getEc()).append(", ");
+        sb.append("End: ").append(getEnd()).append(", ");
+        sb.append("Evalue: ").append(getEvalue()).append(", ");
+        sb.append("Family: ").append(getFamily()).append(", ");
+        sb.append("Gc: ").append(getGc()).append(", ");
+        sb.append("Gc3: ").append(getGc3()).append(", ");
+        sb.append("Gc3skew: ").append(getGc3skew()).append(", ");
+        sb.append("Gene: ").append(getGene()).append(", ");
+        sb.append("Geneid: ").append(getGeneid()).append(", ");
+        sb.append("Genome: ").append(getGenome()).append(", ");
+        sb.append("Gi: ").append(getGi()).append(", ");
+        sb.append("Hmmloc: ").append(getHmmloc()).append(", ");
+        sb.append("Host: ").append(getHost()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Identifier: ").append(getIdentifier()).append(", ");
+        sb.append("Isolate: ").append(getIsolate()).append(", ");
+        sb.append("Isolation_source: ").append(getIsolation_source()).append(", ");
+        sb.append("Lab_host: ").append(getLab_host()).append(", ");
+        sb.append("Location: ").append(getLocation()).append(", ");
+        sb.append("Locus: ").append(getLocus()).append(", ");
+        sb.append("Locus_tag: ").append(getLocus_tag()).append(", ");
+        sb.append("Method: ").append(getMethod()).append(", ");
+        sb.append("Model: ").append(getModel()).append(", ");
+        sb.append("Mol_type: ").append(getMol_type()).append(", ");
+        sb.append("Molwt: ").append(getMolwt()).append(", ");
+        sb.append("Name: ").append(getName()).append(", ");
+        sb.append("Natype: ").append(getNatype()).append(", ");
+        sb.append("Notes: ").append(getNotes()).append(", ");
+        sb.append("Ntlength: ").append(getNtlength()).append(", ");
+        sb.append("Numexons: ").append(getNumexons()).append(", ");
+        sb.append("Oldid: ").append(getOldid()).append(", ");
+        sb.append("Pfamdomains: ").append(getPfamdomains()).append(", ");
+        sb.append("Plasmid: ").append(getPlasmid()).append(", ");
+        sb.append("Product: ").append(getProduct()).append(", ");
+        sb.append("Protein: ").append(getProtein()).append(", ");
+        sb.append("Protein_gi: ").append(getProtein_gi()).append(", ");
+        sb.append("Protein_id: ").append(getProtein_id()).append(", ");
+        sb.append("Pseudogene: ").append(getPseudogene()).append(", ");
+        sb.append("Ref: ").append(getRef()).append(", ");
+        sb.append("Score: ").append(getScore()).append(", ");
+        sb.append("Secondary: ").append(getSecondary()).append(", ");
+        sb.append("Seg: ").append(getSeg()).append(", ");
+        sb.append("Segment: ").append(getSegment()).append(", ");
+        sb.append("Sequence: ").append(getSequence()).append(", ");
+        sb.append("Sequenceset: ").append(getSequenceset()).append(", ");
+        sb.append("Serogroup: ").append(getSerogroup()).append(", ");
+        sb.append("Serotype: ").append(getSerotype()).append(", ");
+        sb.append("Serovar: ").append(getSerovar()).append(", ");
+        sb.append("Source: ").append(getSource()).append(", ");
+        sb.append("Specific_host: ").append(getSpecific_host()).append(", ");
+        sb.append("Spliced: ").append(getSpliced()).append(", ");
+        sb.append("Splicing: ").append(getSplicing()).append(", ");
+        sb.append("Start: ").append(getStart()).append(", ");
+        sb.append("Strain: ").append(getStrain()).append(", ");
+        sb.append("Strand: ").append(getStrand()).append(", ");
+        sb.append("Subregion: ").append(getSubregion()).append(", ");
+        sb.append("Subtype: ").append(getSubtype()).append(", ");
+        sb.append("Taxon: ").append(getTaxon()).append(", ");
+        sb.append("Totaldomainnum: ").append(getTotaldomainnum()).append(", ");
+        sb.append("Transl_table: ").append(getTransl_table()).append(", ");
+        sb.append("Translation: ").append(getTranslation()).append(", ");
+        sb.append("Truncated: ").append(getTruncated()).append(", ");
+        sb.append("Udate: ").append(getUdate()).append(", ");
+        sb.append("Uniprot: ").append(getUniprot()).append(", ");
+        sb.append("Updated: ").append(getUpdated()).append(", ");
+        sb.append("User_id: ").append(getUser_id()).append(", ");
+        sb.append("Version: ").append(getVersion()).append(", ");
+        sb.append("Uploaded: ").append(isUploaded()).append(", ");
+        sb.append("Visible: ").append(isVisible());
+        return sb.toString();
     }
     
 }

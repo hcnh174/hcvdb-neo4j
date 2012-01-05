@@ -38,8 +38,10 @@ public class Sequence
 	protected Date udate;
 	protected String ref="";
 	
-	protected Map<String,Object> source=Maps.newLinkedHashMap();
-	protected List<Feature> features=Lists.newArrayList();
+	protected Feature source=new Feature();
+	
+	@RelatedTo(type = "FEATURE")
+	protected Set<Feature> features=Sets.newHashSet();
 	
 	@RelatedTo(type = "TAG") //, direction = Direction.BOTH
 	protected Set<Tag> tags=Sets.newHashSet();
@@ -61,6 +63,7 @@ public class Sequence
     
     public void addFeature(Feature feature)
     {
+    	feature.setSequence(this);
     	this.features.add(feature);
     }
     
@@ -70,50 +73,12 @@ public class Sequence
     	addFeature(feature);
     	return feature;
     }
-    
-    public class Feature
+
+    public boolean hasFeature(Feature feature)
     {
-    	protected String type;
-    	protected String name;
-	    protected Integer start;
-	    protected Integer end;
-	    protected String sequence;
-    	protected Map<String,Object> properties=Maps.newLinkedHashMap();
-    	
-    	public Feature(){}
-    	
-    	public Feature(String type)
-    	{
-    		this.type=type;
-    	}
-    	
-    	public Feature(String type, String name, int start, int end)
-    	{
-    		this.type=type;
-    		this.name = name;
-	        this.start = start;
-	        this.end = end;
-    	}
-    	
-    	public String getType(){return this.type;}
-    	public void setType(final String type){this.type=type;}
-    	
-    	public String getName(){return this.name;}
-    	public void setName(final String name){this.name=name;}
-
-    	public Integer getStart(){return this.start;}
-    	public void setStart(final Integer start){this.start=start;}
-
-    	public Integer getEnd(){return this.end;}
-    	public void setEnd(final Integer end){this.end=end;}
-    	
-    	public String getSequence(){return this.sequence;}
-    	public void setSequence(final String sequence){this.sequence=sequence;}
-
-    	public Map<String,Object> getProperties(){return this.properties;}
-    	public void setProperties(final Map<String,Object> properties){this.properties=properties;}
+        return features.contains(feature);
     }
-
+    
     /////////////////////////////////////////////////////////////
     
     public void addTag(Tag tag)

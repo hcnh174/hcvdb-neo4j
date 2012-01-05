@@ -4,6 +4,9 @@
 package edu.hiro.hcv.bio;
 
 import edu.hiro.hcv.bio.Taxon;
+import java.lang.Boolean;
+import java.lang.Integer;
+import java.lang.String;
 import java.util.List;
 import java.util.Set;
 
