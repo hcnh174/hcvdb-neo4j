@@ -1,94 +1,129 @@
 package edu.hiro.hcv.sequences;
 
 
-import java.util.HashSet;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.roo.addon.equals.RooEquals;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.tostring.RooToString;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import edu.hiro.hcv.tags.Tag;
 
 /**
- * A Spring Data Neo4j enhanced Sequence entity.
- * <p/>
- * This is the initial POJO in the Universe.
  */
+@RooJavaBean
+@RooToString
+@RooEquals
 @NodeEntity
 public class Sequence 
 {   
-    @GraphId Long id;
-    
-    @Indexed
-    private String name;
-
-    @Indexed
-    private String sequence;
-
-    @RelatedTo(type = "TAGGED", elementClass = Tag.class, direction = Direction.BOTH)
-    private Set<Tag> tags = new HashSet<Tag>();
+    @GraphId protected Long id;
+	protected String accession="";
+	protected String sequence="";
+	protected Integer ntlength;
+	protected Integer gi;
+	protected String description="";
+	protected String version="";
+	protected String taxon="";
+	protected Date udate;
+	protected String ref="";
+	
+	protected Map<String,Object> source=Maps.newLinkedHashMap();
+	protected List<Feature> features=Lists.newArrayList();
+	
+	@RelatedTo(type = "TAG") //, direction = Direction.BOTH
+	protected Set<Tag> tags=Sets.newHashSet();
 
     public Sequence()
     {
     }
     
-    public Sequence(String name, String sequence)
+    public Sequence(String accession)
     {
-        this.name = name;
-        this.sequence = sequence;
+        this.accession = accession;
     }   
-
-    public String getName()
+    
+    public Sequence(String accession, String sequence)
     {
-        return name;
+        this.accession = accession;
+        this.sequence = sequence;
+    }  
+    
+    public void addFeature(Feature feature)
+    {
+    	this.features.add(feature);
+    }
+    
+    public Feature createFeature(String type)
+    {
+    	Feature feature=new Feature(type);
+    	addFeature(feature);
+    	return feature;
+    }
+    
+    public class Feature
+    {
+    	protected String type;
+    	protected String name;
+	    protected Integer start;
+	    protected Integer end;
+	    protected String sequence;
+    	protected Map<String,Object> properties=Maps.newLinkedHashMap();
+    	
+    	public Feature(){}
+    	
+    	public Feature(String type)
+    	{
+    		this.type=type;
+    	}
+    	
+    	public Feature(String type, String name, int start, int end)
+    	{
+    		this.type=type;
+    		this.name = name;
+	        this.start = start;
+	        this.end = end;
+    	}
+    	
+    	public String getType(){return this.type;}
+    	public void setType(final String type){this.type=type;}
+    	
+    	public String getName(){return this.name;}
+    	public void setName(final String name){this.name=name;}
+
+    	public Integer getStart(){return this.start;}
+    	public void setStart(final Integer start){this.start=start;}
+
+    	public Integer getEnd(){return this.end;}
+    	public void setEnd(final Integer end){this.end=end;}
+    	
+    	public String getSequence(){return this.sequence;}
+    	public void setSequence(final String sequence){this.sequence=sequence;}
+
+    	public Map<String,Object> getProperties(){return this.properties;}
+    	public void setProperties(final Map<String,Object> properties){this.properties=properties;}
     }
 
-    public String getSequence()
+    /////////////////////////////////////////////////////////////
+    
+    public void addTag(Tag tag)
     {
-        return sequence;
-    }
-
-    @Override
-    public String toString()
-    {
-        return String.format("Sequence{name='%s, sequence=%d}", name, sequence);
-    }
-
-    public void addTag( Tag tag )
-    {
+    	tag.addSequence(this);
     	tags.add(tag);
     }
 
-    public boolean isTagged( Tag tag )
+    public boolean hasTag(Tag tag)
     {
-        return tags.contains( tag );
+        return tags.contains(tag);
     }
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Sequence other = (Sequence) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
 }

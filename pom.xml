@@ -8,14 +8,21 @@
     <name>hcvdb-neo4j</name>
     <properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <roo.version>1.1.5.RELEASE</roo.version>
+        <roo.version>1.2.0.RELEASE</roo.version>
         <spring.version>3.1.0.RELEASE</spring.version>
+        <spring-security.version>3.1.0.RELEASE</spring-security.version> <!-- 3.0.7.RELEASE -->
+        <spring.batch.version>2.1.7.RELEASE</spring.batch.version>	
         <aspectj.version>1.6.11</aspectj.version>
         <slf4j.version>1.6.1</slf4j.version>        
         <spring.data.neo4j.version>2.0.0.RELEASE</spring.data.neo4j.version>
         <thymeleaf.version>1.1.2</thymeleaf.version>
         <guava.version>10.0.1</guava.version>
         <freemarker.version>2.3.18</freemarker.version>
+		<biojava.version>3.0.2</biojava.version>
+		<biojava.legacy.version>1.8.1</biojava.legacy.version>
+		<extdirectspring.version>1.0.13</extdirectspring.version>
+		<wro4j.version>1.4.2</wro4j.version>
+		<weka.version>3.6.0</weka.version>
     </properties>
     <repositories>
         <repository>
@@ -33,6 +40,16 @@
             <name>Spring Roo Repository</name>
             <url>http://spring-roo-repository.springsource.org/release</url>
         </repository>
+        <repository>
+			<id>biojava-maven-repo</id>
+			<name>BioJava repository</name>
+			<url>http://www.biojava.org/download/maven/</url>	
+		</repository>
+		<repository>
+			<id>weka-maven-repo</id>
+			<name>Weka repository</name>
+			<url>http://ir.dcs.gla.ac.uk/~bpiwowar/maven</url>	
+		</repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -228,6 +245,129 @@
 			<artifactId>freemarker</artifactId>
 			<version>${freemarker.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>core</artifactId>
+			<version>${biojava.legacy.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>sequencing</artifactId>
+			<version>${biojava.legacy.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>gui</artifactId>
+			<version>${biojava.legacy.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava3-core</artifactId>
+			<version>${biojava.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava3-alignment</artifactId>
+			<version>${biojava.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava3-genome</artifactId>
+			<version>${biojava.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava3-structure</artifactId>
+			<version>${biojava.version}</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>ro.isdc.wro4j</groupId>
+		  <artifactId>wro4j-core</artifactId>
+		  <version>${wro4j.version}</version>
+		</dependency>		
+		<dependency>
+		  <groupId>ro.isdc.wro4j</groupId>
+		  <artifactId>wro4j-extensions</artifactId>
+		  <version>${wro4j.version}</version>
+		</dependency>
+		
+		<dependency>
+	      <groupId>ch.ralscha</groupId>
+	      <artifactId>extdirectspring</artifactId>
+	      <version>${extdirectspring.version}</version>
+	    </dependency>
+
+
+		<!--  spring security -->
+       	<dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    	<dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    	<dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+    	<dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        
+        <!--  spring batch -->
+        <dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+			<version>${spring.batch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-infrastructure</artifactId>
+			<version>${spring.batch.version}</version>
+		</dependency>
+		
+		<dependency>
+		   <groupId>weka</groupId>
+			<artifactId>weka</artifactId>
+			<version>${weka.version}</version>	
+		</dependency>
+		
+		<dependency>
+		    <groupId>dom4j</groupId>
+		    <artifactId>dom4j</artifactId>
+		    <version>1.6.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-httpclient</groupId>
+		    <artifactId>commons-httpclient</artifactId>
+		    <version>3.1</version>
+		</dependency>
     </dependencies>
     <build>
         <plugins>
@@ -378,7 +518,9 @@
 				<executions>
 				  <execution>
 				    <phase>package</phase>
-				    <goals><goal>assemble</goal></goals>
+				    <goals>
+                            <goal>assemble</goal>
+                        </goals>
 				    <configuration>
 				      <assembleDirectory>target</assembleDirectory>
 				      <extraJvmArguments>-Xmx512m</extraJvmArguments>
@@ -394,4 +536,36 @@
 				</plugin>
         </plugins>
     </build>
+    <profiles>  
+		<profile>  
+			<id>setup</id> 
+			<!--  mvn test -Psetup  -->
+			<build>  
+				<plugins>  
+					<plugin>  
+						<groupId>org.codehaus.mojo</groupId>  
+						<artifactId>exec-maven-plugin</artifactId>  
+						<version>1.1.1</version>  
+						<executions>  
+							<execution>  
+								<phase>test</phase>
+								<goals>  
+									<goal>java</goal> 
+								</goals>
+								<configuration>  
+									<mainClass>edu.hiro.hcv.setup.Setup</mainClass>
+									<!-- 
+									<arguments>
+										<argument>-dir</argument>
+										<argument>c:/workspace/vardb-hcv.etc</argument> 
+									</arguments>
+									 -->
+								</configuration>  
+							</execution>  
+						</executions>  
+					</plugin> 
+				</plugins>  
+			</build>  
+		</profile>  
+	</profiles>
 </project>

@@ -9,7 +9,6 @@
 	<!-- Turns on support for mapping requests to Spring MVC @Controller methods
 	     Also registers default Formatters and Validators for use across all @Controllers-->
 	<mvc:annotation-driven/> <!-- conversion-service="applicationConversionService"  -->
-	 
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources -->
 	<mvc:resources location="/images/" mapping="/images/**"/>
@@ -25,7 +24,8 @@
 	</mvc:interceptors>
 	
 	<!-- selects a static view for rendering without the need for an explicit controller -->
-	<!--  <mvc:view-controller path="/" view-name="index"/> 
+	<!--
+	<mvc:view-controller path="/" view-name="index"/> 
 	<mvc:view-controller path="/uncaughtException"/>
 	<mvc:view-controller path="/resourceNotFound"/>
 	<mvc:view-controller path="/dataAccessFailure"/>
@@ -57,39 +57,7 @@
 	
 	<!-- enable this for integration of file upload functionality -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-	
-	<!-- 
-	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver">
-    <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
-  	</bean>
-    <bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" id="tilesConfigurer">
-    <property name="definitions">
-      <list>
-        <value>/WEB-INF/layouts/layouts.xml</value>
-        <value>/WEB-INF/views/**/views.xml</value>
-      </list>
-    </property>
-  </bean>
-   -->
-	<!-- <bean class="edu.hiro.hcv.web.ApplicationConversionServiceFactoryBean" id="applicationConversionService"/> -->
-	
-	<!-- 
-	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
-		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".html" />
-		<property name="templateMode" value="HTML5" />
-	</bean>
-	
-	<bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
-		<property name="templateResolver" ref="templateResolver" />
-	</bean>
-	
-	<bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
-		<property name="templateEngine" ref="templateEngine" />
-	</bean>
-	 -->
-	
-	
+		
 	<bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="suffix" value=".ftl"/>
 		<property name="cache" value="true"/>
@@ -104,13 +72,28 @@
 	</bean>
 	
 	<!-- 
-	<bean id="freemarkerExceptionHandler" class="org.vardb.util.web.CFreemarkerExceptionHandler">
-		<property name="freemarkerConfigurer" ref="freemarkerConfigurer"/>
-	</bean>
-	
 	<bean id="registerFreemarkerExceptionHandler" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetObject" ref="freemarkerExceptionHandler"/>
+		<property name="targetObject">
+			<bean class="edu.hiro.hcv.util.FreemarkerExceptionHandler">
+				<property name="freemarkerConfigurer" ref="freemarkerConfigurer"/>
+			</bean>
+		</property>
 		<property name="targetMethod" value="registerHandler"/>
 	</bean>
 	 -->
+	 
+	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML5" />
+		<property name="order" value="2"/>
+	</bean>
+	
+	<bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+	</bean>
+	
+	<bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+	</bean>
 </beans>

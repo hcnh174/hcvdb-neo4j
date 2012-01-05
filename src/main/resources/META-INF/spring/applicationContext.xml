@@ -19,7 +19,7 @@
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
 	
-    <neo4j:config storeDirectory="target/neo4j-db"/>
+    <neo4j:config storeDirectory="../db/neo4j-db"/>
     <neo4j:repositories base-package="edu.hiro.hcv.sequences"/>
     
     <!-- 

@@ -52,7 +52,7 @@
     
     <!-- Handles Spring requests -->
     <servlet>
-        <servlet-name>hirohcvdb</servlet-name>
+        <servlet-name>hcvdb-neo4j</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -62,7 +62,7 @@
     </servlet>
     
     <servlet-mapping>
-        <servlet-name>hirohcvdb</servlet-name>
+        <servlet-name>hcvdb-neo4j</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     
