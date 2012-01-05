@@ -60,7 +60,7 @@ public class SequenceRepositoryTest
         Sequence mySequence = repository.save(new Sequence( "ABC123", "cgtgcacgtcactcga" ));
         assertEquals(1, (long) template.count(Sequence.class));
         Sequence foundSequence = repository.findOne(mySequence.id);
-        assertEquals(mySequence.getName(), foundSequence.getName());
+        assertEquals(mySequence.getAccession(), foundSequence.getAccession());
     }
     
     

@@ -30,6 +30,7 @@ public class HomeController {
 	@Autowired Neo4jTemplate template;
 	//@Autowired TagRepository tagRepository;
 	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String dflt(Model model) {
 		return index(model);

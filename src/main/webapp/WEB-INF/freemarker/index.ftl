@@ -5,7 +5,7 @@ size: ${page.size}<br/>
 
 <ul>
 <#list sequences as sequence>
-	<li>${sequence.name}: ${sequence.sequence}</li>
+	<li>${sequence.accession}: ${sequence.sequence}</li>
 </#list>
 </ul>
 
