@@ -4,10 +4,8 @@
 package edu.hiro.hcv.sequences;
 
 import edu.hiro.hcv.sequences.Feature;
+import edu.hiro.hcv.sequences.Sequence;
 import edu.hiro.hcv.tags.Tag;
-import java.lang.Integer;
-import java.lang.Long;
-import java.lang.String;
 import java.util.Date;
 import java.util.Set;
 

@@ -3,26 +3,14 @@
 
 package edu.hiro.hcv.sequences;
 
-import java.lang.String;
+import edu.hiro.hcv.sequences.Sequence;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect Sequence_Roo_ToString {
     
     public String Sequence.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Accession: ").append(getAccession()).append(", ");
-        sb.append("Description: ").append(getDescription()).append(", ");
-        sb.append("Features: ").append(getFeatures() == null ? "null" : getFeatures().size()).append(", ");
-        sb.append("Gi: ").append(getGi()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("Ntlength: ").append(getNtlength()).append(", ");
-        sb.append("Ref: ").append(getRef()).append(", ");
-        sb.append("Sequence: ").append(getSequence()).append(", ");
-        sb.append("Source: ").append(getSource()).append(", ");
-        sb.append("Tags: ").append(getTags() == null ? "null" : getTags().size()).append(", ");
-        sb.append("Taxon: ").append(getTaxon()).append(", ");
-        sb.append("Udate: ").append(getUdate()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

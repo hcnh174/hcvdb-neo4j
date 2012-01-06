@@ -3,20 +3,14 @@
 
 package edu.hiro.hcv.sequences;
 
-import java.lang.String;
+import edu.hiro.hcv.sequences.Feature;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect Feature_Roo_ToString {
     
     public String Feature.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("End: ").append(getEnd()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("Name: ").append(getName()).append(", ");
-        sb.append("Properties: ").append(getProperties() == null ? "null" : getProperties().size()).append(", ");
-        sb.append("Sequence: ").append(getSequence()).append(", ");
-        sb.append("Start: ").append(getStart()).append(", ");
-        sb.append("Type: ").append(getType());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

@@ -18,7 +18,7 @@
         <spring.data.neo4j.version>2.0.0.RELEASE</spring.data.neo4j.version>
         <spring.data.mongodb.version>1.0.0.RELEASE</spring.data.mongodb.version>
         <thymeleaf.version>1.1.2</thymeleaf.version>
-        <guava.version>10.0.1</guava.version>
+        <guava.version>11.0</guava.version>
         <freemarker.version>2.3.18</freemarker.version>
 		<biojava.version>3.0.2</biojava.version>
 		<biojava.legacy.version>1.8.1</biojava.legacy.version>

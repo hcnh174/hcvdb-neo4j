@@ -17,11 +17,11 @@ privileged aspect Sequence_Roo_Equals {
             return true;
         }
         Sequence rhs = (Sequence) obj;
-        return new EqualsBuilder().append(accession, rhs.accession).append(description, rhs.description).append(gi, rhs.gi).append(id, rhs.id).append(ntlength, rhs.ntlength).append(ref, rhs.ref).append(sequence, rhs.sequence).append(taxon, rhs.taxon).append(udate, rhs.udate).append(version, rhs.version).isEquals();
+        return new EqualsBuilder().append(accession, rhs.accession).append(description, rhs.description).append(gi, rhs.gi).append(id, rhs.id).append(ntlength, rhs.ntlength).append(ref, rhs.ref).append(sequence, rhs.sequence).append(source, rhs.source).append(taxon, rhs.taxon).append(udate, rhs.udate).append(version, rhs.version).isEquals();
     }
     
     public int Sequence.hashCode() {
-        return new HashCodeBuilder().append(accession).append(description).append(gi).append(id).append(ntlength).append(ref).append(sequence).append(taxon).append(udate).append(version).toHashCode();
+        return new HashCodeBuilder().append(accession).append(description).append(gi).append(id).append(ntlength).append(ref).append(sequence).append(source).append(taxon).append(udate).append(version).toHashCode();
     }
     
 }
