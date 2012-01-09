@@ -3,12 +3,10 @@
 
 package edu.hiro.hcv.users;
 
-import edu.hiro.hcv.tags.Tag;
 import java.lang.Boolean;
 import java.lang.Long;
 import java.lang.String;
 import java.util.Date;
-import java.util.Set;
 
 privileged aspect User_Roo_JavaBean {
     
@@ -90,14 +88,6 @@ privileged aspect User_Roo_JavaBean {
     
     public void User.setUpdated(Date updated) {
         this.updated = updated;
-    }
-    
-    public Set<Tag> User.getTags() {
-        return this.tags;
-    }
-    
-    public void User.setTags(Set<Tag> tags) {
-        this.tags = tags;
     }
     
 }

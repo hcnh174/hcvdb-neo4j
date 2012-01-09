@@ -1,0 +1,145 @@
+package edu.hiro.hcv.sequences;
+
+import static junit.framework.Assert.assertEquals;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
+import org.springframework.data.neo4j.support.node.Neo4jHelper;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.BeforeTransaction;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.mongodb.Mongo;
+
+import edu.hiro.hcv.hcv.HcvGenomeRepository;
+
+/**
+ * Exploratory testing of Spring Data Neo4j using
+ * the SequenceRepositoryImpl.
+ */
+@ContextConfiguration(locations = "classpath:META-INF/spring/applicationContext.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
+public class SequenceRepositoryTest
+{
+
+	//@Resource(name="sequenceRepository") 
+	//private SequenceRepository repository;
+    
+	//@Resource(name="sequenceService")
+	//@Autowired
+    //private SequenceService sequenceService;
+    
+	//@Resource(name="neo4jTemplate")
+	@Autowired
+	private Neo4jTemplate neo4jTemplate;
+	
+	@Autowired
+	private HcvGenomeRepository hcvGenomeRepository;
+	
+	@Autowired
+	private Mongo mongo;
+
+	@Rollback(false)
+    @BeforeTransaction
+    public void clearDatabase()
+    {
+		Neo4jHelper.cleanDb(neo4jTemplate);
+    }
+	
+	@Test
+	public void testSetup()
+	{
+		
+	}
+	
+    @Test
+    public void shouldAllowDirectSequenceCreation()
+    {
+        assertEquals(0, (long) neo4jTemplate.count(Sequence.class));
+        Sequence mySequence =new Sequence( "ABC123", "cgtgcacgtcactcga" );
+        neo4jTemplate.save(mySequence);
+        assertEquals(1, (long) neo4jTemplate.count(Sequence.class));
+        Sequence foundSequence = neo4jTemplate.findOne(mySequence.id, Sequence.class);
+        assertEquals(mySequence.getAccession(), foundSequence.getAccession());
+    }
+    
+    @Test
+    public void shouldPopulateGalaxyWithSequences()
+    {
+        Iterable<Sequence> sequences = sequenceService.makeSomeSequences();
+        //assertNotNull( sequences );
+    }
+    
+    @Test
+    public void testWithMongoTemplate()
+    {
+    	MongoTemplate mongoTemplate=new MongoTemplate(mongo, "hcvdbneo4j");
+    	mongoTemplate.collectionExists("hcvsequences");
+    	
+    	//hcvGenomeRepository
+    }
+    
+/*	
+
+    @Test
+    public void shouldHaveCorrectNumberOfSequences()
+    {
+        repository.makeSomeSequences();
+        assertEquals(13, (long) repository.count());
+    }
+
+    @Test
+    public void shouldFindAllSequences()
+    {
+        Collection<Sequence> madeSequences = repository.makeSomeSequences();
+        Iterable<Sequence> foundSequences = repository.findAll();
+
+        int countOfFoundSequences = 0;
+        for ( Sequence foundSequence : foundSequences )
+        {
+            assertTrue( madeSequences.contains( foundSequence ) );
+            countOfFoundSequences++;
+        }
+
+        assertEquals( madeSequences.size(), countOfFoundSequences );
+    }
+
+    @Test
+    public void shouldFindSequencesByName()
+    {
+        for ( Sequence w : repository.makeSomeSequences() )
+        {
+            assertNotNull( repository.findSequenceNamed( w.getName() ) );
+        }
+    }
+
+	@SuppressWarnings("unchecked")
+    @Test
+    public void shouldFindSequencesWith1Moon()
+    {
+        repository.makeSomeSequences();
+        for ( Sequence worldWithOneMoon : repository.findSequencesWithMoons( 1 ) )
+        {
+        	assertThat( worldWithOneMoon.getName(), is( anyOf( containsString( "Earth" ), containsString( "Midgard" ) ) ) );
+        }
+    }
+
+    @Test
+    public void shouldReachMarsFromEarth()
+    {
+        repository.makeSomeSequences();
+
+        Sequence earth = repository.findSequenceNamed( "Earth" );
+        Sequence mars = repository.findSequenceNamed( "Mars" );
+
+        assertTrue( mars.canBeReachedFrom( earth ) );
+        assertTrue( earth.canBeReachedFrom( mars ) );
+    }
+*/
+}

@@ -5,5 +5,5 @@ import org.springframework.data.neo4j.repository.NamedIndexRepository;
 
 /**
  */
-public interface SequenceRepository extends GraphRepository<Sequence>, NamedIndexRepository<Sequence> {
+public interface SequenceRepository extends GraphRepository<Sequence> {
 }

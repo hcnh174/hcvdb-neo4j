@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.PreUpdate;
-import javax.persistence.Transient;
+//import javax.persistence.PreUpdate;
+//import javax.persistence.Transient;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.GraphId;
@@ -46,8 +46,8 @@ public class User implements UserDetails
 	protected Date created;
 	protected Date updated;
 
-    @RelatedTo(type = "OWNS", elementClass = Tag.class, direction = Direction.BOTH)
-    protected Set<Tag> tags = new HashSet<Tag>();
+    //@RelatedTo(type = "OWNS", elementClass = Tag.class, direction = Direction.BOTH)
+    //protected Set<Tag> tags = new HashSet<Tag>();
 
     public User()
     {
@@ -60,6 +60,7 @@ public class User implements UserDetails
 		this.updated=new Date();
     }   
 
+    /*
     public void addTag( Tag tag )
     {
     	tags.add(tag);
@@ -69,8 +70,9 @@ public class User implements UserDetails
     {
         return tags.contains( tag );
     }
+    */
     
-    @Transient
+    //@Transient
     public String getName() {
         String name = this.firstname + " " + this.lastname;
         return name.trim();
@@ -82,7 +84,7 @@ public class User implements UserDetails
         return salt;
     }
 
-    @PreUpdate
+    //@PreUpdate
     protected void onUpdate() {
         this.updated = new Date();
         System.out.println("onUpdate called: " + this.updated.toString());
@@ -90,25 +92,25 @@ public class User implements UserDetails
     
     public boolean isEnabled(){return this.enabled;}
 	
-   	@Transient
+   	//@Transient
    	public boolean isAccountNonExpired()
    	{
    		return true;
    	}
    	
-   	@Transient
+   	//@Transient
    	public boolean isAccountNonLocked()
    	{
    		return true;
    	}
    	
-   	@Transient
+   	//@Transient
    	public boolean isCredentialsNonExpired()
    	{
    		return true;
    	}
 
-   	@Transient
+   	//@Transient
    	public List<String> getRoles()
    	{
    		List<String> roles=Lists.newArrayList("ROLE_USER","ROLE_LOGIN_USER");
@@ -117,7 +119,7 @@ public class User implements UserDetails
    		return roles;
    	}
    	
-   	@Transient
+   	//@Transient
    	public Collection<GrantedAuthority> getAuthorities()
    	{
    		LoginService loginService=new LoginServiceImpl();

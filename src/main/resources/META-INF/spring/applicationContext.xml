@@ -27,10 +27,16 @@
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
 	
+	<tx:annotation-driven/> <!--  mode="proxy" -->
+	
+	<!-- 
     <neo4j:config storeDirectory="../db/neo4j-db"/>
     <neo4j:repositories base-package="edu.hiro.hcv.sequences"/>
-    
+     -->
+     
     <!-- 
+     graph-database-context-ref="template"
+     
     <neo4j:config graphDatabaseService="graphDatabaseService"/>
     
 	<bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
@@ -40,17 +46,20 @@
 	</bean>
     -->
     
-
-<!-- 
-    <mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>
-
-    
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg ref="mongo" />
-		<constructor-arg value="hcvdbneo4j" />
+    <bean id="graphDatabaseService" class="org.neo4j.kernel.EmbeddedGraphDatabase" destroy-method="shutdown">
+	    <constructor-arg index="0" value="../db/neo4j-db" />
 	</bean>
- -->
-<!-- 
-	<mongo:repositories base-package="edu.hiro.hcv.sequences" />
- 	 -->
+    
+	<mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>
+	
+	<mongo:repositories base-package="edu.hiro.hcv.hcv" />
+	 
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongo" ref="mongo"/>
+		<constructor-arg name="databaseName" value="hcvdbneo4j"/>
+	</bean>
+ 
+	<!-- 
+	<bean class="org.springframework.data.mongodb.core.MongoExceptionTranslator"/>
+	 -->
 </beans>

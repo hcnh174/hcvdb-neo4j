@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.repository.GraphRepository;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
  */
-@Service
+//@Service
 @Transactional
 public class SequenceServiceImpl implements SequenceService
 {
-
-    @Autowired
-	private SequenceRepository repository;
+	//@Autowired
+	private Neo4jTemplate neo4jTemplate;
+	
+    //@Autowired
+	//private SequenceRepository repository;
     
     public Collection<Sequence> makeSomeSequences() {
     	
@@ -29,7 +33,7 @@ public class SequenceServiceImpl implements SequenceService
         sequences.add(earth);
         
         Sequence mars = sequence("Mars", "acgtctcgtca");
-        repository.save(mars);
+        neo4jTemplate.save(mars);
         
         sequences.add(mars);
         sequences.add(sequence("Jupiter", "acgtctcgtca"));
@@ -37,29 +41,30 @@ public class SequenceServiceImpl implements SequenceService
         sequences.add(sequence("Uranus", "acgtctcgtca"));
         sequences.add(sequence("Neptune", "acgtctcgtca"));
 
-        // Norse sequences
         sequences.add(sequence("Alfheimr", "acgtctcgtca"));
         sequences.add(sequence("Midgard", "acgtctcgtca"));
         sequences.add(sequence("Muspellheim", "acgtctcgtca"));
         sequences.add(sequence("Asgard", "acgtctcgtca"));
         sequences.add(sequence("Hel", "acgtctcgtca"));
         
-        repository.save(sequences);
+        neo4jTemplate.save(sequences);
 
         return sequences;
-    }
- 
+    } 
+
     public Sequence sequence(String name, String seq) {
     	
     	Sequence sequence = findSequenceNamed(name);
         if (sequence == null) {
         	sequence = new Sequence(name, seq);
-        	repository.save(sequence);
+        	neo4jTemplate.save(sequence);
         }
     	return sequence;
     }
-    
+       
     public Sequence findSequenceNamed(String name) {
+    	//return (Sequence)neo4jTemplate.lookup(Sequence.class,"name", name);
+    	GraphRepository<Sequence> repository = neo4jTemplate.repositoryFor(Sequence.class);
         return repository.findByPropertyValue("name", name);
     }
 }

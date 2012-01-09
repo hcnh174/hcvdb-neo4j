@@ -21,7 +21,6 @@ privileged aspect User_Roo_ToString {
         sb.append("Name: ").append(getName()).append(", ");
         sb.append("Password: ").append(getPassword()).append(", ");
         sb.append("Roles: ").append(getRoles() == null ? "null" : getRoles().size()).append(", ");
-        sb.append("Tags: ").append(getTags() == null ? "null" : getTags().size()).append(", ");
         sb.append("Updated: ").append(getUpdated()).append(", ");
         sb.append("Username: ").append(getUsername()).append(", ");
         sb.append("AccountNonExpired: ").append(isAccountNonExpired()).append(", ");

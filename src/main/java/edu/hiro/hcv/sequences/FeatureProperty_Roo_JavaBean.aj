@@ -4,7 +4,9 @@
 package edu.hiro.hcv.sequences;
 
 import edu.hiro.hcv.sequences.Feature;
-import edu.hiro.hcv.sequences.FeatureProperty;
+import java.lang.Long;
+import java.lang.Object;
+import java.lang.String;
 
 privileged aspect FeatureProperty_Roo_JavaBean {
     

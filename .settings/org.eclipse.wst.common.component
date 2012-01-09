@@ -2,9 +2,9 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="hcvdb-neo4j">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
         <property name="context-root" value="hcvdb-neo4j"/>
         <property name="java-output-path" value="/hcvdb-neo4j/target/classes"/>
     </wb-module>
