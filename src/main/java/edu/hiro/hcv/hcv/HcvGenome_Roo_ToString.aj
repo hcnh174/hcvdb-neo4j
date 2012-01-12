@@ -3,17 +3,14 @@
 
 package edu.hiro.hcv.hcv;
 
-import java.lang.String;
+import edu.hiro.hcv.hcv.HcvGenome;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect HcvGenome_Roo_ToString {
     
     public String HcvGenome.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Accession: ").append(getAccession()).append(", ");
-        sb.append("Cds: ").append(getCds()).append(", ");
-        sb.append("Refs: ").append(getRefs() == null ? "null" : getRefs().size()).append(", ");
-        sb.append("Sequence: ").append(getSequence());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

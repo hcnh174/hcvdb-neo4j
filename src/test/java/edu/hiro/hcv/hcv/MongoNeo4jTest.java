@@ -24,7 +24,9 @@ import edu.hiro.hcv.sequences.Sequence;
  * Exploratory testing of Spring Data Neo4j using
  * the SequenceRepositoryImpl.
  */
-@ContextConfiguration(locations = "classpath:META-INF/spring/applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:META-INF/spring/applicationContext.xml",
+		"classpath:META-INF/spring/applicationContext-mongo.xml",
+		"classpath:META-INF/spring/applicationContext-neo4j.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 //@Transactional
 public class MongoNeo4jTest

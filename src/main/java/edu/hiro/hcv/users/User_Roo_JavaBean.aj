@@ -3,9 +3,7 @@
 
 package edu.hiro.hcv.users;
 
-import java.lang.Boolean;
-import java.lang.Long;
-import java.lang.String;
+import edu.hiro.hcv.users.User;
 import java.util.Date;
 
 privileged aspect User_Roo_JavaBean {

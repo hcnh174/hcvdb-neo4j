@@ -17,13 +17,14 @@
         <spring.data.commons.version>1.2.0.RELEASE</spring.data.commons.version>
         <spring.data.neo4j.version>2.0.0.RELEASE</spring.data.neo4j.version>
         <spring.data.mongodb.version>1.0.0.RELEASE</spring.data.mongodb.version>
-        <thymeleaf.version>1.1.3</thymeleaf.version>
-        <guava.version>11.0</guava.version>
+        <morphia.version>0.99</morphia.version>
+        <thymeleaf.version>1.1.4</thymeleaf.version>
+        <guava.version>11.0.1</guava.version>
         <freemarker.version>2.3.18</freemarker.version>
 		<biojava.version>3.0.2</biojava.version>
 		<biojava.legacy.version>1.8.1</biojava.legacy.version>
 		<extdirectspring.version>1.0.13</extdirectspring.version>
-		<wro4j.version>1.4.2</wro4j.version>
+		<wro4j.version>1.4.3</wro4j.version>
 		<weka.version>3.6.0</weka.version>
     </properties>
     <repositories>
@@ -32,6 +33,11 @@
 			<name>BioJava repository</name>
 			<url>http://www.biojava.org/download/maven/</url>	
 		</repository>
+		<repository>
+			<id>morphia-maven-repo</id>
+			<name>Morphia repository</name>
+			<url>http://morphia.googlecode.com/svn/mavenrepo/</url>	
+		</repository>		
         <repository>
             <id>spring-maven-release</id>
             <name>Spring Maven Release Repository</name>
@@ -46,8 +52,7 @@
             <id>spring-roo-repository</id>
             <name>Spring Roo Repository</name>
             <url>http://spring-roo-repository.springsource.org/release</url>
-        </repository>
-        
+        </repository>        
 		<repository>
 			<id>weka-maven-repo</id>
 			<name>Weka repository</name>
@@ -394,6 +399,13 @@
 		    <groupId>commons-httpclient</groupId>
 		    <artifactId>commons-httpclient</artifactId>
 		    <version>3.1</version>
+		</dependency>
+		
+		<!--  morphia -->
+		<dependency>
+	        <groupId>com.google.code.morphia</groupId>
+	        <artifactId>morphia</artifactId>
+	        <version>${morphia.version}</version>
 		</dependency>
     </dependencies>
     <build>

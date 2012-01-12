@@ -3,7 +3,7 @@
 
 package edu.hiro.hcv.hcv;
 
-import java.lang.String;
+import edu.hiro.hcv.hcv.HcvGenome;
 import java.util.List;
 
 privileged aspect HcvGenome_Roo_JavaBean {

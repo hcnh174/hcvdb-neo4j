@@ -10,12 +10,8 @@
        	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd
-		http://www.springframework.org/schema/data/neo4j
-		http://www.springframework.org/schema/data/neo4j/spring-neo4j-2.0.xsd
 		http://www.springframework.org/schema/tx
-		http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-		http://www.springframework.org/schema/data/mongo
-		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+		http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<context:property-placeholder location="classpath*:META-INF/spring/*.properties"/>
 
@@ -28,38 +24,5 @@
     </context:component-scan>
 	
 	<tx:annotation-driven/> <!--  mode="proxy" -->
-	
-	<!-- 
-    <neo4j:config storeDirectory="../db/neo4j-db"/>
-    <neo4j:repositories base-package="edu.hiro.hcv.sequences"/>
-     -->
-     
-    <!-- 
-     graph-database-context-ref="template"
-     
-    <neo4j:config graphDatabaseService="graphDatabaseService"/>
-    
-	<bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
-	    <constructor-arg index="0" value="${NEO4J_REST_URL}" />
-	    <constructor-arg index="1" value="${NEO4J_LOGIN}" />
-	    <constructor-arg index="2" value="${NEO4J_PASSWORD}" />
-	</bean>
-    -->
-    
-    <bean id="graphDatabaseService" class="org.neo4j.kernel.EmbeddedGraphDatabase" destroy-method="shutdown">
-	    <constructor-arg index="0" value="../db/neo4j-db" />
-	</bean>
-    
-	<mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>
-	
-	<mongo:repositories base-package="edu.hiro.hcv.hcv" />
-	 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg name="mongo" ref="mongo"/>
-		<constructor-arg name="databaseName" value="hcvdbneo4j"/>
-	</bean>
- 
-	<!-- 
-	<bean class="org.springframework.data.mongodb.core.MongoExceptionTranslator"/>
-	 -->
+
 </beans>
