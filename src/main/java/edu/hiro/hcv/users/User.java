@@ -3,18 +3,8 @@ package edu.hiro.hcv.users;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-//import javax.persistence.PreUpdate;
-//import javax.persistence.Transient;
-
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.roo.addon.equals.RooEquals;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -23,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.google.common.collect.Lists;
 
-import edu.hiro.hcv.tags.Tag;
 import edu.hiro.hcv.util.MathHelper;
 
 /**
@@ -31,11 +20,9 @@ import edu.hiro.hcv.util.MathHelper;
 @RooJavaBean
 @RooToString
 @RooEquals
-@NodeEntity
 public class User implements UserDetails 
 {   
-    @GraphId protected Long id;
-    @Indexed protected String username;
+    protected String username;
     protected String password;
     protected Boolean enabled;
 	protected Boolean administrator=false;
@@ -45,9 +32,6 @@ public class User implements UserDetails
 	protected String affiliation;
 	protected Date created;
 	protected Date updated;
-
-    //@RelatedTo(type = "OWNS", elementClass = Tag.class, direction = Direction.BOTH)
-    //protected Set<Tag> tags = new HashSet<Tag>();
 
     public User()
     {
@@ -60,18 +44,6 @@ public class User implements UserDetails
 		this.updated=new Date();
     }   
 
-    /*
-    public void addTag( Tag tag )
-    {
-    	tags.add(tag);
-    }
-
-    public boolean hasTag( Tag tag )
-    {
-        return tags.contains( tag );
-    }
-    */
-    
     //@Transient
     public String getName() {
         String name = this.firstname + " " + this.lastname;

@@ -1,10 +1,7 @@
 package edu.hiro.hcv.bio;
 
-import java.io.BufferedReader;
 import java.io.PrintStream;
-import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -15,7 +12,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.biojava.bio.seq.Feature;
-import org.biojava.bio.seq.FeatureFilter;
 import org.biojava.bio.seq.FeatureHolder;
 import org.biojava.bio.seq.io.ParseException;
 import org.biojava.bio.symbol.Location;
@@ -35,16 +31,8 @@ import org.biojavax.bio.seq.RichSequenceIterator;
 import org.biojavax.bio.seq.io.GenbankLocationParser;
 import org.biojavax.bio.taxa.NCBITaxon;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Lists;
-
-import edu.hiro.hcv.bio.StrandType;
-import edu.hiro.hcv.sequences.Sequence;
 import edu.hiro.hcv.util.CException;
 import edu.hiro.hcv.util.DateHelper;
-import edu.hiro.hcv.util.FileHelper;
-import edu.hiro.hcv.util.MessageWriter;
 import edu.hiro.hcv.util.StringHelper;
 
 public class BiojavaHelper

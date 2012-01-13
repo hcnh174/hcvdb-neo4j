@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.biojavax.Namespace;
-import org.biojavax.SimpleNamespace;
 import org.biojavax.bio.seq.RichFeature;
 import org.biojavax.bio.seq.RichSequence;
 import org.biojavax.bio.seq.RichSequenceIterator;
@@ -15,8 +13,8 @@ import org.biojavax.bio.seq.RichSequenceIterator;
 import com.google.common.collect.Lists;
 
 import edu.hiro.hcv.bio.BiojavaHelper;
-import edu.hiro.hcv.sequences.Sequence;
-import edu.hiro.hcv.sequences.Feature;
+import edu.hiro.hcv.morphia.Feature;
+import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.util.CException;
 import edu.hiro.hcv.util.FileHelper;
 import edu.hiro.hcv.util.StringHelper;
@@ -26,6 +24,7 @@ public class GenbankSequenceBuilder
 	// private constructor to enforce singleton pattern
 	private GenbankSequenceBuilder(){}
 	
+	/*
 	public static void parseFolder(String folder, List<Sequence> sequences)
 	{
 		List<String> filenames=FileHelper.listFilesRecursively(folder,".gb");
@@ -120,23 +119,22 @@ public class GenbankSequenceBuilder
 		sequence.setTaxon(BiojavaHelper.getTaxon(richsequence));
 		sequence.setUdate(BiojavaHelper.getUdate(annotations));
 		sequence.setRef(StringHelper.join(BiojavaHelper.getRefs(richsequence),";"));
-		/*
-		//display(richsequence);		
-		sequence.setGi(Integer.parseInt(richsequence.getIdentifier()));
-		sequence.setAccession(stripVersion(richsequence.getName()));
-		sequence.setDefline(clean(richsequence.getDescriptin()));
-		sequence.setVersion(richsequence.getAccession());
-		sequence.setCircular(getCircular(richsequence));
-		sequence.setDivision(richsequence.getDivision());
-		sequence.setTaxon(getTaxon(richsequence));
-		sequence.setUdate(getUdate(annotations));
-		//sequence.setKw(getKw(annotations));
-		sequence.setComments(getComments(richsequence));
-		sequence.setConceptual(getConceptual(sequence.getComments()));
-		sequence.setEc(getEc(sequence.getComments()));
-		sequence.setStrand(StrandType.forward);
-		sequence.setRef(StringHelper.join(getRefs(richsequence),";"));
-		*/
+
+//		//display(richsequence);		
+//		sequence.setGi(Integer.parseInt(richsequence.getIdentifier()));
+//		sequence.setAccession(stripVersion(richsequence.getName()));
+//		sequence.setDefline(clean(richsequence.getDescriptin()));
+//		sequence.setVersion(richsequence.getAccession());
+//		sequence.setCircular(getCircular(richsequence));
+//		sequence.setDivision(richsequence.getDivision());
+//		sequence.setTaxon(getTaxon(richsequence));
+//		sequence.setUdate(getUdate(annotations));
+//		//sequence.setKw(getKw(annotations));
+//		sequence.setComments(getComments(richsequence));
+//		sequence.setConceptual(getConceptual(sequence.getComments()));
+//		sequence.setEc(getEc(sequence.getComments()));
+//		sequence.setStrand(StrandType.forward);
+//		sequence.setRef(StringHelper.join(getRefs(richsequence),";"));
 		return sequence;
 	}
 	
@@ -249,204 +247,5 @@ public class GenbankSequenceBuilder
 		feature.setProperty("strand",BiojavaHelper.getStrand(richfeature));
 		feature.setProperty("note",BiojavaHelper.getNote(annotations));	
 	}
-	
-	/*
-	private static void convert(RichSequence richsequence, List<Sequence> sequences)
-	{		
-		FeatureFilter geneFilter=new FeatureFilter.ByType("gene"); // hack? CDS
-		FeatureFilter cdsFilter=new FeatureFilter.ByType("CDS");
-		FeatureFilter filter = new FeatureFilter.Or(geneFilter,cdsFilter);
-		
-		NonOverlappingLocations locations=new NonOverlappingLocations();
-		FeatureHolder holder=richsequence.filter(filter);
-		for (Iterator<?> i = holder.features();i.hasNext();)
-		{
-			RichFeature feature = (RichFeature)i.next();
-			locations.add(feature.getLocation());
-		}
-		
-		if (locations.getLocations().size()==0)
-		{
-			Sequence sequence=convert(richsequence);
-			sequences.add(sequence);
-			return;
-		}
-		
-		for (Location location : locations.getLocations())
-		{
-			Sequence sequence=convert(richsequence,location);
-			sequences.add(sequence);
-		}
-	}
 	*/
-	
-	
-	/*
-	// assume one CDS - extract translation
-	// get all matpeptides
-	private static void convertPolyprotein(RichSequence richsequence, List<Sequence> sequences)
-	{
-		Sequence template=new Sequence();
-		RichFeature cds;
-		for (Iterator<?> i = richsequence.features();i.hasNext();)
-		{
-			RichFeature feature = (RichFeature)i.next();
-			String featuretype=feature.getType();
-			Map<String,String> annotations=getAnnotations(feature);
-			Map<String,String> crossrefs=getCrossrefs(feature);
-			if ("source".equals(featuretype))
-				setSourceProperties(template,richsequence,feature,annotations);
-			else if ("CDS".equals(featuretype))
-			{
-				cds=feature;
-				setCdsProperties(template,richsequence,feature,annotations,crossrefs);
-			}
-		}
-			
-		for (Iterator<?> i = richsequence.features();i.hasNext();)
-		{
-			RichFeature feature = (RichFeature)i.next();
-			String featuretype=feature.getType();
-			Map<String,String> annotations=getAnnotations(feature);
-			Map<String,String> crossrefs=getCrossrefs(feature);
-			if ("mat_peptide".equals(featuretype))
-			{
-				Sequence sequence=new Sequence(template);
-				setMatPeptideProperties(sequence,richsequence,feature,annotations,crossrefs,cds);
-			}
-		}
-	}
-	
-	private static void setMatPeptideProperties(Sequence sequence, RichSequence richsequence, RichFeature richfeature,
-			Map<String,String> annotations, Map<String,String> crossrefs,
-			RichFeature cds)
-	{
-		String translation=annotations.get("biojavax:translation");
-		int transstart=
-		
-		//sequence.setProduct(annotations.get("biojavax:product"));
-		//sequence.setProtein_id(annotations.get("biojavax:protein_id"));
-		//sequence.setUniprot(getUniprot(crossrefs));
-		//sequence.setTranslation(annotations.get("biojavax:translation"));
-		//sequence.updateAalength();
-		sequence.setSplicing(getSplicing(richfeature.getLocation().getMin(),richfeature));
-		sequence.setSpliced(extractSubsequence(richsequence,richfeature));
-		//sequence.setPseudogene(getPseudogene(annotations));
-		sequence.setStrand(getStrand(richfeature));
-		sequence.addNote(getNote(annotations));
-	}
-	*/
-	
-
-	// don't filter by location
-	
-	
-//	public static Sequence convert(RichSequence richsequence, Location location)
-//	{
-//		Sequence sequence=createSequence(richsequence);
-//		//System.out.println("checking location "+location.getMin()+".."+location.getMax());
-//		FeatureFilter locationFilter = new FeatureFilter.ShadowOverlapsLocation(location);
-//		for (Iterator<?> i = richsequence.filter(locationFilter).features();i.hasNext();)
-//		{
-//			RichFeature feature = (RichFeature)i.next();
-//			setProperties(sequence,richsequence,feature);
-//		}
-//		return sequence;
-//	}
-//	
-//	public static ListMultimap<String,Location> findCodingRegions(String gpt, MessageWriter writer)
-//	{
-//		try
-//		{
-//			writer.message("finding coding regions");
-//			ListMultimap<String,Location> locations=ArrayListMultimap.create();//Multimaps.newArrayListMultimap();
-//			BufferedReader reader = new BufferedReader(new StringReader(gpt));			
-//			RichSequenceIterator iter = RichSequence.IOTools.readGenbankProtein(reader,NAMESPACE);
-//			while(iter.hasNext())
-//			{
-//				RichSequence richsequence = iter.nextRichSequence();
-//				FeatureFilter filter=new FeatureFilter.HasAnnotation("coded_by");
-//				for (Iterator<?> i = richsequence.filter(filter).features();i.hasNext();)
-//				{
-//					RichFeature feature = (RichFeature)i.next();
-//					//display(feature);
-//					Map<String,String> annotations=getAnnotations(feature);
-//					String coded_by=annotations.get("biojavax:coded_by");
-//					if (coded_by==null)
-//						continue;
-//					writer.message("found coded_by annotation: "+coded_by);
-//					int index=coded_by.indexOf(':');
-//					String accession=stripVersion(coded_by);					
-//					String loc=coded_by.substring(index+1);
-//					Location location=parseLocation(richsequence,loc);
-//					locations.put(accession,location);
-//				}
-//			}
-//			return locations;
-//		}
-//		catch (Exception e)
-//		{
-//			throw new CException(e);
-//		}
-//	}
-//	
-//	public static ListMultimap<String,Location> getLocationsFromGeneSummaries(String summaries)
-//	{
-//		String regex="Annotation: ([a-zA-Z0-9_.]+) \\(([0-9]+)\\.\\.([0-9]+)(, complement)?\\)";
-//		Pattern pattern=Pattern.compile(regex);
-//		Matcher matcher=pattern.matcher(summaries);
-//		ListMultimap<String,Location> locations=ArrayListMultimap.create();
-//		while (matcher.find())
-//		{
-//			System.out.println("found regex match: "+matcher.group(0));
-//			String accession=matcher.group(1);
-//			int start=Integer.parseInt(matcher.group(2));
-//			int end=Integer.parseInt(matcher.group(3));
-//			Location location=createLocation(start, end);
-//			System.out.println("adding location: "+accession+":"+start+".."+end);
-//			if (!locations.containsEntry(accession, location))
-//				locations.put(accession,location);
-//			else System.out.println("found duplicate location: "+accession+":"+start+".."+end);
-//		}
-//		return locations;
-//	}
-////	
-//	// filter GenBank files based on coding regions	
-//	public static void convertByLocation(String gbk, ListMultimap<String,Location> locations, List<Sequence> sequences, MessageWriter writer)
-//	{	
-//		BufferedReader reader = new BufferedReader(new StringReader(gbk));
-//		RichSequenceIterator iter = RichSequence.IOTools.readGenbankDNA(reader,NAMESPACE);
-//		while(iter.hasNext())
-//		{
-//			RichSequence richsequence = nextRichSequence(iter);
-//			if (richsequence==null)
-//				continue;
-//			//String accession=richsequence.getAccession();
-//			String accession=richsequence.getName();
-//			writer.message("parsing Genbank sequence "+accession);
-//			convertByLocation(richsequence, locations.get(accession), sequences);
-//		}
-//	}
-//	
-//	public static void convertByLocation(String gbk, List<Location> locations, List<Sequence> sequences, MessageWriter writer)
-//	{	
-//		BufferedReader reader = new BufferedReader(new StringReader(gbk));
-//		RichSequenceIterator iter = RichSequence.IOTools.readGenbankDNA(reader,NAMESPACE);
-//		while(iter.hasNext())
-//		{
-//			RichSequence richsequence = nextRichSequence(iter);
-//			if (richsequence==null)
-//				continue;
-//			String accession=richsequence.getName();
-//			writer.message("parsing Genbank sequence "+accession);
-//			convertByLocation(richsequence, locations, sequences);
-//		}
-//	}
-//
-
-	
-	
-	
-	////////////////////////////////////////////////////
-
 }

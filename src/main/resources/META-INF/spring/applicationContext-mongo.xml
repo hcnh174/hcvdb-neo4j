@@ -10,11 +10,25 @@
 		http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/data/mongo
 		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
-     <!--
-    <bean class="com.google.code.morphia.Morphia" id="morphia" />
-    <bean class="com.mongodb.Mongo" id="mongo"/>
-    -->	
     
+    <!-- <bean id="mongo" class="com.mongodb.Mongo"/> -->
+    <mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>    
+    
+    <bean id="morphia" class="com.google.code.morphia.Morphia"/>
+    
+     <bean id="sequenceRepository" class="edu.hiro.hcv.morphia.SequenceRepository">
+        <constructor-arg ref="morphia" index="0" />
+        <constructor-arg ref="mongo" index="1" />
+        <constructor-arg value="${mongodbname}" index="2" />
+      </bean>
+      
+      <bean id="tagRepository" class="edu.hiro.hcv.morphia.TagRepository">
+        <constructor-arg ref="morphia" index="0" />
+        <constructor-arg ref="mongo" index="1" />
+        <constructor-arg value="${mongodbname}" index="2" />
+      </bean>
+    
+	<!-- 
 	<mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>
 	<mongo:repositories base-package="edu.hiro.hcv.hcv" />
 
@@ -23,7 +37,8 @@
 		<constructor-arg name="mongo" ref="mongo"/>
 		<constructor-arg name="databaseName" value="hcvdbneo4j"/>
 	</bean>
-		
+	
+	 -->	
  <!-- 
  <bean class="hu.inagy.testspring.daos.UserDAO" id="userDao">
         <constructor-arg ref="morphia" index="0" />
