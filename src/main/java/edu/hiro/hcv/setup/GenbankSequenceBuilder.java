@@ -17,14 +17,12 @@ import edu.hiro.hcv.morphia.Feature;
 import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.util.CException;
 import edu.hiro.hcv.util.FileHelper;
-import edu.hiro.hcv.util.StringHelper;
 
 public class GenbankSequenceBuilder
 {
 	// private constructor to enforce singleton pattern
 	private GenbankSequenceBuilder(){}
 	
-	/*
 	public static void parseFolder(String folder, List<Sequence> sequences)
 	{
 		List<String> filenames=FileHelper.listFilesRecursively(folder,".gb");
@@ -62,7 +60,7 @@ public class GenbankSequenceBuilder
 			while(iter.hasNext())
 			{
 				richsequence=iter.nextRichSequence();
-				convert(richsequence,sequences);
+				build(richsequence,sequences);
 			}
 		}
 		catch (Exception e)
@@ -71,29 +69,61 @@ public class GenbankSequenceBuilder
 		}
 	}
 	
-//	public static RichSequence read(String gb)
-//	{
-//		try
-//		{
-//			BufferedReader reader = new BufferedReader(new StringReader(gb));
-//			RichSequenceIterator iter = RichSequence.IOTools.readGenbankDNA(reader,NAMESPACE);
-//			if (!iter.hasNext())
-//				return null; 
-//			return iter.nextRichSequence();
-//		}
-//		catch (Exception e)
-//		{
-//			System.err.println("could not parse GenBank file: "+e);
-//			throw new CException(e);
-//		}		
-//	}
-	
-	private static void convert(RichSequence richsequence, List<Sequence> sequences)
+	private static void build(RichSequence richsequence, List<Sequence> sequences)
 	{		
-		Sequence sequence=convert(richsequence);
+		Sequence sequence=buildSequence(richsequence);
 		sequences.add(sequence);
 	}
 	
+	public static Sequence buildSequence(RichSequence richsequence)
+	{
+		//Sequence sequence=createSequence(richsequence);
+		Sequence sequence=new Sequence();
+		sequence.setSequence(richsequence.seqString());
+		sequence.setNtlength(sequence.getSequence().length());
+		for (Iterator<?> i = richsequence.features();i.hasNext();)
+		{
+			RichFeature richfeature = (RichFeature)i.next();
+			//BiojavaHelper.display(richfeature);
+			addFeature(sequence,richsequence,richfeature);
+		}
+		return sequence;
+	}
+	
+	private static void addFeature(Sequence sequence, RichSequence richsequence, RichFeature richfeature)
+	{
+		String featuretype=richfeature.getType();
+		Feature feature=new Feature(featuretype);
+		feature.setStart(richfeature.getLocation().getMin());
+		feature.setEnd(richfeature.getLocation().getMax());
+		//feature.setSequence(BiojavaHelper.extractSubsequence(richsequence,richfeature));
+		//feature.setNtlength(feature.getSequence().length());
+		Map<String,String> annotations=BiojavaHelper.getAnnotations(richfeature);
+		Map<String,String> crossrefs=BiojavaHelper.getCrossrefs(richfeature);
+		for (String annotation : annotations.keySet())
+		{
+			annotation=BiojavaHelper.stripBiojavaPrefix(annotation);
+			feature.setProperty(annotation,annotations.get(annotation));
+		}
+		for (String crossref : crossrefs.keySet())
+		{
+			crossref=BiojavaHelper.stripBiojavaPrefix(crossref);
+			feature.setProperty(crossref,crossrefs.get(crossref));
+		}
+		sequence.addFeature(feature);
+
+		/*
+		if ("source".equals(featuretype))
+			setSourceProperties(sequence,richsequence,richfeature,annotations);
+		else if ("gene".equals(featuretype))
+			addGeneProperties(sequence,richsequence,richfeature,annotations,crossrefs);
+		else if ("CDS".equals(featuretype))
+			addCdsProperties(sequence,richsequence,richfeature,annotations,crossrefs);
+		else System.out.println("unhandleded feature type: "+featuretype);
+		*/
+	}
+	
+	/*
 	public static Sequence convert(RichSequence richsequence)
 	{
 		Sequence sequence=createSequence(richsequence);

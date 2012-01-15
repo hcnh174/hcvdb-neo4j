@@ -3,7 +3,6 @@ package edu.hiro.hcv.setup;
 import java.util.List;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
 
 import edu.hiro.hcv.morphia.Sequence;
 
@@ -19,8 +18,15 @@ public class Setup {
 		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
 		ctx.load("META-INF/spring/applicationContext.xml");
 		ctx.load("META-INF/spring/applicationContext-mongo.xml");
-		ctx.load("META-INF/spring/applicationContext-noe4j.xml");
+		ctx.load("META-INF/spring/applicationContext-neo4j.xml");
 		ctx.refresh();
+		
+		//String filename="d:/temp/AB435162.2.gb";
+		String filename="d:/temp/NC_004102.1.gb";
+		List<Sequence> sequences=GenbankSequenceBuilder.parseFile(filename);
+		Sequence sequence=sequences.get(0);
+		//sequenceRepository.save(sequence);
+		System.out.println("sequence="+sequence.toString());
 		
 		//SequenceService sequenceService=(SequenceService)ctx.getBean("sequenceService");
 		//SequenceRepository sequenceRepository=(SequenceRepository)ctx.getBean(SequenceRepository.class);//"sequenceRepository");
@@ -45,12 +51,7 @@ public class Setup {
 //			System.out.println("sequence="+sequence.toString());
 //		}
 		
-		//List<Sequence> sequences=GenbankSequenceBuilder.parseFile("d:/temp/AB435162.2.gb");
-		//Sequence sequence=sequences.get(0);
-		//Tag tag=new Tag("genotype","1b");
-		//sequence.addTag(tag);
-		//sequenceRepository.save(sequence);
-		//System.out.println("sequence="+sequence.toString());
+
 		
 		
 //		Setup setup=new Setup();

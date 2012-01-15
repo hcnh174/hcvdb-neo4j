@@ -6,6 +6,8 @@ import java.util.Set;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.fieldaccess.DynamicProperties;
+import org.springframework.data.neo4j.fieldaccess.DynamicPropertiesContainer;
 import org.springframework.roo.addon.equals.RooEquals;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -22,7 +24,8 @@ public class TagNode
 {   
     @GraphId protected Long id;
     protected String type="";
-    protected String name="";	
+    protected String name="";
+    protected DynamicProperties properties = new DynamicPropertiesContainer();
 		
 	@RelatedTo(type = "TAG")
 	protected Set<SequenceNode> sequences=Sets.newHashSet();
@@ -41,7 +44,7 @@ public class TagNode
     
     public void addSequence(SequenceNode sequence)
     {
-    	sequence.addTag(this);
+    	//sequence.addTag(this);
     	sequences.add(sequence);
     }
 

@@ -6,9 +6,15 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+import edu.hiro.hcv.sequences.SequenceService;
 
 /**
  * Exploratory testing of Spring Data Neo4j using
@@ -21,15 +27,53 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 //@Transactional
 public class Neo4jTest
 {
-	//@Resource(name="graphDatabaseService")
-	//private GraphDatabaseService graphDatabaseService;
+	@Resource(name="graphDatabaseService")
+	private GraphDatabaseService graphDatabaseService;
 	
 	@Resource(name="neo4jTemplate")
 	private Neo4jTemplate neo4jTemplate;
+	
+	@Autowired
+	private SequenceNodeRepository sequenceNodeRepository;
+	
+	@Autowired
+	private TagNodeRepository tagNodeRepository;
+	
+	@Autowired
+	private SequenceService sequenceService;
 
+	@Test
+	//@Rollback(false)
+    public void testDynamicProperties()
+    {
+		Transaction tx = graphDatabaseService.beginTx();
+        try {
+    	 SequenceNode sequence=new SequenceNode("ABCDEF");
+    	 sequence.getProperties().setProperty("ntlength",100);
+    	 
+    	 TagNode genotype=new TagNode("genotype","1b");
+    	 sequence.addTag(genotype);
+    	 
+    	 TagNode patient=new TagNode("patient","Q1045");
+    	 patient.getProperties().setProperty("age",37);
+    	 patient.getProperties().setProperty("weight",75);
+    	 sequence.addTag(patient);
+    	 
+    	 sequenceNodeRepository.save(sequence);
+    	 tagNodeRepository.save(genotype);
+    	 tagNodeRepository.save(patient);
+    	tx.success();
+	    } finally {
+	    	tx.finish();
+	    }
+    }
+	
     @Test
+    //@Rollback(false)
     public void testNeo4j()
     {
+    	Transaction tx = graphDatabaseService.beginTx();
+        try {
     	 ArrayList<SequenceNode> sequences = new ArrayList<SequenceNode>();
     	 sequences.add(new SequenceNode("Jupiter"));
          sequences.add(new SequenceNode("Saturn"));
@@ -42,7 +86,13 @@ public class Neo4jTest
          sequences.add(new SequenceNode("Asgard"));
          sequences.add(new SequenceNode("Hel"));
          
-         neo4jTemplate.save(sequences);
+         for (SequenceNode sequence : sequences)
+         {
+        	 neo4jTemplate.save(sequence);
+         }
+     	tx.success();
+        } finally {
+        	tx.finish();
+        }
     }
-
 }
