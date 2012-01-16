@@ -8,6 +8,8 @@
     <name>hcvdb-neo4j</name>
     <properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<maven.compiler.debug>true</maven.compiler.debug>
+    	
         <roo.version>1.2.0.RELEASE</roo.version>
         <spring.version>3.1.0.RELEASE</spring.version>
         <spring-security.version>3.1.0.RELEASE</spring-security.version> <!-- 3.0.7.RELEASE -->
@@ -26,6 +28,10 @@
 		<extdirectspring.version>1.0.13</extdirectspring.version>
 		<wro4j.version>1.4.3</wro4j.version>
 		<weka.version>3.6.0</weka.version>
+		
+		<maven.build.timestamp.format>yyyy-MM-dd'T'hh:mm:ss.SSSZ</maven.build.timestamp.format>
+		<build.timestamp>${maven.build.timestamp}</build.timestamp>
+		<extjs.version>4.0.7</extjs.version>
     </properties>
     <repositories>
     	<repository>
@@ -409,6 +415,27 @@
 		</dependency>
     </dependencies>
     <build>
+    	<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>version.properties</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>version.properties</include>
+				</includes>
+			</resource>
+		</resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
