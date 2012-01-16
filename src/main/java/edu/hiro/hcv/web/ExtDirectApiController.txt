@@ -1,0 +1,18 @@
+package edu.hiro.hcv.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
+
+import ch.ralscha.extdirectspring.api.ApiController;
+import ch.ralscha.extdirectspring.util.JsonHandler;
+
+@Controller
+public class ExtDirectApiController extends ApiController
+{
+	@Autowired
+	public ExtDirectApiController(ApplicationContext context, JsonHandler jsonHandler)
+	{
+		super(context, jsonHandler);
+	}
+}
