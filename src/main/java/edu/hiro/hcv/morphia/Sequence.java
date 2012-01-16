@@ -1,6 +1,6 @@
 package edu.hiro.hcv.morphia;
 
-import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.roo.addon.equals.RooEquals;
@@ -10,6 +10,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 /**
@@ -22,16 +23,14 @@ public class Sequence
 {   
     @Id protected String accession="";
 	protected String sequence="";
-	protected Integer ntlength;
+	protected Integer length;
 	protected Integer gi;
 	protected String description="";
-	protected String version="";
-	protected String taxon="";
-	protected Date udate;
-	protected String ref="";
-	
-	@Embedded
-	protected Set<Feature> features=Sets.newHashSet();
+	protected Integer taxon;
+
+	@Embedded protected List<String> comments=Lists.newArrayList();
+	@Embedded protected Set<Feature> features=Sets.newHashSet();	
+	@Embedded protected Set<Integer> refs=Sets.newHashSet();
 	
     public Sequence()
     {
@@ -46,6 +45,7 @@ public class Sequence
     {
         this.accession = accession;
         this.sequence = sequence;
+        this.length=sequence.length();
     }  
     
     public void addFeature(Feature feature)
@@ -63,5 +63,19 @@ public class Sequence
     public boolean hasFeature(Feature feature)
     {
         return features.contains(feature);
+    }
+    
+    ///////////////////////////////////////
+    
+    public void addRef(Integer ref)
+    {
+    	this.refs.add(ref);
+    }
+    
+    ///////////////////////////////////////
+    
+    public void addComment(String comment)
+    {
+    	this.comments.add(comment);
     }
 }

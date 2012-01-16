@@ -20,10 +20,12 @@ import com.google.common.collect.Maps;
 public class Feature
 {
 	protected String type;
-	protected String name;
     protected Integer start;
     protected Integer end;
-	protected Map<String,Object> properties=Maps.newLinkedHashMap();
+    protected String sequence;
+    protected Integer length;
+	protected Map<String,String> annotations=Maps.newLinkedHashMap();
+	protected Map<String,String> crossrefs=Maps.newLinkedHashMap();
 	
 	public Feature(){}
 	
@@ -32,22 +34,37 @@ public class Feature
 		this.type=type;
 	}
 	
-	public Feature(String type, String name, int start, int end)
+	public Feature(String type, int start, int end, String sequence)
 	{
 		this.type=type;
-		this.name = name;
         this.start = start;
         this.end = end;
+        this.sequence=sequence;
+        this.length=sequence.length();
 	}
 	
-	public void setProperty(String name, Object value)
+	////////////////////////////////////////////////////
+	
+	public void setAnnotation(String name, String value)
 	{
-		properties.put(name,value);
+		annotations.put(name,value);
 	}
 	
-	public Object getProperty(String property)
+	public Object getAnnotation(String property)
 	{
-		return this.properties.get(property);
+		return this.annotations.get(property);
+	}
+	
+	////////////////////////////////////////////////////
+	
+	public void setCrossref(String name, String value)
+	{
+		crossrefs.put(name,value);
+	}
+	
+	public Object getCrossref(String property)
+	{
+		return this.crossrefs.get(property);
 	}
 	
 }

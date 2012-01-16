@@ -29,6 +29,8 @@
         </init-param>
     </filter>
     
+
+	<!-- 
     <filter>
 	  <filter-name>WebResourceOptimizer</filter-name>
 	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -41,8 +43,8 @@
 	    <param-value>true</param-value>
 	  </init-param>
 	</filter>
-    
-    <!-- 
+ 	-->
+ 	
     <filter>
 	  <filter-name>WebResourceOptimizer</filter-name>
 	  <filter-class>ro.isdc.wro.http.WroFilter</filter-class>
@@ -59,7 +61,6 @@
       	<param-value>true</param-value>
       </init-param>
 	</filter>
-     -->
      
     <filter>
         <filter-name>HttpMethodFilter</filter-name>

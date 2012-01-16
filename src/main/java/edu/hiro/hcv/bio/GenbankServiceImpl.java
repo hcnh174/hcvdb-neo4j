@@ -3,13 +3,11 @@ package edu.hiro.hcv.bio;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Required;
 
-import edu.hiro.hcv.util.BeanHelper;
 import edu.hiro.hcv.util.CException;
 import edu.hiro.hcv.util.FileHelper;
 import edu.hiro.hcv.util.HttpHelper;
@@ -121,8 +119,9 @@ public class GenbankServiceImpl implements GenbankService
 	
 	////////////////////////////////////////////////////////
 	
+	/*
 	//Taxonomy database example //e.g. 9685
-	public List<Taxon> downloadTaxa(List<Integer> taxids)
+	public String downloadTaxa(List<Integer> taxids)
     {
 		String id=StringHelper.join(taxids,",");
 		String url=EFETCH_URL;
@@ -131,8 +130,9 @@ public class GenbankServiceImpl implements GenbankService
     	model.put("mode","xml");
     	model.put("report","brief");
     	model.put("id",id);
-		String xml=HttpHelper.postRequest(url,model);	
-		return TaxonParser.parseTaxa(xml);
+		String xml=HttpHelper.postRequest(url,model);
+		return xml;
+		//return TaxonParser.parseTaxa(xml);
 	}
 	
 	///////////////////////////////////////////////////////////
@@ -140,7 +140,7 @@ public class GenbankServiceImpl implements GenbankService
 	public Collection<Taxon> getTaxa(List<Integer> ids, MessageWriter writer)
 	{
 		writer.write("Updating taxonomies...");
-		Map<Integer,Taxon> lookup=new HashMap<Integer,Taxon>();
+		//Map<Integer,Taxon> lookup=new HashMap<Integer,Taxon>();
 		int numids=ids.size();
 		int numbatches=MathHelper.getNumbatches(numids,BATCHSIZE);
 		BeanHelper beanhelper=new BeanHelper();
@@ -153,7 +153,7 @@ public class GenbankServiceImpl implements GenbankService
 			System.out.println("batch load ids - from "+fromIndex+" to "+toIndex);
 			// look up all the unknown taxa and their ancestors
 			List<Integer> sublist=ids.subList(fromIndex,toIndex);
-			List<Taxon> taxa=downloadTaxa(sublist);			
+			List<Taxon> taxa=downloadTaxa(sublist);
 			for (Taxon bean : taxa)
 			{
 				Taxon taxon=lookup.get(bean.getId());
@@ -192,9 +192,11 @@ public class GenbankServiceImpl implements GenbankService
 		
 		return rootTaxa;
 	}
+	*/
 
 	//////////////////////////////////////////////////////////
 	
+	/*
 	// example "11748933,11700088" 
 	public List<Ref> downloadRefs(List<Integer> ids)
 	{
@@ -231,4 +233,5 @@ public class GenbankServiceImpl implements GenbankService
 		}
 		return map;
 	}
+	*/
 }

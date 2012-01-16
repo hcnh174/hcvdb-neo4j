@@ -114,25 +114,25 @@ public class BiojavaHelper
 		return value;
 	}
 	
-	public static String getTaxon(RichSequence richsequence)
+	public static Integer getTaxon(RichSequence richsequence)
 	{
 		NCBITaxon taxon=richsequence.getTaxon();
 		if (taxon==null)
 			return null;
-		return Integer.toString(taxon.getNCBITaxID());
+		return taxon.getNCBITaxID();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static String getComments(RichSequence richsequence)
-	{
-		StringBuilder buffer=new StringBuilder();
-		for(Comment comment : (Set<Comment>)richsequence.getComments())
-		{
-			buffer.append(clean(comment.getComment()));
-			buffer.append("|");
-		}
-		return buffer.toString().trim();
-	}
+//	@SuppressWarnings("unchecked")
+//	public static String getComments(RichSequence richsequence)
+//	{
+//		StringBuilder buffer=new StringBuilder();
+//		for(Comment comment : (Set<Comment>)richsequence.getComments())
+//		{
+//			buffer.append(clean(comment.getComment()));
+//			buffer.append("|");
+//		}
+//		return buffer.toString().trim();
+//	}
 	
 	public static Boolean getConceptual(String comments)
 	{

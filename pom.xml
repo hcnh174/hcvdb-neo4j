@@ -551,15 +551,34 @@
             </plugin>
             <!--  added for heroku support -->
             <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-dependency-plugin</artifactId>
+			    <version>2.3</version>
+			    <executions>
+			        <execution>
+			            <phase>package</phase>
+			            <goals><goal>copy</goal></goals>
+			            <configuration>
+			                <artifactItems>
+			                    <artifactItem>
+			                        <groupId>org.mortbay.jetty</groupId>
+			                        <artifactId>jetty-runner</artifactId>
+			                        <version>7.4.5.v20110725</version>
+			                        <destFileName>jetty-runner.jar</destFileName>
+			                    </artifactItem>
+			                </artifactItems>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>			
+            <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>appassembler-maven-plugin</artifactId>
 				<version>1.1.1</version>
 				<executions>
 				  <execution>
 				    <phase>package</phase>
-				    <goals>
-                            <goal>assemble</goal>
-                        </goals>
+				    <goals><goal>assemble</goal></goals>
 				    <configuration>
 				      <assembleDirectory>target</assembleDirectory>
 				      <extraJvmArguments>-Xmx512m</extraJvmArguments>

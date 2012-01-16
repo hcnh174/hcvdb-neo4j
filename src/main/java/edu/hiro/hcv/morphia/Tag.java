@@ -19,7 +19,7 @@ public class Tag
 	@Id protected Long id;
     protected String type;    
     protected String name;
-    protected String description;    
+    protected String description;
 	
     public Tag()
     {

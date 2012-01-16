@@ -106,13 +106,15 @@
 	<bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 	</bean>
-	
+
+		
 <!-- 	<bean id="wroFilter" class="ro.isdc.wro.http.ConfigurableWroFilter"> -->
 <!-- 	  <property name="debug" value="${application.wrofilter.debug}"/> -->
 <!-- 	  <property name="cacheUpdatePeriod" value="${application.wrofilter.cache-update-period}"/> -->
 <!-- 	  <property name="modelUpdatePeriod" value="${application.wrofilter.model-update-period}"/> -->
 <!-- 	</bean> -->
 	
+	<!-- 
 	<bean id="wroFilter" class="ro.isdc.wro.http.ConfigurableWroFilter">
 	  <property name="properties" ref="wroProperties"/>
 	</bean>
@@ -120,4 +122,5 @@
 	<bean id="wroProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">  
 	    <property name="location" value="classpath:wro.properties" />  
 	</bean> 
+	 -->
 </beans>

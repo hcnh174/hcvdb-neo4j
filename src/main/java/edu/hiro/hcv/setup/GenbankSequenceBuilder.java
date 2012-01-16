@@ -5,7 +5,9 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.biojavax.Comment;
 import org.biojavax.bio.seq.RichFeature;
 import org.biojavax.bio.seq.RichSequence;
 import org.biojavax.bio.seq.RichSequenceIterator;
@@ -60,7 +62,7 @@ public class GenbankSequenceBuilder
 			while(iter.hasNext())
 			{
 				richsequence=iter.nextRichSequence();
-				build(richsequence,sequences);
+				convert(richsequence,sequences);
 			}
 		}
 		catch (Exception e)
@@ -69,58 +71,81 @@ public class GenbankSequenceBuilder
 		}
 	}
 	
-	private static void build(RichSequence richsequence, List<Sequence> sequences)
+	private static void convert(RichSequence richsequence, List<Sequence> sequences)
 	{		
-		Sequence sequence=buildSequence(richsequence);
+		Sequence sequence=convertSequence(richsequence);
 		sequences.add(sequence);
 	}
 	
-	public static Sequence buildSequence(RichSequence richsequence)
+	@SuppressWarnings("unchecked")
+	public static Sequence convertSequence(RichSequence richsequence)
 	{
-		//Sequence sequence=createSequence(richsequence);
-		Sequence sequence=new Sequence();
-		sequence.setSequence(richsequence.seqString());
-		sequence.setNtlength(sequence.getSequence().length());
+		BiojavaHelper.display(richsequence);
+		String seq=richsequence.seqString();
+		String accession=richsequence.getName();//BiojavaHelper.stripVersion(richsequence.getName());
+		Sequence sequence=new Sequence(accession,seq);
+	
+		sequence.setGi(Integer.parseInt(richsequence.getIdentifier()));
+		sequence.setAccession(accession);
+		sequence.setDescription(BiojavaHelper.clean(richsequence.getDescription()));
+		sequence.setTaxon(BiojavaHelper.getTaxon(richsequence));
+		//sequence.setDivision(richsequence.getDivision());
+		for(Comment comment : (Set<Comment>)richsequence.getComments())
+		{
+			sequence.addComment(BiojavaHelper.clean(comment.getComment()));
+		}
+		for (Integer ref : BiojavaHelper.getRefs(richsequence))
+		{
+			sequence.addRef(ref);
+		}
+
+//		//display(richsequence);		
+//		sequence.setGi(Integer.parseInt(richsequence.getIdentifier()));
+//		sequence.setAccession(stripVersion(richsequence.getName()));
+//		sequence.setDefline(clean(richsequence.getDescriptin()));
+//		sequence.setVersion(richsequence.getAccession());
+//		sequence.setCircular(getCircular(richsequence));
+//		
+//		sequence.setTaxon(getTaxon(richsequence));
+//		sequence.setUdate(getUdate(annotations));
+//		//sequence.setKw(getKw(annotations));
+//		sequence.setComments(getComments(richsequence));
+//		sequence.setConceptual(getConceptual(sequence.getComments()));
+//		sequence.setEc(getEc(sequence.getComments()));
+//		sequence.setStrand(StrandType.forward);
+//		sequence.setRef(StringHelper.join(getRefs(richsequence),";"));
+		
+		
 		for (Iterator<?> i = richsequence.features();i.hasNext();)
 		{
 			RichFeature richfeature = (RichFeature)i.next();
-			//BiojavaHelper.display(richfeature);
-			addFeature(sequence,richsequence,richfeature);
+			Feature feature=convertFeature(sequence,richsequence,richfeature);
+			sequence.addFeature(feature);
 		}
 		return sequence;
 	}
 	
-	private static void addFeature(Sequence sequence, RichSequence richsequence, RichFeature richfeature)
+	private static Feature convertFeature(Sequence sequence, RichSequence richsequence, RichFeature richfeature)
 	{
-		String featuretype=richfeature.getType();
-		Feature feature=new Feature(featuretype);
-		feature.setStart(richfeature.getLocation().getMin());
-		feature.setEnd(richfeature.getLocation().getMax());
-		//feature.setSequence(BiojavaHelper.extractSubsequence(richsequence,richfeature));
-		//feature.setNtlength(feature.getSequence().length());
-		Map<String,String> annotations=BiojavaHelper.getAnnotations(richfeature);
-		Map<String,String> crossrefs=BiojavaHelper.getCrossrefs(richfeature);
+		//BiojavaHelper.display(richfeature);
+		String featuretype=richfeature.getType();		
+		int start=richfeature.getLocation().getMin();
+		int end=richfeature.getLocation().getMax();
+		String seq=BiojavaHelper.extractSubsequence(richsequence,richfeature);
+		Feature feature=new Feature(featuretype,start,end,seq);
+		
+		Map<String,String> annotations=BiojavaHelper.getAnnotations(richfeature);		
 		for (String annotation : annotations.keySet())
 		{
-			annotation=BiojavaHelper.stripBiojavaPrefix(annotation);
-			feature.setProperty(annotation,annotations.get(annotation));
+			String name=BiojavaHelper.stripBiojavaPrefix(annotation);
+			feature.setAnnotation(name,annotations.get(annotation));
 		}
+		Map<String,String> crossrefs=BiojavaHelper.getCrossrefs(richfeature);
 		for (String crossref : crossrefs.keySet())
 		{
-			crossref=BiojavaHelper.stripBiojavaPrefix(crossref);
-			feature.setProperty(crossref,crossrefs.get(crossref));
+			feature.setCrossref(crossref,crossrefs.get(crossref));
 		}
-		sequence.addFeature(feature);
-
-		/*
-		if ("source".equals(featuretype))
-			setSourceProperties(sequence,richsequence,richfeature,annotations);
-		else if ("gene".equals(featuretype))
-			addGeneProperties(sequence,richsequence,richfeature,annotations,crossrefs);
-		else if ("CDS".equals(featuretype))
-			addCdsProperties(sequence,richsequence,richfeature,annotations,crossrefs);
-		else System.out.println("unhandleded feature type: "+featuretype);
-		*/
+		return feature;
 	}
 	
 	/*
