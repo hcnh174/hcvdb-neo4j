@@ -20,6 +20,7 @@ public class Tag
     protected String type;    
     protected String name;
     protected String description;
+    protected String identifier;
 	
     public Tag()
     {
