@@ -1,3 +1,5 @@
+var data='nelson';
+
 Ext.application({
     name: 'AM',
 

@@ -10,36 +10,13 @@
 <script src="http://home.hiroshima-u.ac.jp/nhayes/static/ext-4.1.0-beta-1/ext-all-debug.js"></script>
 -->
 
-<link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.0.7-gpl/resources/css/ext-all.css">
+<link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.0.7-gpl/resources/css/ext-all.css"/>
 <script src="http://cdn.sencha.io/ext-4.0.7-gpl/ext-all-debug.js"></script>
 
-
-<script type="text/javascript" src="../../js/app/model/User.js"></script>
-<script type="text/javascript" src="../../js/app/store/Users.js"></script>
-<script type="text/javascript" src="../../js/app/view/user/List.js"></script>
-<script type="text/javascript" src="../../js/app/view/user/Edit.js"></script>
-<script type="text/javascript" src="../../js/app/controller/Users.js"></script>
-<script type="text/javascript" src="../../js/app.js"></script>
-<script type="text/javascript" src="../../js/api-debug-static.js"></script>
+<script src="wro/hcv.js"></script>
 
 <script>
 /*<![CDATA[*/
-// Ext.Loader.setConfig({
-// 	enabled : true,
-// 	paths : {
-// 		AM : '../../js'
-// 	}
-// });
-/*
-Ext.require('AM.controller.Users');
-           
-Ext.require([
-    'Ext.direct.*',
-    'Ext.form.Panel',
-    'Ext.form.field.Text',
-    'Ext.form.field.Number'
-]);
-*/
 
 Ext.onReady(function(){
    Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);

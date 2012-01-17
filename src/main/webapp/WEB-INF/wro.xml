@@ -3,12 +3,20 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
 
+	<!-- 
   <group name="global">  	
   	<css>file:../../../workspace/vardb-roo/src/main/webapp/css/yui-grids.css</css>
   </group>
-  
-  <group name="vardb">
-	<js>file:../../../workspace/vardb-roo/src/main/webapp/js/vardb/vardb.js</js>
+   -->
+   
+  <group name="hcv">	
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/model/User.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/store/Users.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/user/List.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/user/Edit.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/controller/Users.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/api-debug-static.js</js>
   </group>
 
 </groups>

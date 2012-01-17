@@ -18,6 +18,8 @@ Ext.define('AM.controller.Users', {
             }
         });
     },
+    
+    
 
     editUser: function(grid, record) {
         console.log('Double clicked on ' + record.get('name'));
@@ -35,6 +37,6 @@ Ext.define('AM.controller.Users', {
 
         record.set(values);
         win.close();
-        //this.getUsersStore().sync();
+        this.getUsersStore().sync();
     }
 });

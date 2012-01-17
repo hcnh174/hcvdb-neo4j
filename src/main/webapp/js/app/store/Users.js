@@ -3,13 +3,13 @@ Ext.define('AM.store.Users', {
     model: 'AM.model.User',
     autoLoad: true,
     
- 
+    /*
     data: [
         {name: 'Ed',    email: 'ed@sencha.com'},
         {name: 'Tommy', email: 'tommy@sencha.com'}
     ]
-
-    /*
+*/
+    
 	proxy: {
 	    type: 'ajax',
 	    //url: '../../js/data/users.json',
@@ -23,5 +23,5 @@ Ext.define('AM.store.Users', {
 	        successProperty: 'success'
 	    }
 	}
-	*/
+	
 });
