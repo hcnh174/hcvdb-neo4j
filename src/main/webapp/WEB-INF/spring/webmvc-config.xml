@@ -90,7 +90,7 @@
 		<property name="templateEngine" ref="templateEngine" />
 	</bean>
 
-		
+	<!-- 
 	<bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="suffix" value=".ftl"/>
 		<property name="cache" value="true"/>
@@ -103,7 +103,7 @@
 		<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>	
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
-	
+	 -->
 	<!-- 
 	<bean id="registerFreemarkerExceptionHandler" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
 		<property name="targetObject">

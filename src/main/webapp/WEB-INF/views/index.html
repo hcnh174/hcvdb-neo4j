@@ -5,37 +5,67 @@
 <head>
 <title>TITLE</title>
 <meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="description" content="HTML 5 CSS 3 Spring Form" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<!--  <link rel="stylesheet" href="../css/global.css" th:href="@{/css/style.css}" /> -->
-<link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.0.7-gpl/resources/css/ext-all.css"/>
+<!-- 
+<link rel="stylesheet" type="text/css" href="http://home.hiroshima-u.ac.jp/nhayes/static/ext-4.1.0-beta-1/resources/css/ext-all.css" />
+<script src="http://home.hiroshima-u.ac.jp/nhayes/static/ext-4.1.0-beta-1/ext-all-debug.js"></script>
+-->
+
+<link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.0.7-gpl/resources/css/ext-all.css">
+<script src="http://cdn.sencha.io/ext-4.0.7-gpl/ext-all-debug.js"></script>
 
 
-<script type="text/javascript" src="http://cdn.sencha.io/ext-4.0.7-gpl/ext-all-debug.js"></script>
-<script type="text/javascript" src="api.js"></script>
-
-</head>
-
-<body>
-Thymeleaf test
+<script type="text/javascript" src="../../js/app/model/User.js"></script>
+<script type="text/javascript" src="../../js/app/store/Users.js"></script>
+<script type="text/javascript" src="../../js/app/view/user/List.js"></script>
+<script type="text/javascript" src="../../js/app/view/user/Edit.js"></script>
+<script type="text/javascript" src="../../js/app/controller/Users.js"></script>
+<script type="text/javascript" src="../../js/app.js"></script>
+<script type="text/javascript" src="../../js/api-debug-static.js"></script>
 
 <script>
 /*<![CDATA[*/
-Ext.Direct.addProvider(Ext.app.REMOTING_API);
+// Ext.Loader.setConfig({
+// 	enabled : true,
+// 	paths : {
+// 		AM : '../../js'
+// 	}
+// });
+/*
+Ext.require('AM.controller.Users');
+           
+Ext.require([
+    'Ext.direct.*',
+    'Ext.form.Panel',
+    'Ext.form.field.Text',
+    'Ext.form.field.Number'
+]);
+*/
 
-function testDirect()
-{
-	hcvDirect.multiply(2, function(result)
-	}
-	    Ext.MessageBox.alert("Result", result);
-	});
-}
+Ext.onReady(function(){
+   Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+
+});
+
 /*]]>*/
 </script>
+</head>
 
-<form>
-<input type="button" value="Test Direct" onclick="testDirect()"/>
-</form>
+<body>
+
+<!-- 
+<img src="../../images/logo.png" width="100" height="100"/>
+<h1>Hiroshima Hepatitis C Virus Database</h1>
+<hr/>
+<p>The database will make it easier to analyze associations between substitutions and clinical data (published or user-supplied).</p>
+<img src="../../images/genome.png" width="400"/>
+
+<ul>
+<li>statistics</li>
+<li>search</li>
+<li>news</li>
+<li>alignment</li>
+<li>resistance</li>
+</ul>
+ -->
 </body>
 </html>

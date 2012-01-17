@@ -4,6 +4,8 @@ package edu.hiro.hcv.web;
 
 //import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -43,8 +45,13 @@ public class HomeController {
 	public String test(Model model) {
 		
 		logger.info("Welcome home! from Thymeleaf");
-		System.out.println("Welcome home! from Thymeleaf");
 		return "test";
+	}
+	
+	@RequestMapping(value = "/direct.html", method = RequestMethod.GET)
+	public String direct(Model model) {
+		
+		return "direct";
 	}
 	
 	@RequestMapping(value = "/load.html", method = RequestMethod.POST)
@@ -71,4 +78,18 @@ public class HomeController {
 		return "uncaughtException";
 	}
 	*/
+	
+	 /** Error page. */ 
+    @RequestMapping("/error.html") 
+    public String error(HttpServletRequest request, Model model) { 
+        model.addAttribute("errorCode", request.getAttribute("javax.servlet.error.status_code")); 
+        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception"); 
+        String errorMessage = null; 
+        if (throwable != null) { 
+            errorMessage = throwable.getMessage(); 
+        } 
+        model.addAttribute("errorMessage", errorMessage.toString()); 
+        return "error"; 
+    }
+
 }
