@@ -9,6 +9,7 @@
   </group>
    -->
    
+   <!-- 
   <group name="hcv">	
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/model/User.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/store/Users.js</js>
@@ -18,5 +19,15 @@
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/api-debug-static.js</js>
   </group>
-
+ -->
+ 
+  <group name="hcv">	
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/model/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/store/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/user/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/controller/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/*.js</js>
+  </group>
 </groups>

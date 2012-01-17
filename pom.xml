@@ -618,7 +618,25 @@
 				    </configuration>
 				  </execution>
 				</executions>
-				</plugin>
+		</plugin>
+		<plugin>
+				    <groupId>ro.isdc.wro4j</groupId>
+				    <artifactId>wro4j-maven-plugin</artifactId>
+				    <version>${wro4j.version}</version>
+				    <executions>
+				      <execution>
+				        <phase>compile</phase>
+				        <goals>
+				          <goal>jshint</goal>
+				        </goals>
+				      </execution>
+				    </executions>
+				    <configuration>
+				    	<options>debug,asi,expr,smarttabs</options>
+				    	<failNever>true</failNever>
+				      <!-- <options>devel,evil,noarg</options> -->
+				    </configuration>
+				  </plugin>
         </plugins>
     </build>
     <profiles>  

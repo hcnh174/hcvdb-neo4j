@@ -1,6 +1,6 @@
-Ext.define('AM.store.Users', {
+Ext.define('Hcv.store.Users', {
     extend: 'Ext.data.Store',
-    model: 'AM.model.User',
+    model: 'Hcv.model.User',
     autoLoad: true,
     
     /*
