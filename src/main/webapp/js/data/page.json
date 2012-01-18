@@ -1,0 +1,6 @@
+{
+    success: true,
+    root: [
+        {id: 1, title: 'Json page', text: 'This page was loaded through Ajax.'}
+    ]
+}

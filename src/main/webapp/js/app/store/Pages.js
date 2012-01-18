@@ -1,6 +1,6 @@
-Ext.define('Hcv.store.Users', {
+Ext.define('Hcv.store.Pages', {
     extend: 'Ext.data.Store',
-    model: 'Hcv.model.User',
+    model: 'Hcv.model.Page',
     autoLoad: true,
     
     /*
@@ -12,7 +12,7 @@ Ext.define('Hcv.store.Users', {
     
 	proxy: {
 	    type: 'ajax',
-	    url: '../../js/data/users.json',
+	    url: '../../js/data/page.json',
 	    reader: {
 	        type: 'json',
 	        root: 'root',

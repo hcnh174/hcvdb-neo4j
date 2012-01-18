@@ -4,14 +4,24 @@ Ext.define('Hcv.view.Viewport', {
 	items:
 	[
 		{
-			xtype: 'userlist',
-			region: 'center'
+			xtype: 'container',
+			region: 'center',
+			id: 'centerContainer',
+			layout: 'fit',
+			items:
+			[
+				{
+					xtype: 'page',
+					pagetitle: 'Welcome',
+					pagetext: 'This is a database'
+				}
+			]
 		},
 		{
 			region: 'north',
 			autoHeight: true,
 			border: false,
-			margins: '0 0 5 0',
+			//margins: '0 0 5 0',
 			layout: 'fit',
 			items:
 			[

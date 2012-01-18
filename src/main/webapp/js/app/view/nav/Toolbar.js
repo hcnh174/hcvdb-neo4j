@@ -6,6 +6,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 		
 		this.items=[
             this.createHomepageMenu(),'-',
+            this.createTestMenu(),'-',
 			this.createResourceMenu(),'-',
 			this.createBlastMenu(),'-',
 			this.createToolMenu(),'-',
@@ -24,6 +25,8 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 		this.callParent(arguments);
 	},
 	
+	
+	
 	createHomepageMenu:function()
 	{
 		var menu=
@@ -32,6 +35,73 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 		};
 		return menu;
 	},
+	
+	createTestMenu:function()
+	{
+		var menu=
+		{
+			text: 'Test',
+			enableScrolling: false,
+			menu:
+			{
+				items:
+				[
+					{
+						text: 'Login',
+						handler: function()
+						{
+							var view = Ext.widget('login');
+						}
+					},
+					{
+						text: 'NewUser',
+						handler: function()
+						{
+							var view = Ext.widget('newuser');
+						}
+					},
+					{
+						text: 'Feedback',
+						handler: function()
+						{
+							var view = Ext.widget('feedback');
+						}
+					},
+					{
+						text: 'Page',
+						//action: 'page',
+						scope: this,
+						handler: function()
+						{
+							console.log('trying to update page');
+							var panel=Ext.getCmp('centerContainer');
+							this.clearExtjsComponent(panel);
+							var view = Ext.widget('page',{pageid: 'welcome'});
+							var store=view.getStore();
+							store.load({
+								id: 1,
+								scope   : this,
+							    callback: function(records, operation, success) {
+							        console.log(records);
+							        panel.add(view);
+									panel.doLayout();
+							    }
+							});							
+						}
+						
+					}
+				]
+			}
+		};
+		return menu;
+	},
+	
+	clearExtjsComponent: function(cmp) {
+        var f;
+        while(f = cmp.items.first()){
+            cmp.remove(f, true);
+        }
+    },
 	
 	createResourceMenu:function()
 	{
