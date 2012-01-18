@@ -28,7 +28,7 @@
 		<extdirectspring.version>1.0.13</extdirectspring.version>
 		<wro4j.version>1.4.3</wro4j.version>
 		<weka.version>3.6.0</weka.version>
-		
+		<antlr.version>3.0.1</antlr.version>
 		<maven.build.timestamp.format>yyyy-MM-dd'T'hh:mm:ss.SSSZ</maven.build.timestamp.format>
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
 		<extjs.version>4.0.7</extjs.version>
@@ -413,6 +413,12 @@
 	        <artifactId>morphia</artifactId>
 	        <version>${morphia.version}</version>
 		</dependency>
+		
+		<dependency>
+	      <groupId>org.antlr</groupId>
+	      <artifactId>antlr-runtime</artifactId>
+	      <version>${antlr.version}</version>
+	    </dependency>
     </dependencies>
     <build>
     	<resources>
@@ -637,6 +643,20 @@
 				      <!-- <options>devel,evil,noarg</options> -->
 				    </configuration>
 				  </plugin>
+				  <!-- 
+				  <plugin>
+			        <groupId>org.codehaus.mojo</groupId>
+			        <artifactId>antlr3-maven-plugin</artifactId>
+			        <version>1.0</version>
+			        <executions>
+			          <execution>
+			            <goals>
+			              <goal>antlr</goal>
+			            </goals>
+			          </execution>
+			        </executions>
+			      </plugin>
+			       -->
         </plugins>
     </build>
     <profiles>  
