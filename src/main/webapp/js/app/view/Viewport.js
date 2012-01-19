@@ -11,9 +11,8 @@ Ext.define('Hcv.view.Viewport', {
 			items:
 			[
 				{
-					xtype: 'page',
-					pagetitle: 'Welcome',
-					pagetext: 'This is a database'
+					//xtype: 'page'
+					xtype: 'sequencelist'
 				}
 			]
 		},
@@ -28,7 +27,7 @@ Ext.define('Hcv.view.Viewport', {
 				{
 					html: '<table border="0"><tr>'+
 					'<td><img src="../../images/logo.png" width="100" height="100"/></td>'+
-					'<td><h1 class="x-panel-header">Hiroshima Hepatitis C Virus Database</h1></td>'+
+					'<td><h1 class="x-panel-header" style="font-size: 18pt">Hiroshima Hepatitis C Virus Database</h1></td>'+
 					'</tr></table>'
 				},
 				{
@@ -37,6 +36,7 @@ Ext.define('Hcv.view.Viewport', {
 				}
 			]
 		},
+		/*
 		{
 			region: 'south',
 			//title: 'South Panel',
@@ -45,12 +45,15 @@ Ext.define('Hcv.view.Viewport', {
 			split: false,
 			height: 25
 		},
+		*/
 		{
+			xtype: 'navpanel',
 			region: 'west',
-			collapsible: false,
-			// title: 'Navigation',
+			//layout: 'fit',
+			collapsible: true,
+			title: 'Navigation',
 			width: 150,
-			html: 'Tree'
+			//html: 'Navigation'
 		},
 		{
 			region: 'east',

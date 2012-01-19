@@ -9,9 +9,14 @@ public class TestQueryParser
 	public void testParse() throws Exception
 	{
 		String str1="family=\"var\" AND (pathogen=\"Plasmodium falciparum\" OR pathogen=\"plasmodium.falciparum\")";
-		String str2="family=var AND (pathogen=\"Plasmodium falciparum\" OR pathogen=\"plasmodium.falciparum\")";
+		//String str2="family=var AND (pathogen=\"Plasmodium falciparum\" OR pathogen=\"plasmodium.falciparum\")";
+		//String str2="(pathogen=\"Plasmodium falciparum\" OR pathogen=\"plasmodium.falciparum\") AND family=var";
 		
-		Filter filter=HcvQueryParser.parse(str1);
-		System.out.println("filter="+filter.getText());
+		Filter filter;
+		filter=HcvQueryParser.parse(str1);
+		System.out.println("filter1="+filter.getText());
+		
+		//filter=HcvQueryParser.parse(str2);
+		//System.out.println("filter2="+filter.getText());
 	}
 }

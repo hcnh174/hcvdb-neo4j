@@ -11,8 +11,18 @@
 		http://www.springframework.org/schema/data/mongo
 		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
     
+    <!-- 
+    <bean class="java.net.URI" id="mongoUrl">
+    	<constructor-arg value="${MONGO_URL}"/>
+	</bean>
+     -->
+     
     <!-- <bean id="mongo" class="com.mongodb.Mongo"/> -->
-    <mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>    
+    <!-- <mongo:mongo id="mongo" host="127.0.0.1" port="27017"/> -->
+    
+    <!-- <mongo:db-factory uri="mongodb://127.0.0.1:27017/${mongodbname}"/>  -->
+    
+	<mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>
     
     <bean id="morphia" class="com.google.code.morphia.Morphia"/>
     

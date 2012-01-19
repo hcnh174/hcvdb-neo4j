@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<vardb>
+<family identifier="hepatitis.c.virus.core" pathogen="hepatitis.c.virus"> <!--  ortholog="var" -->
+<name>Core</name>
+<description>Hepatitis C virus core protein</description>
+<abbr>HCV core</abbr>
+<familysize>1</familysize>
+<switchingrate></switchingrate>
+<chromosomes></chromosomes>
+<expression></expression>
+<introns></introns>
+<protein>Core protein</protein>
+<daltons></daltons>
+<location></location>
+<function></function>
+<ligands></ligands>
+<html>
+
+</html>
+<notes>
+</notes>
+<refs>
+	<!-- <ref>kaviratne_et_al_2003</ref> -->
+</refs>
+<structures>
+	<structure>1XCQ</structure>
+	<structure>1CWX</structure>
+	<structure>1XCT</structure>
+</structures>
+</family>
+
+</vardb>

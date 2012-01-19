@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<vardb>
+<family identifier="hepatitis.c.virus.e2" pathogen="hepatitis.c.virus"> <!--  ortholog="var" -->
+<name>E2</name>
+<description>Hepatitis C virus E2 glycoprotein</description>
+<abbr>HCV E2</abbr>
+<familysize>1</familysize>
+<switchingrate></switchingrate>
+<chromosomes></chromosomes>
+<expression></expression>
+<introns></introns>
+<protein>E2 glycoprotein</protein>
+<daltons></daltons>
+<location></location>
+<function></function>
+<ligands></ligands>
+<html>
+
+</html>
+<notes>
+</notes>
+<refs>
+	<!-- <ref>kaviratne_et_al_2003</ref> -->
+</refs>
+<structures>
+	<!--
+	<structure>3BQI</structure>
+	<structure>3BQK</structure>
+	<structure>3BQL</structure>
+	<structure>3C64</structure>
+	 -->
+</structures>
+</family>
+
+</vardb>

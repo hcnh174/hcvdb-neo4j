@@ -1,0 +1,7 @@
+{
+	success: true,
+	root: [
+		{accession: 'ABC123', sequence: 'acgtcgctcgctcgctac'},
+		{accession: 'DEF456', sequence: 'acgtcgctcgctcgctac'}		
+	]
+}

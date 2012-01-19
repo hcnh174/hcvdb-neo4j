@@ -5,6 +5,12 @@ Ext.application({
 	controllers:
 	[
 		'Pages',
-		'Users'
-	]
+		'Users',
+		'Sequences'
+	],
+	launch: function()
+	{
+		//Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+		//Ext.QuickTips.init();
+	}
 });

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<vardb>
+<family identifier="hepatitis.b.virus.hbsag" pathogen="hepatitis.b.virus">
+<name>HBsAg</name>
+
+<description>Hepatitis B virus surface antigen</description>
+<familysize></familysize>
+<switchingrate></switchingrate>
+<chromosomes></chromosomes>
+<expression></expression>
+<introns></introns>
+<protein></protein>
+<daltons></daltons>
+<location></location>
+<function></function>
+<ligands></ligands>
+<notes>MHR: major hydrophilic region - central core exposed on surface involved in antibody binding</notes>
+<refs>
+	<ref>17510775</ref>
+</refs>
+</family>
+</vardb>

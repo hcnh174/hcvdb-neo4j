@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<vardb>
+<virus identifier="hepatitis.c.virus" taxon="11103">
+<name>Hepatitis C virus</name>
+<description>Human hepatitis C virus HCV</description>
+<distribution></distribution>
+<hosts>Human</hosts>
+<lifecycle></lifecycle>
+<chromosomes></chromosomes>
+<gccontent>58</gccontent>
+<numgenes>2</numgenes>
+<numproteins>2</numproteins>
+<numbases>9,646 nt</numbases>
+<genome></genome>
+<kegg_organism></kegg_organism>
+<kegg_pathway>map05160</kegg_pathway>
+<url><![CDATA[http://www.ncbi.nlm.nih.gov/sites/entrez?Db=genome&Cmd=ShowDetailView&TermToSearch=16556]]></url>
+<baltimore>IV</baltimore>
+<nucleicAcidType>RNA</nucleicAcidType>
+<shape>LINEAR</shape>
+<strandedness>SINGLE</strandedness>
+<sense>POSITIVE</sense>
+<reverseTranscription>true</reverseTranscription>
+<size></size>
+<notes></notes>
+<codonusage>
+UUU  7.1(    85)  UCU 11.8(   142)  UAU 12.0(   145)  UGU 10.3(   124)
+UUC 21.7(   261)  UCC 23.8(   287)  UAC 21.1(   254)  UGC 21.8(   263)
+UUA  2.8(    34)  UCA 10.1(   122)  UAA  0.0(     0)  UGA  0.3(     4)
+UUG 15.9(   191)  UCG  9.0(   108)  UAG  0.0(     0)  UGG 21.5(   259)
+
+CUU 12.6(   152)  CCU 13.2(   159)  CAU  9.0(   108)  CGU  5.6(    68)
+CUC 29.8(   359)  CCC 26.5(   319)  CAC 13.4(   161)  CGC  9.5(   114)
+CUA 10.2(   123)  CCA 15.2(   183)  CAA 11.6(   140)  CGA  5.5(    66)
+CUG 28.1(   338)  CCG 13.3(   160)  CAG 18.5(   223)  CGG 15.8(   190)
+
+AUU  7.6(    92)  ACU 13.5(   163)  AAU  8.7(   105)  AGU  3.1(    37)
+AUC 26.7(   322)  ACC 29.7(   358)  AAC 19.6(   236)  AGC 15.1(   182)
+AUA  8.4(   101)  ACA 14.0(   169)  AAA 10.0(   121)  AGA  4.6(    55)
+AUG 20.7(   249)  ACG 16.0(   193)  AAG 21.8(   263)  AGG 17.4(   210)
+
+GUU 12.9(   155)  GCU 23.0(   277)  GAU  9.5(   114)  GGU 11.5(   139)
+GUC 27.1(   326)  GCC 30.3(   365)  GAC 31.2(   376)  GGC 30.2(   364)
+GUA 10.0(   121)  GCA 17.1(   206)  GAA  8.1(    97)  GGA 13.6(   164)
+GUG 30.1(   363)  GCG 23.5(   283)  GAG 31.7(   382)  GGG 25.8(   311)
+</codonusage>
+<diseases>
+	<disease>hepatitis_c</disease>
+</diseases>
+</virus>
+</vardb>

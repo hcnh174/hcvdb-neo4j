@@ -1,0 +1,29 @@
+<vardb>
+<disease identifier="hepatitis_b">
+<name>Hepatitis B</name>
+<description>inflammation of the liver</description>
+<icd10></icd10>
+<host>human</host>
+<human>true</human>
+<!--<distribution>endemic in China and other parts of Asia; 3-6% of world's population infected</distribution>-->
+<morbidity></morbidity>
+<mortality></mortality>
+<pathogenesis></pathogenesis>
+<symptoms>liver inflammation, vomiting, jaundice, death (rarely)</symptoms>
+<diagnosis></diagnosis>
+<prevention></prevention>
+<treatment></treatment>
+<!--<vaccines>Hepatitis A vaccines (HAVRIXR,VAQTAR); Hepatitis B vaccine</vaccines>-->
+<history></history>
+<url></url>
+<kegg_disease>H00412</kegg_disease>
+<kegg_pathway></kegg_pathway>
+<notes></notes>
+<!--<drugs>
+	<drug>D02768</drug>
+	<drug>D01655</drug>
+	<drug>D04008</drug>
+	<drug>D00423</drug>
+</drugs>-->
+</disease>
+</vardb>

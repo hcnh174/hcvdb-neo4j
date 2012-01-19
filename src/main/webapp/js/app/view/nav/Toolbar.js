@@ -68,6 +68,38 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						}
 					},
 					{
+						text: 'Direct',
+						handler: function()
+						{
+							hcvDirect.multiply(2, function(result)
+							{
+							    Ext.MessageBox.alert("Result", result);
+							});
+						}
+					},
+					{
+						text: 'Direct-StoreRead',
+						scope: this,
+						handler: function()
+						{
+							//this.createDemoGrid();
+							var store = new Ext.data.DirectStore( {
+							    paramsAsHash: true,
+							    root: 'records',
+							    totalProperty: 'total',
+							    remoteSort: true,
+							    directFn: hcvDirect.loadAllSequences,
+							    fields: ['accession', 'sequence']
+							});
+							store.load({
+								params: {
+									start: 0,
+									limit: 1
+								}
+							});
+						}
+					},
+					{
 						text: 'Page',
 						//action: 'page',
 						scope: this,
@@ -75,7 +107,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						{
 							console.log('trying to update page');
 							var panel=Ext.getCmp('centerContainer');
-							this.clearExtjsComponent(panel);
+							Hcv.util.Util.clearExtjsComponent(panel);
 							var view = Ext.widget('page',{pageid: 'welcome'});
 							var store=view.getStore();
 							store.load({
@@ -96,12 +128,54 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 		return menu;
 	},
 	
-	clearExtjsComponent: function(cmp) {
-        var f;
-        while(f = cmp.items.first()){
-            cmp.remove(f, true);
-        }
-    },
+	/*
+	createDemoGrid: function()
+	{
+		Ext.define('Sequence', {
+		    extend: 'Ext.data.Model',
+		    fields: ['accession', 'sequence']
+		});
+		
+		var grid=Ext.create('Ext.grid.Panel', {
+	        store: {
+	            model: 'Sequence',
+	            remoteSort: true,
+	            autoLoad: true,
+	            sorters: [{
+	                property: 'accession',
+	                direction: 'ASC'
+	            },
+	            {
+	            	property: 'sequence',
+	            	direction: 'DESC'
+	            }],
+	            proxy: {
+	                type: 'direct',
+	                directFn: hcvDirect.getAllSequences                
+	            }
+	        },
+	        columns:
+	        [
+	         {
+	            dataIndex: 'accession',
+	            flex: 1,
+	            text: 'Accession'
+	        },
+	        {
+	            dataIndex: 'sequence',
+	            //align: 'right',
+	            width: 120,
+	            text: 'Sequence'
+	            //renderer: Ext.util.Format.usMoney
+	        }],
+	        height: 350,
+	        width: 600,
+	        title: 'Sequences',
+	        renderTo: 'centerContainer'//Ext.getBody()
+	    });
+	},	
+	*/
+	
 	
 	createResourceMenu:function()
 	{
