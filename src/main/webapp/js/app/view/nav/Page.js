@@ -3,6 +3,7 @@ Ext.define('Hcv.view.nav.Page' ,{
     alias: 'widget.page',
     layout: 'fit',
     store: 'Pages',
+    //id: 'centerPanel',
     
     initComponent: function() {
 
@@ -13,5 +14,21 @@ Ext.define('Hcv.view.nav.Page' ,{
 		    '</tpl>'
 		);
         this.callParent(arguments);
+    },
+    
+    loadPage: function(pageid)
+    {
+		this.store.load({
+			id: pageid,
+			scope   : this,
+		    callback: function(records, operation, success) {
+		        console.log(records);
+		        var container=Ext.getCmp('centerContainer');
+				var panel=Ext.getCmp('centerPanel');
+		        container.remove(panel,true);
+		        container.add(this);
+		        container.doLayout();
+		    }
+		});
     }
 });

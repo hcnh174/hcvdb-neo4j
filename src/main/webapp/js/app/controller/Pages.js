@@ -4,32 +4,19 @@ Ext.define('Hcv.controller.Pages', {
 	models: ['Page'],
 	views:
 	[
-		'nav.Toolbar'
+		'nav.Toolbar',
+		'nav.Page',
+		'nav.Navpanel'
 	],
 	
 	init: function() {
 		this.control({
-			'useredit button[action=save]': {
-				click: this.updatePage
+			'navpanel': {
+				itemclick: function(view, record, item, index, e) { 
+		            alert(record.get('text'));
+		        }
 			}
 		});
-	},
-
-	updatePage: function()
-	{
-		console.log('trying to update page');
-		var panel=Ext.comp('mainContainer');
-		this.clearExtjsComponent(panel);
-		var view = Ext.widget('page');
-		panel.add(view);
-		panel.doLayout();
-	},
-
-	clearExtjsComponent: function(cmp) {
-        var f;
-        while(f = cmp.items.first()){
-            cmp.remove(f, true);
-        }
-    }
+	}
 });
 

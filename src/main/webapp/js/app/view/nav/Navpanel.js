@@ -1,46 +1,47 @@
-//Ext.define('Hcv.view.nav.Navpanel' ,{
-//	extend: 'Ext.Component',
-//	alias : 'widget.navpanel',
-//	layout: 'fit',
-//
-//	initComponent: function() {
-//		
-//
-//		//this.itemTpl=new Ext.XTemplate(
-//		this.html='<ul>'+
-//		        '<li>link1</li>'+
-//		        '<li>link2</li>'+
-//		        '<li>link3</li>'+
-//		        '</ul>';
-//		this.callParent(arguments);
-//	}
-//});
-
 Ext.define('Hcv.view.nav.Navpanel' ,{
 	extend: 'Ext.tree.Panel',
 	alias : 'widget.navpanel',
+	rootVisible: false,
+	useArrows: true,
     root: {
         text: 'Root',
         expanded: true,
         children: [
             {
-                text: 'Child 1',
-                leaf: true
+                text: 'Hepatitis',
+                leaf: true,
+                pageid: 'genes'
             },
             {
-                text: 'Child 2',
-                leaf: true
+                text: 'Drugs',
+                leaf: true,
+                pageid: 'drugs'
             },
             {
-                text: 'Child 3',
+                text: 'Genes',
                 expanded: true,
+                pageid: 'genes',
                 children: [
                     {
-                        text: 'Grandchild',
+                        text: 'Core',
+                        leaf: true
+                    },
+                    {
+                    	text: 'NS3',
+                        leaf: true
+                    },
+                    {
+                    	text: 'NS5A',
                         leaf: true
                     }
                 ]
             }
         ]
     }
+    
+//    listeners: {
+//        itemclick: function(view, record, item, index, e) { 
+//            alert(record.get('text'));
+//        }
+//    }
 });

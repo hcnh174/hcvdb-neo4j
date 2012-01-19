@@ -8,11 +8,12 @@ Ext.define('Hcv.view.Viewport', {
 			region: 'center',
 			id: 'centerContainer',
 			layout: 'fit',
+			autoEl: {},
 			items:
 			[
 				{
-					//xtype: 'page'
-					xtype: 'sequencelist'
+					xtype: 'sequencelist', //xtype: 'page'
+					id: 'centerPanel'
 				}
 			]
 		},
@@ -51,8 +52,9 @@ Ext.define('Hcv.view.Viewport', {
 			region: 'west',
 			//layout: 'fit',
 			collapsible: true,
+			//collapseMode: 'mini',
 			title: 'Navigation',
-			width: 150,
+			width: 150
 			//html: 'Navigation'
 		},
 		{

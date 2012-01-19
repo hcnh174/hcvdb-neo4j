@@ -3,32 +3,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
 
-	<!-- 
-  <group name="global">  	
-  	<css>file:../../../workspace/vardb-roo/src/main/webapp/css/yui-grids.css</css>
-  </group>
-   -->
-   
-   <!-- 
-  <group name="hcv">	
-	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/model/User.js</js>
-	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/store/Users.js</js>
-	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/user/List.js</js>
-	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/user/Edit.js</js>
-	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/controller/Users.js</js>
-	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app.js</js>
-	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/api-debug-static.js</js>
-  </group>
- -->
- 
   <group name="hcv">
+	<css>file:../../../workspace/hcvdb-neo4j/src/main/webapp/css/*</css>
+	
   	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/util/*.js</js>	
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/model/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/store/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/nav/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/popup/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/sequence/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/user/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/tools/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/controller/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/*.js</js>

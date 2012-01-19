@@ -1,6 +1,7 @@
 Ext.define('Hcv.util.Util', {
 	statics: {
 		
+		/*
 		clearExtjsComponent: function(cmp) {
 			alert('trying to clear ExtJS componenents');
 			var f;
@@ -8,5 +9,6 @@ Ext.define('Hcv.util.Util', {
 				cmp.remove(f, true);
 			}
 		}
+		*/
 	}
 });

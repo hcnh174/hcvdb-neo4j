@@ -1,0 +1,21 @@
+.x-tree-node .x-tree-selected a span{
+	background : #FF0000;
+	color : yellow;
+}
+
+/* node color override, in case it has entries */
+.x-tree-node .x-tree-has-children .x-tree-selected a span{
+	background :#FF0000;
+	color :yellow !important;
+}
+
+/* node color override, in case it has entries */
+.x-tree-node .x-tree-has-children a span{
+	color : #FF5500;
+}
+
+.special
+{
+	background: 'yellow';
+	color: 'red' !important;
+}

@@ -106,21 +106,19 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						handler: function()
 						{
 							console.log('trying to update page');
-							var panel=Ext.getCmp('centerContainer');
-							Hcv.util.Util.clearExtjsComponent(panel);
+							//Hcv.util.Util.clearExtjsComponent(panel);
 							var view = Ext.widget('page',{pageid: 'welcome'});
-							var store=view.getStore();
-							store.load({
-								id: 1,
-								scope   : this,
-							    callback: function(records, operation, success) {
-							        console.log(records);
-							        panel.add(view);
-									panel.doLayout();
-							    }
-							});							
+							view.loadPage(1);					
 						}
-						
+					},
+					{
+						text: 'Term',
+						scope: this,
+						handler: function()
+						{
+							console.log('trying to update page');
+							var view = Ext.widget('termpopup',{term: 'hepatitis'});
+						}
 					}
 				]
 			}

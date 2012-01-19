@@ -14,7 +14,7 @@ Ext.define('Hcv.view.user.Login', {
 //	bodyStyle: 'padding:5px 5px 0',
 //	defaultType: 'textfield',
 //	monitorValid: false,
-//	iconCls: 'login-icon',    
+	iconCls: 'login-icon',    
 
 	initComponent:function()
 	{
