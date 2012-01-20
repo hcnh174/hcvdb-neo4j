@@ -9,5 +9,6 @@ import edu.hiro.hcv.morphia.Sequence;
 @Transactional(readOnly=false)
 public interface SequenceService
 {
-	List<Sequence> getSequencesByGene(String gene);
+	//List<Sequence> getSequencesByGene(String gene);
+	List<Sequence> getSequences();
 }

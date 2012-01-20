@@ -38,10 +38,4 @@ Ext.define('Hcv.view.nav.Navpanel' ,{
             }
         ]
     }
-    
-//    listeners: {
-//        itemclick: function(view, record, item, index, e) { 
-//            alert(record.get('text'));
-//        }
-//    }
 });

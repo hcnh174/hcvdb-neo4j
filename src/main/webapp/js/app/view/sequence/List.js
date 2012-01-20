@@ -23,7 +23,7 @@ Ext.define('Hcv.view.sequence.List' ,{
 	
 	initComponent: function() {
 		this.columns = [
-			{xtype: 'rownumberer', width: 50, sortable: false},
+			{xtype: 'rownumberer', width: 50, sortable: true},
 			{header: 'Accession',  dataIndex: 'accession',  width: 120},
 			{header: 'Sequence', dataIndex: 'sequence', flex: 1}
 		];

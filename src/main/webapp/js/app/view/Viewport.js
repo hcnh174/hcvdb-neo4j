@@ -58,11 +58,18 @@ Ext.define('Hcv.view.Viewport', {
 			//html: 'Navigation'
 		},
 		{
+			xtype: 'eastpanel',
 			region: 'east',
 			collapsible: true,
 			title: 'Navigation',
-			width: 150,
-			html: 'Links'
+			width: 150
 		}
+//		{
+//			region: 'east',
+//			collapsible: true,
+//			title: 'Navigation',
+//			width: 150,
+//			html: 'Links'
+//		}
 	]
 });

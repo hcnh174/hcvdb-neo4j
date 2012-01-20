@@ -19,10 +19,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-//import org.apache.commons.lang.builder.EqualsBuilder;
-//import org.apache.commons.lang.builder.HashCodeBuilder;
-//import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-//import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.util.StringUtils;
 
 import com.google.common.base.Charsets;
@@ -39,7 +39,6 @@ public final class StringHelper
 	
 	private StringHelper(){}
 	
-	/*
 	public static String toString(Object obj)
 	{
 		return ReflectionToStringBuilder.reflectionToString(obj);
@@ -64,7 +63,6 @@ public final class StringHelper
 	{
 		return new HashCodeBuilder(initialNonZeroOddNumber,multiplierNonZeroOddNumber);
 	}
-	*/
 	
 	public static String trimAllWhitespace(String str)
 	{

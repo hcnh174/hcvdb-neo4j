@@ -17,19 +17,23 @@ Ext.define('Hcv.store.Sequences', {
 		}
 	],
 		
-//	proxy:
-//	{
-//		type: 'direct',
-//		directFn: 'hcvDirect.getSequences'
-//	},
-	
-	proxy: {
-		type: 'ajax',
-		url: '../../js/data/sequences.json',
+	proxy:
+	{
+		type: 'direct',
+		directFn: hcvDirect.getSequences,
 		reader: {
-			type: 'json',
-			root: 'root',
-			successProperty: 'success'
+			root: 'records',
+			totalProperty: 'total'
 		}
 	}
+	
+//	proxy: {
+//		type: 'ajax',
+//		url: '../../js/data/sequences.json',
+//		reader: {
+//			type: 'json',
+//			root: 'root',
+//			successProperty: 'success'
+//		}
+//	}
 });

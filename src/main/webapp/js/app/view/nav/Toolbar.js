@@ -16,16 +16,80 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 //			this.createSearchSelect(),
 //			this.createSearchTextBox(),'-',
 //			this.createSearchButton()
-			{
-				xtype: 'textfield',
-				name: 'field1',
-				emptyText: 'enter search term'
-			}
+//			{
+//				xtype: 'textfield',
+//				name: 'field1',
+//				emptyText: 'enter search term'
+//			},
+			this.createSearchSuggestions(),'-',
+			this.createSearchButton()
 		];		
 		this.callParent(arguments);
 	},
 	
+	createSearchSuggestions:function()
+	{
+		Ext.define('Hcv.model.Suggestion', {
+			extend : 'Ext.data.Model',
+			fields:
+			[
+				{name: 'keyword', mapping: 'keyword'},
+				{name: 'type', mapping: 'type'},
+				{name: 'identifier', mapping: 'identifier'}
+			],
+			proxy : {
+				type: 'direct',
+				directFn: hcvDirect.getSuggestions,
+				reader: {
+					root: 'result',
+					//totalProperty: 'total'
+					idProperty: 'keyword'
+				}
+			}
+		});
+
+		var store = Ext.create('Ext.data.Store', {
+			autoLoad: true,
+			model : 'Hcv.model.Suggestion',
+			baseParams: {limit:20}
+		});
+
+		var combo = Ext.create('Ext.form.field.ComboBox', {
+		    fieldLabel: '',
+		    displayField: 'keyword',
+		    valueField: 'identifier',
+		    //width: 200,
+		    //labelWidth: 130,
+		    store: store,
+		    queryMode: 'remote',
+		    typeAhead: true,
+		    itemId: 'searchtextbox',
+		    loadingText: 'Searching...',
+			width: 150, //width: 100,
+			listWidth: 200,
+			hideTrigger: true,
+			emptyText: 'Search...',
+			queryDelay: 800,
+			forceSelection: false
+		});
+		return combo;
+	},
 	
+	createSearchButton:function()
+	{
+		var button= {
+			xtype: 'button',
+			text: 'Go',
+			width: 32,
+			scope: this,
+			action: 'submit',
+			handler: function()
+			{
+				alert('search');
+			}
+		};
+		return button;
+	},
 	
 	createHomepageMenu:function()
 	{
@@ -78,28 +142,6 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						}
 					},
 					{
-						text: 'Direct-StoreRead',
-						scope: this,
-						handler: function()
-						{
-							//this.createDemoGrid();
-							var store = new Ext.data.DirectStore( {
-							    paramsAsHash: true,
-							    root: 'records',
-							    totalProperty: 'total',
-							    remoteSort: true,
-							    directFn: hcvDirect.loadAllSequences,
-							    fields: ['accession', 'sequence']
-							});
-							store.load({
-								params: {
-									start: 0,
-									limit: 1
-								}
-							});
-						}
-					},
-					{
 						text: 'Page',
 						//action: 'page',
 						scope: this,
@@ -119,62 +161,26 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 							console.log('trying to update page');
 							var view = Ext.widget('termpopup',{term: 'hepatitis'});
 						}
+					},
+					{
+						text: 'Announcements',
+						scope: this,
+						handler: function()
+						{
+							var view = Ext.widget('announcements');
+							var container=Ext.getCmp('centerContainer');
+							var panel=Ext.getCmp('centerPanel');
+					        container.remove(panel,true);
+					        container.add(view);
+					        container.doLayout();
+						}
 					}
 				]
 			}
 		};
 		return menu;
 	},
-	
-	/*
-	createDemoGrid: function()
-	{
-		Ext.define('Sequence', {
-		    extend: 'Ext.data.Model',
-		    fields: ['accession', 'sequence']
-		});
 		
-		var grid=Ext.create('Ext.grid.Panel', {
-	        store: {
-	            model: 'Sequence',
-	            remoteSort: true,
-	            autoLoad: true,
-	            sorters: [{
-	                property: 'accession',
-	                direction: 'ASC'
-	            },
-	            {
-	            	property: 'sequence',
-	            	direction: 'DESC'
-	            }],
-	            proxy: {
-	                type: 'direct',
-	                directFn: hcvDirect.getAllSequences                
-	            }
-	        },
-	        columns:
-	        [
-	         {
-	            dataIndex: 'accession',
-	            flex: 1,
-	            text: 'Accession'
-	        },
-	        {
-	            dataIndex: 'sequence',
-	            //align: 'right',
-	            width: 120,
-	            text: 'Sequence'
-	            //renderer: Ext.util.Format.usMoney
-	        }],
-	        height: 350,
-	        width: 600,
-	        title: 'Sequences',
-	        renderTo: 'centerContainer'//Ext.getBody()
-	    });
-	},	
-	*/
-	
-	
 	createResourceMenu:function()
 	{
 		var menu=
@@ -306,29 +312,29 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	
-	createSearchSelect:function()
-	{
-		var combo=new Ext.form.ComboBox(
-		{
-			store: new Ext.data.ArrayStore(
-			{
-				fields: ['value', 'display'],
-				data: [['SEQUENCES','Sequences'],['GOOGLE','Google']]
-			}),
-			itemId: 'searchtype',
-			hiddenName: 'type',
-			valueField: 'value',
-			displayField: 'display',
-			width: 110,
-			mode: 'local',
-			triggerAction: 'all',
-			value: 'SEQUENCES',
-			selectOnFocus: true,
-			forceSelection: true
-		});
-		return combo;
-	},
-	
+//	createSearchSelect:function()
+//	{
+//		var combo=new Ext.form.ComboBox(
+//		{
+//			store: new Ext.data.ArrayStore(
+//			{
+//				fields: ['value', 'display'],
+//				data: [['SEQUENCES','Sequences'],['GOOGLE','Google']]
+//			}),
+//			itemId: 'searchtype',
+//			hiddenName: 'type',
+//			valueField: 'value',
+//			displayField: 'display',
+//			width: 110,
+//			mode: 'local',
+//			triggerAction: 'all',
+//			value: 'SEQUENCES',
+//			selectOnFocus: true,
+//			forceSelection: true
+//		});
+//		return combo;
+//	},
+//	
 	createSearchTextBox:function()
 	{
 		var item={
