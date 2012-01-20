@@ -174,7 +174,17 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 					        container.add(view);
 					        container.doLayout();
 						}
-					}
+					},
+					{
+						text: 'Load sample data',
+						handler: function()
+						{
+							hcvDirect.loadSampleData(function(result)
+							{
+							    Ext.MessageBox.alert("loaded sample data", result);
+							});
+						}
+					},
 				]
 			}
 		};

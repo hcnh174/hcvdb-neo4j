@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +18,7 @@ import com.google.common.collect.Lists;
 
 import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.sequences.SequenceService;
+import edu.hiro.hcv.util.ExtDirectHelper;
 
 @Controller
 public class HcvDirect {
@@ -25,15 +28,28 @@ public class HcvDirect {
 
 	@ExtDirectMethod
 	public long multiply(long num) {
-	return num * 8;
+		return num * 8;
 	}
+
+	@ExtDirectMethod
+	public void loadSampleData() {
+		sequenceService.loadSampleData(1000);
+	}
+	
+//	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
+//	public ExtDirectStoreResponse<Sequence> getSequences(ExtDirectStoreReadRequest request) {
+//		System.out.println("request1: "+request.toString());
+//		//Pageable paging=new PageRequest(request.getPage(),request.getLimit());
+//		List<Sequence> sequences=sequenceService.getSequences();
+//		return new ExtDirectStoreResponse<Sequence>(sequences.size(), sequences);
+//	}
 
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
 	public ExtDirectStoreResponse<Sequence> getSequences(ExtDirectStoreReadRequest request) {
 		System.out.println("request1: "+request.toString());
-		//Paging paging=new Paging();
-		List<Sequence> sequences=sequenceService.getSequences();
-		return new ExtDirectStoreResponse<Sequence>(sequences.size(), sequences);
+		Pageable paging=ExtDirectHelper.getPageable(request);
+		Page<Sequence> page=sequenceService.getSequences(paging);
+		return ExtDirectHelper.getResponse(page);
 	}
 	
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ)
