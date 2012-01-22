@@ -23,7 +23,7 @@ public class Setup {
 		
 		//String filename="d:/temp/AB435162.2.gb";
 		//String filename="d:/temp/NC_004102.1.gb";
-		String filename="G:/hcvdatabase.etc/hcv2.gb";
+		String filename="h:/hcvdatabase.etc/sequence.gb";
 		List<Sequence> sequences=GenbankSequenceBuilder.parseFile(filename);
 		Sequence sequence=sequences.get(0);
 		//sequenceRepository.save(sequence);

@@ -1,27 +1,21 @@
 <?xml version="1.0"?>
-<vardb>
+<hcvdb>
 <virus identifier="hepatitis.c.virus" taxon="11103">
 <name>Hepatitis C virus</name>
 <description>Human hepatitis C virus HCV</description>
 <distribution></distribution>
-<hosts>Human</hosts>
-<lifecycle></lifecycle>
-<chromosomes></chromosomes>
+<hosts>Human, chimpanzee</hosts>
 <gccontent>58</gccontent>
 <numgenes>2</numgenes>
 <numproteins>2</numproteins>
 <numbases>9,646 nt</numbases>
-<genome></genome>
-<kegg_organism></kegg_organism>
 <kegg_pathway>map05160</kegg_pathway>
-<url><![CDATA[http://www.ncbi.nlm.nih.gov/sites/entrez?Db=genome&Cmd=ShowDetailView&TermToSearch=16556]]></url>
 <baltimore>IV</baltimore>
 <nucleicAcidType>RNA</nucleicAcidType>
 <shape>LINEAR</shape>
 <strandedness>SINGLE</strandedness>
 <sense>POSITIVE</sense>
 <reverseTranscription>true</reverseTranscription>
-<size></size>
 <notes></notes>
 <codonusage>
 UUU  7.1(    85)  UCU 11.8(   142)  UAU 12.0(   145)  UGU 10.3(   124)
@@ -48,4 +42,4 @@ GUG 30.1(   363)  GCG 23.5(   283)  GAG 31.7(   382)  GGG 25.8(   311)
 	<disease>hepatitis_c</disease>
 </diseases>
 </virus>
-</vardb>
+</hcvdb>

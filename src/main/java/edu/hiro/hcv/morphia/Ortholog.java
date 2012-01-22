@@ -2,7 +2,13 @@ package edu.hiro.hcv.morphia;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import org.springframework.roo.addon.equals.RooEquals;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.tostring.RooToString;
 
+@RooJavaBean
+@RooToString
+@RooEquals
 public class Ortholog extends Tag
 {
 	protected Integer alignment_id;

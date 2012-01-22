@@ -3,20 +3,20 @@ package edu.hiro.hcv.morphia;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.roo.addon.equals.RooEquals;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.tostring.RooToString;
-
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Reference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import org.springframework.roo.addon.equals.RooEquals;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.tostring.RooToString;
+
 @RooJavaBean
 @RooToString
 @RooEquals
-@Entity
+@Entity("taxa")
 public class Taxon
 {
 	public final static int BACTERIA=2;

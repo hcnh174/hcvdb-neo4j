@@ -18,16 +18,15 @@ import edu.hiro.hcv.util.ThreadHelper;
 
 public class GenbankServiceImpl implements GenbankService
 {
-
-	private static final int DELAY=5000;
-	private static final int BATCHSIZE=500;
-	private static final String EFETCH_URL="http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi";
+//	private static final int GenbankHelper.DELAY=5000;
+//	private static final int GenbankHelper.BATCHSIZE=500;
+//	private static final String GenbankHelper.EFETCH_URL="http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi";
 	private String genbankcache="d:/temp/genbankcache/";
 
 	public String getGenbankcache(){return this.genbankcache;}
 	@Required public void setGenbankcache(final String genbankcache){this.genbankcache=genbankcache;}
 
-	public void downloadGenbankEntries(Collection<String> idlist, GenbankService.EntrezDatabase database, 
+	public void downloadGenbankEntries(Collection<String> idlist, GenbankHelper.EntrezDatabase database, 
 			String filename, int batchsize, MessageWriter writer)
 	{
 		ensureCacheExists();
@@ -40,7 +39,7 @@ public class GenbankServiceImpl implements GenbankService
 		// do in batches
 		for (List<String> batch : MathHelper.getBatches(ids,batchsize))
 		{
-			ThreadHelper.sleep(DELAY);
+			ThreadHelper.sleep(GenbankHelper.DELAY);
 			downloadGenbankEntry(StringHelper.join(batch,","),database,filename,writer);
 		}
 		if (filename==null)
@@ -50,13 +49,13 @@ public class GenbankServiceImpl implements GenbankService
 		}
 	}
 	
-	public void downloadGenbankEntry(String id, GenbankService.EntrezDatabase database, String filename, MessageWriter writer)
+	public void downloadGenbankEntry(String id, GenbankHelper.EntrezDatabase database, String filename, MessageWriter writer)
 	{
 		writer.message("downloading: "+id);
 		downloadGenbankEntry(id,database,filename);
 	}
 
-	public void downloadGenbankEntry(String id, int from, int to, GenbankService.EntrezDatabase database, String filename,
+	public void downloadGenbankEntry(String id, int from, int to, GenbankHelper.EntrezDatabase database, String filename,
 		MessageWriter writer)
 	{
 		writer.message("downloading: "+id);
@@ -66,20 +65,20 @@ public class GenbankServiceImpl implements GenbankService
 		downloadGenbankEntry(id,database,params,filename);
 	}
 	
-	private void downloadGenbankEntry(String id, GenbankService.EntrezDatabase database, String filename)
+	private void downloadGenbankEntry(String id, GenbankHelper.EntrezDatabase database, String filename)
 	{
 		Map<String,Object> params=new HashMap<String,Object>();
 		downloadGenbankEntry(id,database,params,filename);
 	}
 
-	private void downloadGenbankEntry(String id, GenbankService.EntrezDatabase database, Map<String,Object> params, String filename)
+	private void downloadGenbankEntry(String id, GenbankHelper.EntrezDatabase database, Map<String,Object> params, String filename)
 	{
 		if (StringHelper.isEmpty(id))
 			return;
 		params.put("db",database.name());
 		params.put("rettype","gbwithparts");
 		params.put("id",id);
-		String str=HttpHelper.getRequest(EFETCH_URL,params);
+		String str=HttpHelper.getRequest(GenbankHelper.EFETCH_URL,params);
 		LargeGenbankFileReader.splitString(str,this.genbankcache);
 		if (filename!=null)
 			FileHelper.appendFile(filename,str);		
@@ -108,7 +107,7 @@ public class GenbankServiceImpl implements GenbankService
 	
 	private boolean isCached(String id)
 	{
-		return FileHelper.exists(this.genbankcache+id+GENBANK_SUFFIX);
+		return FileHelper.exists(this.genbankcache+id+GenbankHelper.GENBANK_SUFFIX);
 	}
 	
 	private void ensureCacheExists()
@@ -124,7 +123,7 @@ public class GenbankServiceImpl implements GenbankService
 	public String downloadTaxa(List<Integer> taxids)
     {
 		String id=StringHelper.join(taxids,",");
-		String url=EFETCH_URL;
+		String url=GenbankHelper.EFETCH_URL;
 		Map<String,Object> model=new LinkedHashMap<String,Object>();
     	model.put("db",GenbankService.EntrezDatabase.taxonomy.name());
     	model.put("mode","xml");
@@ -142,12 +141,12 @@ public class GenbankServiceImpl implements GenbankService
 		writer.write("Updating taxonomies...");
 		//Map<Integer,Taxon> lookup=new HashMap<Integer,Taxon>();
 		int numids=ids.size();
-		int numbatches=MathHelper.getNumbatches(numids,BATCHSIZE);
+		int numbatches=MathHelper.getNumbatches(numids,GenbankHelper.BATCHSIZE);
 		BeanHelper beanhelper=new BeanHelper();
 		for (int batchnumber=0;batchnumber<numbatches;batchnumber++)
 		{
-			int fromIndex=batchnumber*BATCHSIZE;
-			int toIndex=fromIndex+BATCHSIZE;
+			int fromIndex=batchnumber*GenbankHelper.BATCHSIZE;
+			int toIndex=fromIndex+GenbankHelper.BATCHSIZE;
 			if (toIndex>=numids)
 				toIndex=numids;//toIndex=numids-1;
 			System.out.println("batch load ids - from "+fromIndex+" to "+toIndex);
@@ -166,7 +165,7 @@ public class GenbankServiceImpl implements GenbankService
 				else beanhelper.copyProperties(taxon,bean);
 			}
 			if (batchnumber<numbatches-1)
-				ThreadHelper.sleep(DELAY);
+				ThreadHelper.sleep(GenbankHelper.DELAY);
 		}	
 
 		List<Taxon> rootTaxa=new ArrayList<Taxon>();
@@ -201,7 +200,7 @@ public class GenbankServiceImpl implements GenbankService
 	public List<Ref> downloadRefs(List<Integer> ids)
 	{
 		String id=StringHelper.join(ids,",");
-		String url=EFETCH_URL;
+		String url=GenbankHelper.EFETCH_URL;
 		Map<String,Object> model=new LinkedHashMap<String,Object>();
 		model.put("db",GenbankService.EntrezDatabase.pubmed.name());
 		model.put("mode","xml");
@@ -214,11 +213,11 @@ public class GenbankServiceImpl implements GenbankService
 	{
 		Map<Integer,Ref> map=new HashMap<Integer,Ref>();		
 		int numids=ids.size();
-		int numbatches=MathHelper.getNumbatches(numids,BATCHSIZE);		
+		int numbatches=MathHelper.getNumbatches(numids,GenbankHelper.BATCHSIZE);		
 		for (int batchnumber=0;batchnumber<numbatches;batchnumber++)
 		{
-			int fromIndex=batchnumber*BATCHSIZE;
-			int toIndex=fromIndex+BATCHSIZE;
+			int fromIndex=batchnumber*GenbankHelper.BATCHSIZE;
+			int toIndex=fromIndex+GenbankHelper.BATCHSIZE;
 			if (toIndex>=numids)
 				toIndex=numids;//toIndex=numids-1;
 			System.out.println("batch load ids - from "+fromIndex+" to "+toIndex);
@@ -229,7 +228,7 @@ public class GenbankServiceImpl implements GenbankService
 				map.put(ref.getPmid(),ref);
 			}
 			if (batchnumber<numbatches-1)
-				ThreadHelper.sleep(DELAY);
+				ThreadHelper.sleep(GenbankHelper.DELAY);
 		}
 		return map;
 	}

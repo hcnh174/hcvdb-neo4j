@@ -1,38 +1,25 @@
 <?xml version="1.0"?>
-<vardb>
+<hcvdb>
 <virus identifier="hepatitis.b.virus" taxon="10407">
 <name>Hepatitis B virus</name>
 <description>Human hepatitis B virus HBV</description>
-<distribution></distribution>
 <hosts>Human</hosts>
-<lifecycle></lifecycle>
-<chromosomes></chromosomes>
 <gccontent>37</gccontent>
 <numgenes>3</numgenes>
 <numproteins>2</numproteins>
 <numbases>7478 nt; full length strand: 3020-3320 b; short length strand: 1700-2800 b</numbases>
-<genome></genome>
-<url><![CDATA[http://www.ncbi.nlm.nih.gov/sites/entrez?db=genome&cmd=Retrieve&dopt=Overview&list_uids=10261]]></url>
 <baltimore>VII</baltimore>
 <nucleicAcidType>DNA</nucleicAcidType>
 <shape>CIRCULAR</shape>
 <strandedness>DOUBLE</strandedness>
 <sense>POSITIVE</sense>
 <reverseTranscription>true</reverseTranscription>
-<size></size>
 <notes>
 circular DNA, but not fully double-stranded
 one of smallest animal viruses: 42nm
 </notes>
-<diseases>
-	<disease>hepatitis_b</disease>
-</diseases>
 <refs>
 	<ref>18240865</ref>
 </refs>
 </virus>
-</vardb>
-
-<!--
-<host>9606</host>
--->
+</hcvdb>

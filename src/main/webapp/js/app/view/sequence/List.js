@@ -16,16 +16,21 @@ Ext.define('Hcv.view.sequence.List' ,{
 	plugins: [{
 		ptype: 'rowexpander',
 		rowBodyTpl : [
-			'<p><b>Accession:</b> {accession}</p><br>',
-			'<p><b>Sequence:</b> {sequence}</p>'
+			'<b>Accession:</b> {accession}<br>',
+			'<b>Sequence:</b> {sequence}'
 		]
 	}],
 	
 	initComponent: function() {
 		this.columns = [
-			{xtype: 'rownumberer', width: 50, sortable: true},
+			{xtype: 'rownumberer', width: 25, sortable: true},
 			{header: 'Accession',  dataIndex: 'accession',  width: 120},
-			{header: 'Sequence', dataIndex: 'sequence', flex: 1}
+			{header: 'Tags',  dataIndex: 'tags',  width: 50},
+			{header: 'GI',  dataIndex: 'gi',  width: 50},
+			{header: 'Length',  dataIndex: 'length',  width: 50},
+			{header: 'Taxon',  dataIndex: 'taxon',  width: 50},
+			{header: 'Sequence', dataIndex: 'sequence', flex: 1},
+			{header: 'Description', dataIndex: 'description', flex: 1}
 		];
 		this.dockedItems=[
 		{

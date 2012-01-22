@@ -8,32 +8,32 @@ Ext.define('Hcv.controller.Sequences', {
 	],
 	
 	init: function() {
-		/*
 		this.control({
+			'viewport > sequencelist': {
+				itemdblclick: this.editSequence
+			},
 			'useredit button[action=save]': {
-				click: this.updatePage
+				click: this.updateSequence
 			}
 		});
-		*/
-	}
-
-	/*
-	updatePage: function()
-	{
-		console.log('trying to update page');
-		var panel=Ext.comp('mainContainer');
-		this.clearExtjsComponent(panel);
-		var view = Ext.widget('page');
-		panel.add(view);
-		panel.doLayout();
 	},
 
-	clearExtjsComponent: function(cmp) {
-        var f;
-        while(f = cmp.items.first()){
-            cmp.remove(f, true);
-        }
-    }
-    */
+	editSequence: function(grid, record) {
+		console.log('Double clicked on ' + record.get('accession'));
+		var view = Ext.widget('useredit');
+		view.down('form').loadRecord(record);
+	},
+	
+	updateSequence: function(button) {
+		console.log('clicked the Save button');
+		var win    = button.up('window'),
+			form   = win.down('form'),
+			record = form.getRecord(),
+			values = form.getValues();
+			
+		record.set(values);
+		win.close();
+		this.getUsersStore().sync();
+	}
 });
 

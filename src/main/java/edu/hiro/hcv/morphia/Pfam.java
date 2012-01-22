@@ -1,6 +1,12 @@
 package edu.hiro.hcv.morphia;
 
+import org.springframework.roo.addon.equals.RooEquals;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.tostring.RooToString;
 
+@RooJavaBean
+@RooToString
+@RooEquals
 public class Pfam extends Tag
 {	
 	protected Integer clan_id;

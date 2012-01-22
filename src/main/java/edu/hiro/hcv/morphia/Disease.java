@@ -3,7 +3,13 @@ package edu.hiro.hcv.morphia;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import org.springframework.roo.addon.equals.RooEquals;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.tostring.RooToString;
 
+@RooJavaBean
+@RooToString
+@RooEquals
 public class Disease extends Tag
 {
 	protected Integer parent_id;

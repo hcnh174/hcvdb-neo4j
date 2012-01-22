@@ -18,7 +18,7 @@ import com.google.common.collect.Sets;
 @RooJavaBean
 @RooToString
 @RooEquals
-@Entity
+@Entity("sequences")
 public class Sequence 
 {   
     @Id protected String accession="";
@@ -31,6 +31,7 @@ public class Sequence
 	@Embedded protected List<String> comments=Lists.newArrayList();
 	@Embedded protected Set<Feature> features=Sets.newHashSet();	
 	@Embedded protected Set<Integer> refs=Sets.newHashSet();
+	@Embedded protected Set<String> tags=Sets.newHashSet();
 	
     public Sequence()
     {
@@ -77,5 +78,10 @@ public class Sequence
     public void addComment(String comment)
     {
     	this.comments.add(comment);
+    }
+    
+    public void addTag(String identifier)
+    {
+    	this.tags.add(identifier);
     }
 }

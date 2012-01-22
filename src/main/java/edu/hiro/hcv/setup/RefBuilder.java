@@ -3,17 +3,51 @@ package edu.hiro.hcv.setup;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+import edu.hiro.hcv.bio.GenbankHelper;
 import edu.hiro.hcv.morphia.Ref;
 import edu.hiro.hcv.util.Dom4jHelper;
+import edu.hiro.hcv.util.MathHelper;
 import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.hcv.util.ThreadHelper;
 
 public final class RefBuilder
 {
 	private RefBuilder(){}
+	
+	public static Map<Integer,Ref> getRefs(Set<Integer> ids)//, MessageWriter writer)
+	{
+		Map<Integer,Ref> map=Maps.newHashMap();
+		List<Integer> idlist=Lists.newArrayList();
+		int numids=idlist.size();
+		int numbatches=MathHelper.getNumbatches(numids,GenbankHelper.BATCHSIZE);		
+		for (int batchnumber=0;batchnumber<numbatches;batchnumber++)
+		{
+			int fromIndex=batchnumber*GenbankHelper.BATCHSIZE;
+			int toIndex=fromIndex+GenbankHelper.BATCHSIZE;
+			if (toIndex>=numids)
+				toIndex=numids;
+			System.out.println("batch load ids - from "+fromIndex+" to "+toIndex);
+			List<Integer> sublist=idlist.subList(fromIndex,toIndex);
+			String xml=GenbankHelper.downloadRefs(sublist);
+			List<Ref> refs=parseRefs(xml);
+			for (Ref ref : refs)
+			{
+				map.put(ref.getId(),ref);
+			}
+			if (batchnumber<numbatches-1)
+				ThreadHelper.sleep(GenbankHelper.DELAY);
+		}
+		return map;
+	}
 	
     public static List<Ref> parseRefs(String xml)
 	{
@@ -31,8 +65,7 @@ public final class RefBuilder
 	
 	private static Ref parseRef(Element refnode)
 	{	
-		Ref ref=new Ref();
-		ref.setPmid(Integer.valueOf(Dom4jHelper.getValue(refnode,"MedlineCitation/PMID")));
+		Ref ref=new Ref(Integer.valueOf(Dom4jHelper.getValue(refnode,"MedlineCitation/PMID")));
 		Element article=(Element)refnode.selectSingleNode("MedlineCitation/Article");
 		ref.setAuthors(getAuthors(article));
     	ref.setTitle(Dom4jHelper.getValue(article,"ArticleTitle"));

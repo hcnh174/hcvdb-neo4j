@@ -6,7 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Transient;
+import org.springframework.roo.addon.equals.RooEquals;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.tostring.RooToString;
 
+@RooJavaBean
+@RooToString
+@RooEquals
 public class Pathogen extends Tag
 {
 	protected Integer taxon_id;

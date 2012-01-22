@@ -36,6 +36,7 @@ public final class StringHelper
 	public static final String EMPTY_STRING="";
 	public static final String UNICODE_SPACE=" ";
 	public static final String ALPHABET="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static String DEFAULT_JOIN_DELIMITER=",";
 	
 	private StringHelper(){}
 	
@@ -122,6 +123,13 @@ public final class StringHelper
 		//return join(list,replace);
 	}
 
+
+	
+	public static String join(Iterable<? extends Object> collection)
+	{
+		return join(collection, DEFAULT_JOIN_DELIMITER);
+	}
+	
 	public static String join(Iterable<? extends Object> collection, String delimiter)
 	{
 		StringBuilder buffer=new StringBuilder();
@@ -132,6 +140,11 @@ public final class StringHelper
 				buffer.append(delimiter);
 		}
 		return buffer.toString();
+	}
+	
+	public static String join(Object[] array)
+	{
+		return join(array, DEFAULT_JOIN_DELIMITER);
 	}
 		
 	public static String join(Object[] array, String delimiter)

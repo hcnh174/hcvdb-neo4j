@@ -73,7 +73,7 @@ public class LargeGenbankFileReader
 	private GenbankSequence getSequence(String identifier)
 	{
 		String accession=SequenceHelper.Address.removeLocation(identifier);
-		String filename=this.genbankcache+accession+GenbankService.GENBANK_SUFFIX;
+		String filename=this.genbankcache+accession+GenbankHelper.GENBANK_SUFFIX;
 		if (!FileHelper.exists(filename))
 			return notfound(identifier);
 		String genbank=FileHelper.readFile(filename);
@@ -85,8 +85,8 @@ public class LargeGenbankFileReader
 			GenbankSequence sequence=GenbankParser.convert(richsequence,getLocation(identifier));
 			if (sequence==null)
 				return notfound(identifier);
-			sequence.setAccession(identifier);
-			sequence.setIdentifier(identifier);
+			//sequence.setAccession(identifier);
+			//sequence.setIdentifier(identifier);
 			return sequence;
 		}
 		else

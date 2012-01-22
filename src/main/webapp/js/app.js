@@ -6,11 +6,11 @@ Ext.application({
 	[
 		'Pages',
 		'Users',
-		'Sequences'
+		'Sequences',
+		'Tags'
 	],
 	launch: function()
 	{
-		//Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 		//Ext.QuickTips.init();
 	}
 });

@@ -3,7 +3,7 @@ Ext.define('Hcv.view.nav.Page' ,{
     alias: 'widget.page',
     layout: 'fit',
     store: 'Pages',
-    //id: 'centerPanel',
+    title: 'Page',
     
     initComponent: function() {
 

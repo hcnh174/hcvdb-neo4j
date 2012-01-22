@@ -1,6 +1,7 @@
 Ext.define('Hcv.view.nav.Toolbar' ,{
 	extend: 'Ext.toolbar.Toolbar',
 	alias : 'widget.navbar',
+	height: 25,
 
 	initComponent: function() {
 		
@@ -176,15 +177,36 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						}
 					},
 					{
-						text: 'Load sample data',
+						text: 'Load genbank file',
 						handler: function()
 						{
-							hcvDirect.loadSampleData(function(result)
+							var filename='h:/hcvdatabase.etc/sequence.gb';
+							hcvDirect.loadGenbankFile(filename,function(result)
 							{
-							    Ext.MessageBox.alert("loaded sample data", result);
+							    Ext.MessageBox.alert("loaded genbank data: ", result);
 							});
 						}
 					},
+					{
+						text: 'Get taxids',
+						handler: function()
+						{
+							hcvDirect.getTaxids(function(result)
+							{
+							    Ext.MessageBox.alert("got taxids: ", result);
+							});
+						}
+					},
+					{
+						text: 'Get refids',
+						handler: function()
+						{
+							hcvDirect.getRefids(function(result)
+							{
+							    Ext.MessageBox.alert("got refids: ", result);
+							});
+						}
+					}
 				]
 			}
 		};
@@ -318,7 +340,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 			}
 		};
 		return menu;
-	},
+	}
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	
@@ -345,15 +367,9 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 //		return combo;
 //	},
 //	
+	/*
 	createSearchTextBox:function()
 	{
-		var item={
-			xtype: 'textfield',
-			name: 'field1'
-			//emptyText: 'enter search term'
-		};
-		return item;
-		/*
 		var self=this;
 		var store = new Ext.data.Store(
 		{
@@ -403,7 +419,6 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 			}
 		});
 		return combo;
-		*/
 	},
 	
 	createSearchButton:function()
@@ -436,6 +451,6 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 			{form.action='search/google.html';}
 		else {throw 'unsupported search type: '+type;}
 		form.submit();
-		*/
 	}
+*/
 });

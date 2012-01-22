@@ -1,6 +1,6 @@
-Ext.define('Hcv.store.Sequences', {
+Ext.define('Hcv.store.Tags', {
 	extend: 'Ext.data.Store',
-	model: 'Hcv.model.Sequence',
+	model: 'Hcv.model.Tag',
 	autoLoad: true,
 	remoteSort: true,
 	pageSize: 200,
@@ -8,19 +8,15 @@ Ext.define('Hcv.store.Sequences', {
 	sorters:
 	[
 		{
-			property: 'accession',
+			property: 'name',
 			direction: 'ASC'
-		},
-		{
-			property: 'sequence',
-			direction: 'DESC'
 		}
 	],
 		
 	proxy:
 	{
 		type: 'direct',
-		directFn: hcvDirect.getSequences,
+		directFn: hcvDirect.getTags,
 		reader: {
 			root: 'records',
 			totalProperty: 'total'

@@ -1,21 +1,21 @@
-.x-tree-node .x-tree-selected a span{
-	background : #FF0000;
-	color : yellow;
+.MainTabPanel .x-tab-bar-strip {
+    top: 30px !important; /* Default value is 20, we add 20 = 40 */
 }
 
-/* node color override, in case it has entries */
-.x-tree-node .x-tree-has-children .x-tree-selected a span{
-	background :#FF0000;
-	color :yellow !important;
+.MainTabPanel .x-tab-bar .x-tab-bar-body {
+    height: 33px !important; /* Default value is 23, we add 20 = 43 */
+    border: 0 !important; /* Overides the border that appears on resizing the grid */
 }
 
-/* node color override, in case it has entries */
-.x-tree-node .x-tree-has-children a span{
-	color : #FF5500;
+.MainTabPanel .x-tab-bar .x-tab-bar-body .x-box-inner {
+    height: 31px !important; /* Default value is 21, we add 20 = 41 */
 }
 
-.special
-{
-	background: 'yellow';
-	color: 'red' !important;
+.MainTabPanel .x-tab-bar .x-tab-bar-body .x-box-inner .x-tab {
+    height: 31px !important; /* Default value is 21, we add 20 = 41 */
+}
+
+.MainTabPanel .x-tab-bar .x-tab-bar-body .x-box-inner .x-tab button {
+    height: 23px !important; /* Default value 13, we add 20 = 33 */
+    line-height: 23px !important; /* Default value 13, we add 20 = 33 */
 }

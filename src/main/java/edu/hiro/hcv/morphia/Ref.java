@@ -15,7 +15,7 @@ import edu.hiro.hcv.util.StringHelper;
 @RooJavaBean
 @RooToString
 @RooEquals
-@Entity
+@Entity("refs")
 public class Ref
 {
 	public enum ReferenceType{JOURNAL,BOOK,CHAPTER};
