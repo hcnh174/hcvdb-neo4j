@@ -41,6 +41,7 @@ public class HomeController {
 	    model.addAttribute("page", page);
 	    model.addAttribute("sequences", page.getContent());
 	    */
+		model.addAttribute("title","Hiroshima Hepatitis C Virus Database");
 		return "index";
 	}
 	

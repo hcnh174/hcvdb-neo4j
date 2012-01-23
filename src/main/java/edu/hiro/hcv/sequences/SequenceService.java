@@ -14,10 +14,5 @@ public interface SequenceService
 {
 	List<Sequence> getSequences();
 	Page<Sequence> getSequences(Pageable pageable);
-	void loadGenbankFile(String filename);
-	
-	Set<Integer> getTaxids();
-	Set<Integer> getRefids();
-	
-	void loadSampleData(int num);
+
 }

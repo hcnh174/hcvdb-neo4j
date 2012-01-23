@@ -32,6 +32,12 @@
         <constructor-arg value="${mongodbname}" index="2" />
       </bean>
       
+      <bean id="refRepository" class="edu.hiro.hcv.morphia.RefRepository">
+        <constructor-arg ref="morphia" index="0" />
+        <constructor-arg ref="mongo" index="1" />
+        <constructor-arg value="${mongodbname}" index="2" />
+      </bean>
+      
       <bean id="tagRepository" class="edu.hiro.hcv.morphia.TagRepository">
         <constructor-arg ref="morphia" index="0" />
         <constructor-arg ref="mongo" index="1" />

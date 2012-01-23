@@ -1,8 +1,9 @@
 package edu.hiro.hcv.bio;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import edu.hiro.hcv.util.HttpHelper;
 import edu.hiro.hcv.util.StringHelper;
@@ -22,7 +23,7 @@ public class GenbankHelper
     {
 		String id=StringHelper.join(taxids,",");
 		String url=EFETCH_URL;
-		Map<String,Object> model=new LinkedHashMap<String,Object>();
+		Map<String,Object> model=Maps.newLinkedHashMap();
     	model.put("db",EntrezDatabase.taxonomy.name());
     	model.put("mode","xml");
     	model.put("report","brief");
@@ -35,7 +36,7 @@ public class GenbankHelper
 	{
 		String id=StringHelper.join(ids,",");
 		String url=EFETCH_URL;
-		Map<String,Object> model=new LinkedHashMap<String,Object>();
+		Map<String,Object> model=Maps.newLinkedHashMap();
 		model.put("db",EntrezDatabase.pubmed.name());
 		model.put("mode","xml");
 		model.put("id",id);

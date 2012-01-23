@@ -1,8 +1,6 @@
 package edu.hiro.hcv.web;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -16,12 +14,11 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
 
 import com.google.common.collect.Lists;
 
-import edu.hiro.hcv.morphia.Ref;
 import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.morphia.SequenceRepository;
 import edu.hiro.hcv.morphia.Suggestion;
 import edu.hiro.hcv.sequences.SequenceService;
-import edu.hiro.hcv.setup.RefBuilder;
+import edu.hiro.hcv.setup.SetupService;
 
 @Controller
 public class HcvDirect {
@@ -29,8 +26,8 @@ public class HcvDirect {
 	@Resource(name="sequenceService")
 	private SequenceService sequenceService; 
 
-	@Resource(name="sequenceRepository")
-	private SequenceRepository sequenceRepository;
+	@Resource(name="setupService")
+	private SetupService setupService;
 	
 	@ExtDirectMethod
 	public long multiply(long num) {
@@ -39,24 +36,17 @@ public class HcvDirect {
 
 	@ExtDirectMethod
 	public void loadGenbankFile(String filename) {
-		sequenceService.loadGenbankFile(filename);
+		setupService.loadGenbankFile(filename);
 	}
 	
 	@ExtDirectMethod
-	public Set<Integer> getTaxids() {
-		return sequenceService.getTaxids();
+	public void getTaxids() {
+		setupService.updateTaxa();
 	}
 	
 	@ExtDirectMethod
-	public Set<Integer> getRefids() {
-		Set<Integer> refids=sequenceService.getRefids();
-		Map<Integer,Ref> map=RefBuilder.getRefs(refids);
-		for (Ref ref : map.values())
-		{
-			System.out.println("saving ref: "+ref.toString());
-			sequenceRepository.getDatastore().save(ref);
-		}
-		return refids;
+	public void getRefids() {
+		setupService.updateRefs();
 	}
 	
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)

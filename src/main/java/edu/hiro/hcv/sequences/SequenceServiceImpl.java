@@ -52,54 +52,5 @@ public class SequenceServiceImpl implements SequenceService
 		Page<Sequence> page=new PageImpl<Sequence>(sequences,pageable,total);
 		return page;
 	}
-	
-	public Set<Integer> getTaxids()
-	{
-		Query<Sequence> query=sequenceRepository.createQuery().retrievedFields(true,"taxon");//.filter("foo >", 12);
-		Set<Integer> taxids=Sets.newHashSet();
-		for (Sequence sequence : query.asList())
-		{
-			System.out.println("taxon="+sequence.getTaxon());
-			taxids.add(sequence.getTaxon());
-		}
-		System.out.println("taxonids: "+StringHelper.join(taxids,","));
-		return taxids;
-	}
-	
-	public Set<Integer> getRefids()
-	{
-		Query<Sequence> query=sequenceRepository.createQuery();
-		Set<Integer> refids=Sets.newHashSet();
-		for (Sequence sequence : query.asList())
-		{
-			for (Integer refid : sequence.getRefs())
-			{
-				System.out.println("ref="+refid);
-				refids.add(refid);
-			}
-		}
-		System.out.println("refids: "+StringHelper.join(refids,","));
-		return refids;
-	}
-	
-	public void loadGenbankFile(String filename)
-	{
-		List<Sequence> sequences=GenbankSequenceBuilder.parseFile(filename);
-		for (Sequence sequence : sequences)
-		{
-			System.out.println("saving sequene: "+sequence.getAccession());
-			sequenceRepository.save(sequence);
-		}
-		System.out.println("finished loading");
-	}
-	
-	public void loadSampleData(int num)
-	{
-		System.out.println("Loading sample data");
-		for (int i=0;i<num; i++)
-		{			
-			sequenceRepository.save(new Sequence("S"+MathHelper.randomInteger(1000),"acgtcttgctgtgctgctgctacctgtgctgctgctactgctactgctgctacctgctgctgctacgttgctgctgcttgctgctgctacaccacgtctcgtc"));
-		}
-		System.out.println("Finished");
-	}
+
 }

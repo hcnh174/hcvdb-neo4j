@@ -1,12 +1,90 @@
 package edu.hiro.hcv.setup;
 
-import org.springframework.batch.core.JobExecution;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class SetupServiceImpl
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.google.code.morphia.query.Query;
+import com.google.common.collect.Sets;
+
+import edu.hiro.hcv.morphia.Ref;
+import edu.hiro.hcv.morphia.RefRepository;
+import edu.hiro.hcv.morphia.Sequence;
+import edu.hiro.hcv.morphia.SequenceRepository;
+import edu.hiro.hcv.sequences.SequenceService;
+import edu.hiro.hcv.util.MathHelper;
+import edu.hiro.hcv.util.StringHelper;
+
+@Service("setupService")
+@Transactional
+public class SetupServiceImpl implements SetupService
 {	
-	public String echo(String message)
+	@Resource(name="sequenceService")
+	private SequenceService sequenceService; 
+	
+	@Resource(name="sequenceRepository")
+	private SequenceRepository sequenceRepository;
+	
+	@Resource(name="refRepository")
+	private RefRepository refRepository;
+	
+	public void updateTaxa()
 	{
-		return message.toUpperCase();
+		Query<Sequence> query=sequenceRepository.createQuery().retrievedFields(true,"taxon");//.filter("foo >", 12);
+		Set<Integer> taxids=Sets.newHashSet();
+		for (Sequence sequence : query.asList())
+		{
+			System.out.println("taxon="+sequence.getTaxon());
+			taxids.add(sequence.getTaxon());
+		}
+		System.out.println("taxonids: "+StringHelper.join(taxids,","));
+	}
+	
+	public void updateRefs()
+	{
+		Query<Sequence> query=sequenceRepository.createQuery();
+		Set<Integer> refids=Sets.newHashSet();
+		for (Sequence sequence : query.asList())
+		{
+			for (Integer refid : sequence.getRefs())
+			{
+				System.out.println("ref="+refid);
+				refids.add(refid);
+			}
+		}
+		Map<Integer,Ref> map=RefBuilder.getRefs(refids);
+		for (Ref ref : map.values())
+		{
+			System.out.println("saving ref: "+ref.toString());
+			refRepository.save(ref);
+		}
+		System.out.println("refids: "+StringHelper.join(refids,","));
+	}
+	
+	public void loadGenbankFile(String filename)
+	{
+		List<Sequence> sequences=GenbankSequenceBuilder.parseFile(filename);
+		for (Sequence sequence : sequences)
+		{
+			System.out.println("saving sequene: "+sequence.getAccession());
+			sequenceRepository.save(sequence);
+		}
+		System.out.println("finished loading");
+	}
+	
+	public void loadSampleData(int num)
+	{
+		System.out.println("Loading sample data");
+		for (int i=0;i<num; i++)
+		{			
+			sequenceRepository.save(new Sequence("S"+MathHelper.randomInteger(1000),"acgtcttgctgtgctgctgctacctgtgctgctgctactgctactgctgctacctgctgctgctacgttgctgctgcttgctgctgctacaccacgtctcgtc"));
+		}
+		System.out.println("Finished");
 	}
 	
 	/*
