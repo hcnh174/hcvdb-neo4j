@@ -1,5 +1,6 @@
 package edu.hiro.hcv.setup;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,8 @@ import edu.hiro.hcv.morphia.Ref;
 import edu.hiro.hcv.morphia.RefRepository;
 import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.morphia.SequenceRepository;
+import edu.hiro.hcv.morphia.Taxon;
+import edu.hiro.hcv.morphia.TaxonRepository;
 import edu.hiro.hcv.sequences.SequenceService;
 import edu.hiro.hcv.util.MathHelper;
 import edu.hiro.hcv.util.StringHelper;
@@ -33,6 +36,9 @@ public class SetupServiceImpl implements SetupService
 	@Resource(name="refRepository")
 	private RefRepository refRepository;
 	
+	@Resource(name="taxonRepository")
+	private TaxonRepository taxonRepository;
+	
 	public void updateTaxa()
 	{
 		Query<Sequence> query=sequenceRepository.createQuery().retrievedFields(true,"taxon");//.filter("foo >", 12);
@@ -40,9 +46,16 @@ public class SetupServiceImpl implements SetupService
 		for (Sequence sequence : query.asList())
 		{
 			System.out.println("taxon="+sequence.getTaxon());
-			taxids.add(sequence.getTaxon());
+			if (sequence.getTaxon()!=null)
+				taxids.add(sequence.getTaxon());
 		}
 		System.out.println("taxonids: "+StringHelper.join(taxids,","));
+		Collection<Taxon> taxa=TaxonBuilder.getTaxa(taxids);
+		for (Taxon taxon : taxa)
+		{
+			System.out.println("saving taxon: "+taxon.toString());
+			taxonRepository.save(taxon);
+		}
 	}
 	
 	public void updateRefs()

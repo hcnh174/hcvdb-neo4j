@@ -20,4 +20,10 @@
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/*.js</js>
   </group>
+  
+   <group name="jsphylosvg">
+  	<js>/js/jsphylosvg/raphael-min.js</js>
+  	<js>/js/jsphylosvg/jsphylosvg.js</js>
+  	<js>/js/jsphylosvg/tree.js</js>
+  </group>
 </groups>

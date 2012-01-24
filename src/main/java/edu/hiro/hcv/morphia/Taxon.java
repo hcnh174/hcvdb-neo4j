@@ -1,17 +1,18 @@
 package edu.hiro.hcv.morphia;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import org.springframework.roo.addon.equals.RooEquals;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.tostring.RooToString;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Reference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
-import org.springframework.roo.addon.equals.RooEquals;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
@@ -23,14 +24,17 @@ public class Taxon
 	public final static int EUKARYOTES=2759;
 	public final static int VIRUSES=10239;
 	
-	@Id protected Integer taxid;
+	@Id protected Integer id;
 	protected String name="";
 	protected String description="";
 	protected TaxonomicLevel level=TaxonomicLevel.UNKNOWN;
-	protected Integer parent_id;	
-	@Reference protected Integer parent;
-	@Reference protected Set<Taxon> child_ids=Sets.newLinkedHashSet();
-	@Reference protected List<Taxon> lineage_ids=Lists.newArrayList();
+	protected Integer parent_id;
+	protected Set<Integer> child_ids=Sets.newLinkedHashSet();
+	protected List<Integer> lineage_ids=Lists.newArrayList();
+
+	@Reference protected Taxon parent;
+	@Reference protected Set<Taxon> children=Sets.newLinkedHashSet();
+	@Reference protected List<Taxon> lineage=Lists.newArrayList();
 	
 	
 	//protected Boolean initialized=false;
@@ -54,17 +58,43 @@ public class Taxon
 	
 	public Taxon(){}
 
-	public Taxon(int taxid)
+	public Taxon(int id)
 	{
-		this.taxid=taxid;
-		this.name="taxid:"+taxid;
+		this.id=id;
+		this.name="taxid:"+id;
 	}
 	
 	public Taxon(String identifier)
 	{
 		this(Integer.parseInt(identifier));
 	}
+	
+	public void add(Taxon taxon)
+	{
+		taxon.setParent_id(this.id);
+		this.child_ids.add(taxon.id);
+	}
 
+	public void assemble(Map<Integer,Taxon> taxa)
+	{
+		if (this.parent_id!=null)
+			this.parent=taxa.get(this.parent_id);
+		for (Integer id : this.child_ids)
+		{
+			Taxon child=taxa.get(id);
+			if (child!=null)
+				this.children.add(child);
+		}
+		/*
+		for (Integer id : this.lineage_ids)
+		{
+			Taxon ancestor=taxa.get(id);
+			if (ancestor!=null)
+				this.lineage.add(ancestor);
+		}
+		*/
+	}
+	
 	/*
 	public boolean getHaschildren()
 	{

@@ -43,6 +43,12 @@
         <constructor-arg ref="mongo" index="1" />
         <constructor-arg value="${mongodbname}" index="2" />
       </bean>
+      
+      <bean id="taxonRepository" class="edu.hiro.hcv.morphia.TaxonRepository">
+        <constructor-arg ref="morphia" index="0" />
+        <constructor-arg ref="mongo" index="1" />
+        <constructor-arg value="${mongodbname}" index="2" />
+      </bean>
     
 	<!-- 
 	<mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>

@@ -26,8 +26,7 @@ public final class RefBuilder
 	public static Map<Integer,Ref> getRefs(Set<Integer> ids)//, MessageWriter writer)
 	{
 		Map<Integer,Ref> map=Maps.newHashMap();
-		List<Integer> idlist=Lists.newArrayList();
-		idlist.addAll(ids);
+		List<Integer> idlist=Lists.newArrayList(ids);
 		int numids=idlist.size();
 		int numbatches=MathHelper.getNumbatches(numids,GenbankHelper.BATCHSIZE);		
 		for (int batchnumber=0;batchnumber<numbatches;batchnumber++)

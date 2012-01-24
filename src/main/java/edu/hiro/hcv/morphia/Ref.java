@@ -21,10 +21,7 @@ public class Ref
 	public enum ReferenceType{JOURNAL,BOOK,CHAPTER};
 	
 	@Id protected Integer id;
-	protected String identifier;
-	protected String name;
 	protected ReferenceType type=ReferenceType.JOURNAL;
-	protected Integer pmid=null;
 	protected String authors="";
 	protected String year="";
 	protected String title="";
@@ -37,36 +34,21 @@ public class Ref
 
 	public Ref() {}
 	
-	public Ref(String identifier)
+	public Ref(int id)
 	{
-		this();
-		this.identifier=identifier;
-		this.name=identifier;
-		if (MathHelper.isInteger(identifier))
-			this.pmid=Integer.parseInt(identifier);
+		this.id=id;
 	}
-	
-	public Ref(int pmid)
-	{
-		this(String.valueOf(pmid));
-		this.pmid=pmid;
-	}
-
-	public String getAbbreviation()
-	{
-		return this.name;
-	}
-	
-	public String createAbbreviation()
-	{
-		if (StringHelper.isEmpty(this.authors))
-			return this.identifier;
-		List<String> authors=StringHelper.splitAsList(this.authors,",");
-		String firstauthor=authors.get(0);
-		if (!StringHelper.isEmpty(firstauthor) && firstauthor.indexOf(' ')!=-1)
-			firstauthor=firstauthor.substring(0,firstauthor.indexOf(' '));
-		return firstauthor+" et al., "+this.year;
-	}
+//
+//	public String createAbbreviation()
+//	{
+//		if (StringHelper.isEmpty(this.authors))
+//			return this.id.toString();
+//		List<String> authors=StringHelper.splitAsList(this.authors,",");
+//		String firstauthor=authors.get(0);
+//		if (!StringHelper.isEmpty(firstauthor) && firstauthor.indexOf(' ')!=-1)
+//			firstauthor=firstauthor.substring(0,firstauthor.indexOf(' '));
+//		return firstauthor+" et al., "+this.year;
+//	}
 
 	public String getCitation()
 	{
@@ -98,6 +80,7 @@ public class Ref
 		return buffer.toString();
 	}
 	
+	/*
 	public void dump()
 	{
 		System.out.println("ID: "+this.pmid);
@@ -111,6 +94,7 @@ public class Ref
         System.out.println("--------------------------\n");
 	}
 
+
 	public String getHtml()
 	{
 		StringBuilder buffer=new StringBuilder();
@@ -119,4 +103,5 @@ public class Ref
 		buffer.append("</a>)");
 		return buffer.toString();
 	}
+	*/
 }

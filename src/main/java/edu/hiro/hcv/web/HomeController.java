@@ -45,6 +45,11 @@ public class HomeController {
 		return "index";
 	}
 	
+	@RequestMapping(value = "/tree.html", method = RequestMethod.GET)
+	public String tree(Model model) {		
+		return "tree";
+	}
+	
 	@RequestMapping(value = "/test.html", method = RequestMethod.GET)
 	public String test(Model model) {
 		

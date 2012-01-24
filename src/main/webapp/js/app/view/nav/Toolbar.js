@@ -180,7 +180,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						text: 'Load genbank file',
 						handler: function()
 						{
-							var filename='h:/hcvdatabase.etc/sequence.gb';
+							var filename='g:/hcvdatabase.etc/sequence.gb';
 							hcvDirect.loadGenbankFile(filename,function(result)
 							{
 							    Ext.MessageBox.alert("loaded genbank data: ", result);
