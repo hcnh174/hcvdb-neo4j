@@ -11,6 +11,7 @@
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/store/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/nav/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/grids/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/popup/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/sequence/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/user/*.js</js>
@@ -22,8 +23,10 @@
   </group>
   
    <group name="jsphylosvg">
-  	<js>/js/jsphylosvg/raphael-min.js</js>
-  	<js>/js/jsphylosvg/jsphylosvg.js</js>
-  	<js>/js/jsphylosvg/tree.js</js>
+   	<!-- 
+  	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/jsphylosvg/raphael-min.js</js>
+  	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/jsphylosvg/jsphylosvg.js</js>
+  	 -->
+  	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/jsphylosvg/tree.js</js>
   </group>
 </groups>

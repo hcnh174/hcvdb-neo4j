@@ -206,6 +206,24 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 							    Ext.MessageBox.alert("got refids: ", result);
 							});
 						}
+					},
+					{
+						text: 'Refs',
+						scope: this,
+						handler: function()
+						{
+							hcvDirect.getRefs(function(result)
+							{
+							    Ext.MessageBox.alert("Result", result);
+							});
+							
+//							var view = Ext.widget('refs');
+//							var container=Ext.getCmp('centerContainer');
+//							var panel=Ext.getCmp('centerPanel');
+//					        container.remove(panel,true);
+//					        container.add(view);
+//					        container.doLayout();
+						}
 					}
 				]
 			}

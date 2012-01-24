@@ -9,9 +9,18 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.code.morphia.query.Query;
 import com.google.common.collect.Sets;
+import com.google.common.collect.Maps;
+
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.graphdb.DynamicRelationshipType;
+import org.neo4j.graphdb.Transaction;
 
 import edu.hiro.hcv.morphia.Ref;
 import edu.hiro.hcv.morphia.RefRepository;
@@ -19,6 +28,9 @@ import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.morphia.SequenceRepository;
 import edu.hiro.hcv.morphia.Taxon;
 import edu.hiro.hcv.morphia.TaxonRepository;
+import edu.hiro.hcv.neo4j.TagNodeRepository;
+import edu.hiro.hcv.neo4j.TaxonNodeRepository;
+import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.sequences.SequenceService;
 import edu.hiro.hcv.util.MathHelper;
 import edu.hiro.hcv.util.StringHelper;
@@ -39,6 +51,12 @@ public class SetupServiceImpl implements SetupService
 	@Resource(name="taxonRepository")
 	private TaxonRepository taxonRepository;
 	
+	@Resource(name="graphDatabaseService")
+	private GraphDatabaseService graphDatabaseService;
+	
+	@Autowired
+	private TaxonNodeRepository taxonNodeRepository;
+	
 	public void updateTaxa()
 	{
 		Query<Sequence> query=sequenceRepository.createQuery().retrievedFields(true,"taxon");//.filter("foo >", 12);
@@ -56,6 +74,57 @@ public class SetupServiceImpl implements SetupService
 			System.out.println("saving taxon: "+taxon.toString());
 			taxonRepository.save(taxon);
 		}
+		
+		Map<Integer,TaxonNode> nodes=Maps.newHashMap();
+    	for (Taxon taxon : taxa)
+    	{
+    		TaxonNode node = new TaxonNode(taxon.getId(), taxon.getName());
+    		System.out.println("creating taxon node: "+node.toString());
+    		taxonNodeRepository.save(node);
+        	nodes.put(taxon.getId(),node);
+    	}
+    	
+    	for (Taxon taxon : taxa)
+    	{
+    		if (taxon.getParent_id()==null)
+    			continue;
+    		TaxonNode node=nodes.get(taxon.getId());
+    		TaxonNode parent=nodes.get(taxon.getParent_id());
+    		node.setParent(node);
+    		parent.addChild(node);
+    		System.out.println("creating relationsip between nodes "+taxon.getId()+" and "+taxon.getParent_id());
+    	}      	
+		
+		/*
+		Transaction tx = graphDatabaseService.beginTx();
+        try {
+        	
+        	Map<Integer,Node> nodes=Maps.newHashMap();
+        	for (Taxon taxon : taxa)
+        	{
+        		Node node = graphDatabaseService.createNode();
+            	node.setProperty("type", "taxon");
+            	node.setProperty("taxid", taxon.getId());
+            	node.setProperty("name", taxon.getName());
+            	node.setProperty("desription", taxon.getDescription());
+            	System.out.println("creating taxon node: "+node.toString());
+            	nodes.put(taxon.getId(),node);
+        	}
+        	
+        	for (Taxon taxon : taxa)
+        	{
+        		if (taxon.getParent_id()==null)
+        			continue;
+        		Node node=nodes.get(taxon.getId());
+        		Node parent=nodes.get(taxon.getParent_id());
+        		Relationship relationship = parent.createRelationshipTo(node,DynamicRelationshipType.withName("LINEAGE"));
+        		System.out.println("creating relationsip between nodes "+taxon.getId()+" and "+taxon.getParent_id());
+        	}      	
+        	tx.success();
+        } finally {
+        	tx.finish();
+        }
+		 */
 	}
 	
 	public void updateRefs()

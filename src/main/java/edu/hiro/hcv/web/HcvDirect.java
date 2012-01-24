@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
@@ -16,6 +17,8 @@ import com.google.common.collect.Lists;
 
 import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.morphia.SequenceRepository;
+import edu.hiro.hcv.morphia.Ref;
+import edu.hiro.hcv.morphia.RefRepository;
 import edu.hiro.hcv.morphia.Suggestion;
 import edu.hiro.hcv.sequences.SequenceService;
 import edu.hiro.hcv.setup.SetupService;
@@ -28,6 +31,9 @@ public class HcvDirect {
 
 	@Resource(name="setupService")
 	private SetupService setupService;
+	
+	@Autowired
+	private RefRepository refRepository;
 	
 	@ExtDirectMethod
 	public long multiply(long num) {
@@ -56,6 +62,12 @@ public class HcvDirect {
 		return new ExtDirectStoreResponse<Sequence>(sequences.size(), sequences);
 	}
 
+	@ExtDirectMethod//(ExtDirectMethodType.STORE_READ)
+	public List<Ref> getRefs() {//ExtDirectStoreReadRequest request) {
+		List<Ref> refs=refRepository.find().asList();
+		return refs;
+	}
+	
 //	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
 //	public ExtDirectStoreResponse<Sequence> getSequences(ExtDirectStoreReadRequest request) {
 //		System.out.println("request1: "+request.toString());
