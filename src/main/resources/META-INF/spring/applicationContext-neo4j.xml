@@ -13,7 +13,23 @@
 
     <neo4j:config storeDirectory="../db/neo4j-db"/>
     <neo4j:repositories base-package="edu.hiro.hcv.neo4j"/>
-          
+
+	<bean id="neo4jTransactionManager" 
+		   class="org.springframework.transaction.jta.JtaTransactionManager">
+	    <property name="transactionManager">
+	        <bean class="org.neo4j.kernel.impl.transaction.SpringTransactionManager">
+	            <constructor-arg ref="graphDatabaseService"/>
+	        </bean>
+	    </property>
+	    <property name="userTransaction">
+	        <bean class="org.neo4j.kernel.impl.transaction.UserTransactionImpl">
+	            <constructor-arg ref="graphDatabaseService"/>
+	        </bean>
+	    </property>
+	</bean>
+
+
+
     <!-- 
      graph-database-context-ref="template"
      

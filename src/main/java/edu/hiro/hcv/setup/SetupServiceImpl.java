@@ -36,7 +36,7 @@ import edu.hiro.hcv.util.MathHelper;
 import edu.hiro.hcv.util.StringHelper;
 
 @Service("setupService")
-@Transactional
+//@Transactional
 public class SetupServiceImpl implements SetupService
 {	
 	@Resource(name="sequenceService")
@@ -69,19 +69,19 @@ public class SetupServiceImpl implements SetupService
 		}
 		System.out.println("taxonids: "+StringHelper.join(taxids,","));
 		Collection<Taxon> taxa=TaxonBuilder.getTaxa(taxids);
-		for (Taxon taxon : taxa)
-		{
-			System.out.println("saving taxon: "+taxon.toString());
-			taxonRepository.save(taxon);
-		}
+//		for (Taxon taxon : taxa)
+//		{
+//			System.out.println("saving taxon: "+taxon.toString());
+//			taxonRepository.save(taxon);
+//		}
 		
 		Map<Integer,TaxonNode> nodes=Maps.newHashMap();
     	for (Taxon taxon : taxa)
     	{
     		TaxonNode node = new TaxonNode(taxon.getId(), taxon.getName());
     		System.out.println("creating taxon node: "+node.toString());
-    		taxonNodeRepository.save(node);
         	nodes.put(taxon.getId(),node);
+        	taxonNodeRepository.save(node);
     	}
     	
     	for (Taxon taxon : taxa)
@@ -93,8 +93,17 @@ public class SetupServiceImpl implements SetupService
     		node.setParent(node);
     		parent.addChild(node);
     		System.out.println("creating relationsip between nodes "+taxon.getId()+" and "+taxon.getParent_id());
-    	}      	
-		
+    	}
+    	
+    	for (TaxonNode node : nodes.values())
+    	{
+    		taxonNodeRepository.save(node);
+    	}
+    	for (TaxonNode node: taxonNodeRepository.findAll())
+    	{
+    		System.out.println("found node: "+node.getId());
+    	}
+    	
 		/*
 		Transaction tx = graphDatabaseService.beginTx();
         try {

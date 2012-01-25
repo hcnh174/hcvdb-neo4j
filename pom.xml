@@ -697,7 +697,7 @@
 				      </execution>
 				    </executions>
 				    <configuration>
-				    	<options>debug,asi,expr,smarttabs</options>
+				    	<options>undef,debug,asi,expr,smarttabs</options>
 				    	<failNever>true</failNever>
 				      <!-- <options>devel,evil,noarg</options> -->
 				    </configuration>

@@ -3,6 +3,8 @@ package edu.hiro.hcv.neo4j;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -18,14 +20,13 @@ import com.google.common.collect.Sets;
  */
 @RooJavaBean
 @RooToString
-@RooEquals
 @NodeEntity
 public class TaxonNode
 {   
     @GraphId protected Long id;
     protected Integer taxid;
     protected String name="";
-    protected DynamicProperties properties = new DynamicPropertiesContainer();
+    //protected DynamicProperties properties = new DynamicPropertiesContainer();
 	
     protected TaxonNode parent;
     
@@ -46,12 +47,26 @@ public class TaxonNode
     
     public void addChild(TaxonNode taxon)
     {
-    	//sequence.addTag(this);
     	children.add(taxon);
     }
 
     public boolean hasChild(TaxonNode taxon)
     {
         return children.contains(taxon);
+    }
+    
+    public boolean equals(Object obj) {
+        if (!(obj instanceof TaxonNode)) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        TaxonNode rhs = (TaxonNode) obj;
+        return new EqualsBuilder().append(id, rhs.id).isEquals();
+    }
+    
+    public int hashCode() {
+        return new HashCodeBuilder().append(id).toHashCode();
     }
 }

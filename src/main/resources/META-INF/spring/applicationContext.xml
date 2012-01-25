@@ -21,8 +21,8 @@
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
 	
-	<tx:annotation-driven/> <!--  mode="proxy" -->
+	<!-- <tx:annotation-driven mode="proxy"/> -->
 	
-
+	<tx:annotation-driven mode="aspectj" transaction-manager="neo4jTransactionManager"/>
 
 </beans>
