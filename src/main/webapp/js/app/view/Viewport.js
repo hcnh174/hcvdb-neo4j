@@ -16,12 +16,11 @@ Ext.define('Hcv.view.Viewport', {
 			activeTab: 0,
 			plain: true,
 			tabBar: {style: 'background-color: white'},
-		    items:
-		    [
-		     	{xtype: 'hcvpanel'},
-		     	{xtype: 'hbvpanel'},
-
-		    ]
+			items:
+			[
+				{xtype: 'hcvpanel'},
+				{xtype: 'hbvpanel'}
+			]
 		}
 	]
 });

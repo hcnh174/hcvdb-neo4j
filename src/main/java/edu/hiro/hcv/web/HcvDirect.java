@@ -62,7 +62,7 @@ public class HcvDirect {
 		return new ExtDirectStoreResponse<Sequence>(sequences.size(), sequences);
 	}
 
-	@ExtDirectMethod//(ExtDirectMethodType.STORE_READ)
+	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
 	public List<Ref> getRefs() {//ExtDirectStoreReadRequest request) {
 		List<Ref> refs=refRepository.find().asList();
 		return refs;

@@ -1,25 +1,25 @@
 Ext.define('Hcv.view.user.NewUser', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.newuser',
+	extend: 'Ext.window.Window',
+	alias : 'widget.newuser',
 
-    title : 'User information',
-    layout: 'fit',
-    autoShow: true,
-    
-    initComponent: function() {
+	title : 'User information',
+	layout: 'fit',
+	autoShow: true,
 
-        this.items = [
-		  {
-		      xtype: 'form',
-		      defaults: {width: 300, allowBlank: false},
-		      defaultType: 'textfield',
-//		    labelWidth: 75,
-//		  	url: vardb.webapp+'/newuser.html',
-//		  	frame: true,
-//		  	width: 550,
-//		  	bodyStyle: 'padding: 5px 5px 0',//		  	
-//		  	monitorValid: true,
-		      items:
+	initComponent: function() {
+
+		this.items = [
+		{
+			xtype: 'form',
+			defaults: {width: 300, allowBlank: false},
+			defaultType: 'textfield',
+//			labelWidth: 75,
+//			url: vardb.webapp+'/newuser.html',
+//			frame: true,
+//			width: 550,
+//			bodyStyle: 'padding: 5px 5px 0',
+//			monitorValid: true,
+			items:
 				[
 					{
 						fieldLabel: 'Username*',
@@ -56,12 +56,12 @@ Ext.define('Hcv.view.user.NewUser', {
 						fieldLabel: 'Email*',
 						name: 'email'
 						//vtype: 'email'
-					}		          
-		      ]
-		  }
-		  ];
-        
-        this.buttons=[
+					}				  
+			  ]
+		}
+		];
+		
+		this.buttons=[
 				{
 					text: 'Submit',
 					action: 'submit'
@@ -75,9 +75,9 @@ Ext.define('Hcv.view.user.NewUser', {
 //					formBind: true,
 //					scope: this,
 //					handler: function(){this.getForm().reset();}
-				}			
+				}
 			];
-    }
+	}
 
 	/*
 	onRender:function()

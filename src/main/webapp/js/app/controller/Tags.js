@@ -1,6 +1,6 @@
 Ext.define('Hcv.controller.Tags', {
 	extend: 'Ext.app.Controller',
-	stores: ['Tags'],    
+	stores: ['Tags'],
 	models: ['Tag'],
 	views:
 	[

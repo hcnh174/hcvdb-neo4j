@@ -1,10 +1,10 @@
 Ext.define('Hcv.view.tags.ApplyTag', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.applytag',
-    title: 'Tag sequences',
-    layout: 'fit',
-    autoShow: true,
-    width: 400,
+	extend: 'Ext.window.Window',
+	alias : 'widget.applytag',
+	title: 'Tag sequences',
+	layout: 'fit',
+	autoShow: true,
+	width: 400,
 	closable: true,
 	resizable: true,
 

@@ -1,6 +1,6 @@
 Ext.define('Hcv.controller.Users', {
 	extend: 'Ext.app.Controller',
-	stores: ['Users'],    
+	stores: ['Users'],	
 	models: ['User'],
 	views:
 	[
@@ -27,7 +27,7 @@ Ext.define('Hcv.controller.Users', {
 	
 	updateUser: function(button) {
 		console.log('clicked the Save button');
-		var win    = button.up('window'),
+		var win	= button.up('window'),
 			form   = win.down('form'),
 			record = form.getRecord(),
 			values = form.getValues();

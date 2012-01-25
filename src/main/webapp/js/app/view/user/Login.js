@@ -1,11 +1,11 @@
 Ext.define('Hcv.view.user.Login', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.login',
+	extend: 'Ext.window.Window',
+	alias : 'widget.login',
 
-    title : 'Login',
-    layout: 'fit',
-    autoShow: true,
-    frame: false,
+	title : 'Login',
+	layout: 'fit',
+	autoShow: true,
+	frame: false,
 
 //	labelWidth: 100,
 //	url: utils.webapp+'/j_spring_security_check',
@@ -14,37 +14,37 @@ Ext.define('Hcv.view.user.Login', {
 //	bodyStyle: 'padding:5px 5px 0',
 //	defaultType: 'textfield',
 //	monitorValid: false,
-	iconCls: 'login-icon',    
+	iconCls: 'login-icon',	
 
 	initComponent:function()
 	{
 		var self=this;
 		this.items=[
 			{
-			    xtype: 'form',
-			    items: [
-			        {
-			            xtype: 'textfield',
-			            name : 'j_username',
-			            fieldLabel: 'Name',
-			            allowBlank: false,
-			            value: 'username'
-			        },
-			        {
-			            xtype: 'textfield',
-			            name : 'email',
-			            fieldLabel: 'Email',
-			            allowBlank: false,
-			            inputType: 'password'
-			        },
-			        {
-			        	xtype: 'checkbox',
+				xtype: 'form',
+				items: [
+					{
+						xtype: 'textfield',
+						name : 'j_username',
+						fieldLabel: 'Name',
+						allowBlank: false,
+						value: 'username'
+					},
+					{
+						xtype: 'textfield',
+						name : 'email',
+						fieldLabel: 'Email',
+						allowBlank: false,
+						inputType: 'password'
+					},
+					{
+						xtype: 'checkbox',
 						fieldLabel: 'Remember me',
-						name: '_spring_security_remember_me'						
-					}			        
-			    ]
-			}			
-		],			
+						name: '_spring_security_remember_me'
+					}
+				]
+			}
+		];
 		this.buttons=[
 			{
 				text: 'Login',

@@ -1,26 +1,26 @@
 Ext.define('Hcv.view.user.Edit', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.feedback',
+	extend: 'Ext.window.Window',
+	alias : 'widget.feedback',
 
-    title: 'Please use the form below to send your comments or suggestions.',
-    layout: 'fit',
-    autoShow: true,
+	title: 'Please use the form below to send your comments or suggestions.',
+	layout: 'fit',
+	autoShow: true,
 
-    initComponent: function() {
+	initComponent: function() {
 
-        this.items = [
-            {
-                xtype: 'form',
-                defaults: {width: 350, allowBlank: true},	
-//                labelWidth: 75,
-//            	frame: true,
-//            	width: 550,
-//            	bodyStyle: 'padding: 5px 5px 0',
-//            	defaultType: 'textfield',
-//            	monitorValid: true,
-//            	iconCls: 'icon-email',
-                items: [
-	                {
+		this.items = [
+			{
+				xtype: 'form',
+				defaults: {width: 350, allowBlank: true},	
+//				labelWidth: 75,
+//				frame: true,
+//				width: 550,
+//				bodyStyle: 'padding: 5px 5px 0',
+//				defaultType: 'textfield',
+//				monitorValid: true,
+//				iconCls: 'icon-email',
+				items: [
+					{
 						fieldLabel: 'Name',
 						name: 'name',
 						value: 'name'//this.name
@@ -44,12 +44,12 @@ Ext.define('Hcv.view.user.Edit', {
 						xtype: 'textarea',
 						allowBlank: false,
 						grow: true		
-					}                    
-                ]
-            }
-        ];
+					}					
+				]
+			}
+		];
 
-        this.buttons = [
+		this.buttons = [
 			{
 				text: 'Submit',
 				action: 'submit'
@@ -63,11 +63,10 @@ Ext.define('Hcv.view.user.Edit', {
 				//scope: this,
 				//handler: function(){this.getForm().reset();}
 			}
-        ];
+		];
 
-        this.callParent(arguments);
-    },
-
+		this.callParent(arguments);
+	}
 
 //	var purposeCombo=new nelson.extjs.SelectList(
 //		{

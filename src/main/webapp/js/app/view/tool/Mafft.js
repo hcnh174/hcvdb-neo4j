@@ -1,6 +1,6 @@
 Ext.define('Hcv.view.tool.Mafft', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.mafft',
+	extend: 'Ext.window.Window',
+	alias : 'widget.mafft',
 	title: 'Align sequences using MAFFT',
 	width: 600,
 	//standardSubmit: true,

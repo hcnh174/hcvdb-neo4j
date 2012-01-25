@@ -1,10 +1,10 @@
 Ext.define('Hcv.view.tags.NewTag', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.newtag',
-    title: 'Create a new tag',
-    layout: 'fit',
-    autoShow: true,
-    width: 400,
+	extend: 'Ext.window.Window',
+	alias : 'widget.newtag',
+	title: 'Create a new tag',
+	layout: 'fit',
+	autoShow: true,
+	width: 400,
 	closable: true,
 	resizable: true,
 

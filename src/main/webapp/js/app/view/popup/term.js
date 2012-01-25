@@ -1,11 +1,11 @@
 Ext.define('Hcv.view.popup.Term', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.termpopup',
+	extend: 'Ext.window.Window',
+	alias : 'widget.termpopup',
 
-    title : 'Definition',
-    layout: 'fit',
-    autoShow: true,
-    width: 400,
+	title : 'Definition',
+	layout: 'fit',
+	autoShow: true,
+	width: 400,
 	height: 250,
 	plain: true,
 

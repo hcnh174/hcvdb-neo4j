@@ -697,9 +697,9 @@
 				      </execution>
 				    </executions>
 				    <configuration>
-				    	<options>undef,debug,asi,expr,smarttabs</options>
+				    	<options>devel,browser,debug,asi,expr,smarttabs</options>
 				    	<failNever>true</failNever>
-				      <!-- <options>devel,evil,noarg</options> -->
+				      <!-- <options>devel,evil,noarg</options> undef,-->
 				    </configuration>
 				  </plugin>
 				  <!-- 

@@ -4,10 +4,10 @@ Ext.define('Hcv.view.HcvPanel' ,{
 	title: 'Hepatitis C virus',
 	items:
 	[
-	 	{
-	 		xtype: 'navbar',
-	 	},
-	 	{
+		{
+			xtype: 'navbar'
+		},
+		{
 			xtype: 'tabpanel',
 			activeTab: 0,
 			items:
@@ -28,13 +28,13 @@ Ext.define('Hcv.view.HcvPanel' ,{
 							title: 'Navigation',
 							width: 150
 						},
-					 	{
-					 		xtype: 'page',
-					 		region: 'center'
-					 	}
+						{
+							xtype: 'page',
+							region: 'center'
+						}
 					]
 				}
 			]
-	 	}
+		}
 	]
 });

@@ -1,6 +1,6 @@
 Ext.define('Hcv.controller.Pages', {
 	extend: 'Ext.app.Controller',
-	stores: ['Pages'],    
+	stores: ['Pages'],	
 	models: ['Page'],
 	views:
 	[
@@ -12,9 +12,9 @@ Ext.define('Hcv.controller.Pages', {
 	init: function() {
 		this.control({
 			'navpanel': {
-				itemclick: function(view, record, item, index, e) { 
-		            alert(record.get('text'));
-		        }
+				itemclick: function(view, record, item, index, e) {
+					alert(record.get('text'));
+				}
 			}
 		});
 	}

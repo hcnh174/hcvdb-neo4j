@@ -1,6 +1,6 @@
 Ext.define('Hcv.view.tool.Variability', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.variabilityform',
+	extend: 'Ext.window.Window',
+	alias : 'widget.variabilityform',
 
 	title: 'Variability',
 	width: 580,

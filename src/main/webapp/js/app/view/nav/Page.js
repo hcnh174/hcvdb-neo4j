@@ -1,34 +1,34 @@
 Ext.define('Hcv.view.nav.Page' ,{
 	extend: 'Ext.view.View',
-    alias: 'widget.page',
-    layout: 'fit',
-    store: 'Pages',
-    title: 'Page',
-    
-    initComponent: function() {
+	alias: 'widget.page',
+	layout: 'fit',
+	store: 'Pages',
+	title: 'Page',
+	
+	initComponent: function() {
 
-    	this.itemTpl=new Ext.XTemplate(
-		    '<tpl for=".">',
-		        '<h1>{title} ({id})</h1>',
-		        '<p>{text}</p>',
-		    '</tpl>'
+		this.itemTpl=new Ext.XTemplate(
+			'<tpl for=".">',
+				'<h1>{title} ({id})</h1>',
+				'<p>{text}</p>',
+			'</tpl>'
 		);
-        this.callParent(arguments);
-    },
-    
-    loadPage: function(pageid)
-    {
+		this.callParent(arguments);
+	},
+	
+	loadPage: function(pageid)
+	{
 		this.store.load({
 			id: pageid,
 			scope   : this,
-		    callback: function(records, operation, success) {
-		        console.log(records);
-		        var container=Ext.getCmp('centerContainer');
+			callback: function(records, operation, success) {
+				console.log(records);
+				var container=Ext.getCmp('centerContainer');
 				var panel=Ext.getCmp('centerPanel');
-		        container.remove(panel,true);
-		        container.add(this);
-		        container.doLayout();
-		    }
+				container.remove(panel,true);
+				container.add(this);
+				container.doLayout();
+			}
 		});
-    }
+	}
 });

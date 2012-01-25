@@ -6,13 +6,13 @@ Ext.define('Hcv.view.HbvPanel' ,{
 	items:
 	[
 		{
-		    title: 'Tab 1',
-		    bodyPadding: 10,
-		    html : 'A simple tab'
+			title: 'Tab 1',
+			bodyPadding: 10,
+			html : 'A simple tab'
 		},
 		{
-		    title: 'Tab 2',
-		    html : 'Another one'
+			title: 'Tab 2',
+			html : 'Another one'
 		}
 	]
 });

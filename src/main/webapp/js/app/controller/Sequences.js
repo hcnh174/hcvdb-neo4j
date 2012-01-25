@@ -1,6 +1,6 @@
 Ext.define('Hcv.controller.Sequences', {
 	extend: 'Ext.app.Controller',
-	stores: ['Sequences'],    
+	stores: ['Sequences'],	
 	models: ['Sequence'],
 	views:
 	[
@@ -26,7 +26,7 @@ Ext.define('Hcv.controller.Sequences', {
 	
 	updateSequence: function(button) {
 		console.log('clicked the Save button');
-		var win    = button.up('window'),
+		var win	= button.up('window'),
 			form   = win.down('form'),
 			record = form.getRecord(),
 			values = form.getValues();

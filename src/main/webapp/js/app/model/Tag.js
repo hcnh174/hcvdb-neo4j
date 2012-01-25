@@ -3,9 +3,9 @@ Ext.define('Hcv.model.Tag', {
 	idProperty: 'identifier',
 	fields:
 	[
-	 	{name: 'identifier'},
-	 	{name: 'type'},
-	 	{name: 'name'},	 	
-	 	{name: 'description'}
-	]	
+		{name: 'identifier'},
+		{name: 'type'},
+		{name: 'name'},
+		{name: 'description'}
+	]
 });

@@ -1,6 +1,6 @@
 Ext.define('Hcv.view.tags.TagCloud', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.tagcloud',
+	extend: 'Ext.window.Window',
+	alias : 'widget.tagcloud',
 	layout: 'fit',
 	width: 600,
 	height: 400,

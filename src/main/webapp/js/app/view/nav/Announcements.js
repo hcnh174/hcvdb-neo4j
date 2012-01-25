@@ -16,16 +16,16 @@ Ext.define('Hcv.view.nav.Announcements' ,{
 	//viewConfig: {forceFit: true},
 	plugins:
 	[
-	 	{
+		{
 			ptype: 'rowexpander',
 			rowBodyTpl : '<p style="background-color: white">{description}</p>'
-	 	}
+		}
 	],
 	
 	initComponent:function()
 	{		
 		Ext.regModel('Announcement', {
-		    fields:
+			fields:
 			[
 				{name: 'title'},
 				{name: 'author'},
@@ -37,28 +37,28 @@ Ext.define('Hcv.view.nav.Announcements' ,{
 		});
 
 		this.store=new Ext.data.Store({
-		    model: 'Announcement',
-		    autoLoad: true,
-		    proxy: {
-		        type: 'ajax',
-		        url : 'announcements.xml',
-		        reader: {
-			        type: 'xml',
-			        root: 'channel',
-			        record: 'item'
-			    }
-		    },		    
-		    sorters:
-	    	[
-	    		{
-	    			property: 'pubDate',
-	    			direction: 'DESC'
-	    		},
-	    		{
-	    			property: 'sequence',
-	    			direction: 'DESC'
-	    		}
-	    	],
+			model: 'Announcement',
+			autoLoad: true,
+			proxy: {
+				type: 'ajax',
+				url : 'announcements.xml',
+				reader: {
+					type: 'xml',
+					root: 'channel',
+					record: 'item'
+				}
+			},
+			sorters:
+			[
+				{
+					property: 'pubDate',
+					direction: 'DESC'
+				},
+				{
+					property: 'sequence',
+					direction: 'DESC'
+				}
+			]
 		});
 		
 
@@ -71,16 +71,16 @@ Ext.define('Hcv.view.nav.Announcements' ,{
 		
 		this.dockedItems=
 		[
-	  		{
-	  			xtype: 'pagingtoolbar',
-	  			store: this.store,
-	  			dock: 'top',
-	  			displayInfo: true,
-	  			pageSize: 1,
-	  			displayMsg: 'Displaying news {0} - {1} of {2}',
+			{
+				xtype: 'pagingtoolbar',
+				store: this.store,
+				dock: 'top',
+				displayInfo: true,
+				pageSize: 1,
+				displayMsg: 'Displaying news {0} - {1} of {2}',
 				emptyMsg: "No news to display"
-	  		}
-  		];
+			}
+		];
 		
 		this.store.on('load', function(){
 			//expander.expandRow(0);

@@ -6,8 +6,8 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 	initComponent: function() {
 		
 		this.items=[
-            this.createHomepageMenu(),'-',
-            this.createTestMenu(),'-',
+			this.createHomepageMenu(),'-',
+			this.createTestMenu(),'-',
 			this.createResourceMenu(),'-',
 			this.createBlastMenu(),'-',
 			this.createToolMenu(),'-',
@@ -56,16 +56,16 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 		});
 
 		var combo = Ext.create('Ext.form.field.ComboBox', {
-		    fieldLabel: '',
-		    displayField: 'keyword',
-		    valueField: 'identifier',
-		    //width: 200,
-		    //labelWidth: 130,
-		    store: store,
-		    queryMode: 'remote',
-		    typeAhead: true,
-		    itemId: 'searchtextbox',
-		    loadingText: 'Searching...',
+			fieldLabel: '',
+			displayField: 'keyword',
+			valueField: 'identifier',
+			//width: 200,
+			//labelWidth: 130,
+			store: store,
+			queryMode: 'remote',
+			typeAhead: true,
+			itemId: 'searchtextbox',
+			loadingText: 'Searching...',
 			width: 150, //width: 100,
 			listWidth: 200,
 			hideTrigger: true,
@@ -138,7 +138,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						{
 							hcvDirect.multiply(2, function(result)
 							{
-							    Ext.MessageBox.alert("Result", result);
+								Ext.MessageBox.alert("Result", result);
 							});
 						}
 					},
@@ -171,19 +171,19 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 							var view = Ext.widget('announcements');
 							var container=Ext.getCmp('centerContainer');
 							var panel=Ext.getCmp('centerPanel');
-					        container.remove(panel,true);
-					        container.add(view);
-					        container.doLayout();
+							container.remove(panel,true);
+							container.add(view);
+							container.doLayout();
 						}
 					},
 					{
 						text: 'Load genbank file',
 						handler: function()
 						{
-							var filename='g:/hcvdatabase.etc/sequence.gb';
+							var filename='h:/hcvdatabase.etc/sequence.gb';
 							hcvDirect.loadGenbankFile(filename,function(result)
 							{
-							    Ext.MessageBox.alert("loaded genbank data: ", result);
+								Ext.MessageBox.alert("loaded genbank data: ", result);
 							});
 						}
 					},
@@ -193,7 +193,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						{
 							hcvDirect.getTaxids(function(result)
 							{
-							    Ext.MessageBox.alert("got taxids: ", result);
+								Ext.MessageBox.alert("got taxids: ", result);
 							});
 						}
 					},
@@ -203,7 +203,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						{
 							hcvDirect.getRefids(function(result)
 							{
-							    Ext.MessageBox.alert("got refids: ", result);
+								Ext.MessageBox.alert("got refids: ", result);
 							});
 						}
 					},
@@ -214,15 +214,8 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 						{
 							hcvDirect.getRefs(function(result)
 							{
-							    Ext.MessageBox.alert("Result", result);
+								Ext.MessageBox.alert("Result", result);
 							});
-							
-//							var view = Ext.widget('refs');
-//							var container=Ext.getCmp('centerContainer');
-//							var panel=Ext.getCmp('centerPanel');
-//					        container.remove(panel,true);
-//					        container.add(view);
-//					        container.doLayout();
 						}
 					}
 				]
@@ -359,116 +352,4 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 		};
 		return menu;
 	}
-	
-	//////////////////////////////////////////////////////////////////////////////////
-	
-//	createSearchSelect:function()
-//	{
-//		var combo=new Ext.form.ComboBox(
-//		{
-//			store: new Ext.data.ArrayStore(
-//			{
-//				fields: ['value', 'display'],
-//				data: [['SEQUENCES','Sequences'],['GOOGLE','Google']]
-//			}),
-//			itemId: 'searchtype',
-//			hiddenName: 'type',
-//			valueField: 'value',
-//			displayField: 'display',
-//			width: 110,
-//			mode: 'local',
-//			triggerAction: 'all',
-//			value: 'SEQUENCES',
-//			selectOnFocus: true,
-//			forceSelection: true
-//		});
-//		return combo;
-//	},
-//	
-	/*
-	createSearchTextBox:function()
-	{
-		var self=this;
-		var store = new Ext.data.Store(
-		{
-			url: 'search/ajax/suggestions.json',
-			reader: new Ext.data.JsonReader(
-			{
-				root: 'results',
-				totalProperty: 'totalCount',
-				idProperty: 'keyword'
-			},
-			[
-				{name: 'keyword', mapping: 'keyword'},
-				{name: 'type', mapping: 'type'},
-				{name: 'identifier', mapping: 'identifier'}
-			]),
-			baseParams: {limit:20}
-		});
-	
-		//var tpl=new Ext.XTemplate('<tpl for"."><div class="x-combo-list-item">{keyword} ({type})</div>');
-		var combo=new Ext.form.ComboBox(
-		{
-			itemId: 'searchtextbox',
-			store: store,
-			minChars: 2,
-			displayField: 'keyword',
-			//typeAhead: true,
-			//typeAheadDelay: 500,
-			loadingText: 'Searching...',
-			width: 150, //width: 100,
-			listWidth: 200,
-			hideTrigger: true,
-			emptyText: 'Search...',
-			queryDelay: 800,
-			forceSelection: false,
-			foundMatch: false,
-			listeners:
-			{
-				select: function(field,record,index)
-				{
-					this.foundMatch=true;
-				},
-				specialkey: function(field,e)
-				{
-					if (e.getKey()===e.ENTER && this.foundMatch)
-						{self.submitSearchHandler();}
-				}
-			}
-		});
-		return combo;
-	},
-	
-	createSearchButton:function()
-	{
-		var button=new Ext.Button(
-		{
-			text: 'Go',
-			width: 32,
-			scope: this,
-			handler: this.submitSearchHandler	
-		});
-		return button;
-	},
-	
-	submitSearchHandler:function()
-	{
-		/*
-		var value=this.getComponent('searchtextbox').getValue().trim();
-		var type=this.getComponent('searchtype').getValue().trim();
-		if (value==='')
-			{return;}
-		var form=document.forms.searchform;
-		form.elements.query.value=value;
-		if (type==='SEQUENCES')
-		{
-			if (value.indexOf(' ')!==-1) // if the query contains spaces, wrap it with quotes
-				{form.elements.query.value='"'+value+'"';}
-		}
-		else if (type==='GOOGLE')
-			{form.action='search/google.html';}
-		else {throw 'unsupported search type: '+type;}
-		form.submit();
-	}
-*/
 });

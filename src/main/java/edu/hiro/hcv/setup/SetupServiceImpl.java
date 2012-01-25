@@ -57,6 +57,7 @@ public class SetupServiceImpl implements SetupService
 	@Autowired
 	private TaxonNodeRepository taxonNodeRepository;
 	
+	@Transactional("neo4jTransactionManager")
 	public void updateTaxa()
 	{
 		Query<Sequence> query=sequenceRepository.createQuery().retrievedFields(true,"taxon");//.filter("foo >", 12);
@@ -90,7 +91,7 @@ public class SetupServiceImpl implements SetupService
     			continue;
     		TaxonNode node=nodes.get(taxon.getId());
     		TaxonNode parent=nodes.get(taxon.getParent_id());
-    		node.setParent(node);
+    		node.setParent(parent);
     		parent.addChild(node);
     		System.out.println("creating relationsip between nodes "+taxon.getId()+" and "+taxon.getParent_id());
     	}
@@ -103,37 +104,6 @@ public class SetupServiceImpl implements SetupService
     	{
     		System.out.println("found node: "+node.getId());
     	}
-    	
-		/*
-		Transaction tx = graphDatabaseService.beginTx();
-        try {
-        	
-        	Map<Integer,Node> nodes=Maps.newHashMap();
-        	for (Taxon taxon : taxa)
-        	{
-        		Node node = graphDatabaseService.createNode();
-            	node.setProperty("type", "taxon");
-            	node.setProperty("taxid", taxon.getId());
-            	node.setProperty("name", taxon.getName());
-            	node.setProperty("desription", taxon.getDescription());
-            	System.out.println("creating taxon node: "+node.toString());
-            	nodes.put(taxon.getId(),node);
-        	}
-        	
-        	for (Taxon taxon : taxa)
-        	{
-        		if (taxon.getParent_id()==null)
-        			continue;
-        		Node node=nodes.get(taxon.getId());
-        		Node parent=nodes.get(taxon.getParent_id());
-        		Relationship relationship = parent.createRelationshipTo(node,DynamicRelationshipType.withName("LINEAGE"));
-        		System.out.println("creating relationsip between nodes "+taxon.getId()+" and "+taxon.getParent_id());
-        	}      	
-        	tx.success();
-        } finally {
-        	tx.finish();
-        }
-		 */
 	}
 	
 	public void updateRefs()
