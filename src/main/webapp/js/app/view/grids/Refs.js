@@ -11,16 +11,16 @@ Ext.define('Hcv.view.grids.Refs' ,{
 //	collapsible: false,
 //	pagesize: 20,
 	
-	plugins: [{
-		ptype: 'rowexpander',
-		rowBodyTpl : [			
-			'<p style="background-color:white;padding: 5px;">',
-			'<div class="references">{citation}</div>',
-			'<br/>',
-			'<div style="padding:2px;">{abstrct}</div>',
-			'</p>'
-		]
-	}],
+//	plugins: [{
+//		ptype: 'rowexpander',
+//		rowBodyTpl : [			
+//			'<p style="background-color:white;padding: 5px;">',
+//			'<div class="references">{citation}</div>',
+//			'<br/>',
+//			'<div style="padding:2px;">{abstrct}</div>',
+//			'</p>'
+//		]
+//	}],
 
 	initComponent: function() {
 		this.columns = [
@@ -30,13 +30,13 @@ Ext.define('Hcv.view.grids.Refs' ,{
 			{header: "PubMed", width: 60, sortable: true, dataIndex: 'id', align: 'right', renderer: this.renderPmid}
 			//{header: "Sequences", width: 50, sortable: true, dataIndex: 'numsequences', align: 'right', renderer: this.renderCount}
 		];
-		this.dockedItems=[
-		{
-			xtype: 'pagingtoolbar',
-			store: 'Refs',
-			dock: 'top',
-			displayInfo: true
-		}];
+//		this.dockedItems=[
+//		{
+//			xtype: 'pagingtoolbar',
+//			store: 'Refs',
+//			dock: 'top',
+//			displayInfo: true
+//		}];
 		this.callParent(arguments);
 	},
 

@@ -1,1 +1,4 @@
 mongod --bind_ip 127.0.0.1 --dbpath %MONGODB_HOME%\data --directoryperdb
+
+neo4jshell -path d:/workspace/db/neo4j-db
+neo4jshell -readonly -path d:/workspace/db/neo4j-db

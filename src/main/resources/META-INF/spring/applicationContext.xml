@@ -20,9 +20,10 @@
         <context:exclude-filter expression=".*_Roo_.*" type="regex"/>
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
-    
-	 <tx:annotation-driven mode="proxy"/> 
-	<!--
-	<tx:annotation-driven mode="aspectj" transaction-manager="neo4jTransactionManager"/>
+
+	<!--    
+	 <tx:annotation-driven mode="proxy"/> "aspectj"
 -->
+	<tx:annotation-driven mode="proxy" transaction-manager="neo4jTransactionManager"/>
+
 </beans>

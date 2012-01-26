@@ -20,6 +20,8 @@ import edu.hiro.hcv.morphia.SequenceRepository;
 import edu.hiro.hcv.morphia.Ref;
 import edu.hiro.hcv.morphia.RefRepository;
 import edu.hiro.hcv.morphia.Suggestion;
+import edu.hiro.hcv.neo4j.TaxonNode;
+import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
 import edu.hiro.hcv.setup.SetupService;
 
@@ -34,6 +36,9 @@ public class HcvDirect {
 	
 	@Autowired
 	private RefRepository refRepository;
+	
+	@Autowired
+	private TaxonNodeRepository taxonNodeRepository;
 	
 	@ExtDirectMethod
 	public long multiply(long num) {
@@ -63,9 +68,19 @@ public class HcvDirect {
 	}
 
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
-	public List<Ref> getRefs() {//ExtDirectStoreReadRequest request) {
+	public List<Ref> getRefs() {
 		List<Ref> refs=refRepository.find().asList();
 		return refs;
+	}
+	
+	@ExtDirectMethod
+	public void getTaxa() {
+		System.out.println("Listing taxa");
+    	for (TaxonNode node: taxonNodeRepository.findAll())
+    	{
+    		System.out.println("found node: "+node.toString());
+    	}
+    	System.out.println("done");
 	}
 	
 //	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)

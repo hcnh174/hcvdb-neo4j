@@ -106,6 +106,12 @@ public final class Dom4jHelper
 		return fixEntities(value);
 	}
 	
+	public static Integer getIntValue(Element element, String path)
+	{
+		String value=getValue(element,path,null);
+		return Integer.valueOf(value);
+	}
+	
 	public static String getText(Node node)
 	{
 		//System.out.println("node.getText()="+node.getText());

@@ -165,7 +165,6 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 					},
 					{
 						text: 'Announcements',
-						scope: this,
 						handler: function()
 						{
 							var view = Ext.widget('announcements');
@@ -209,15 +208,33 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 					},
 					{
 						text: 'Refs',
-						scope: this,
+						action: 'refs',
 						handler: function()
 						{
+							//var view = Ext.widget('refs');
+//							var container=Ext.getCmp('centerContainer');
+//							var panel=Ext.getCmp('centerPanel');
+//							container.remove(panel,true);
+//							container.add(view);
+//							container.doLayout();		
+							/*
 							hcvDirect.getRefs(function(result)
 							{
 								Ext.MessageBox.alert("Result", result);
 							});
+							*/
 						}
-					}
+					},
+					{
+						text: 'Get taxids',
+						handler: function()
+						{
+							hcvDirect.getTaxa(function(result)
+							{
+								Ext.MessageBox.alert("got taxa",result);
+							});
+						}
+					},
 				]
 			}
 		};

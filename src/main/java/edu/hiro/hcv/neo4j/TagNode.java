@@ -18,7 +18,7 @@ import com.google.common.collect.Sets;
  */
 @RooJavaBean
 @RooToString
-@RooEquals
+//@RooEquals
 @NodeEntity
 public class TagNode
 {   

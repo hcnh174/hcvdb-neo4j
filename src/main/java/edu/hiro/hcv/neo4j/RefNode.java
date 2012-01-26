@@ -1,26 +1,27 @@
-package edu.hiro.hcv.bio;
+package edu.hiro.hcv.neo4j;
 
 import java.util.List;
 
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.roo.addon.equals.RooEquals;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import edu.hiro.hcv.util.MathHelper;
 import edu.hiro.hcv.util.StringHelper;
 
 @RooJavaBean
 @RooToString
 @RooEquals
-public class Ref
+@NodeEntity
+public class RefNode
 {
 	public enum ReferenceType{JOURNAL,BOOK,CHAPTER};
 	
-	protected Integer id;
-	protected String identifier;
-	protected String name;
+	@GraphId protected Long nodeId;
+	@Indexed protected Integer id;
 	protected ReferenceType type=ReferenceType.JOURNAL;
-	protected Integer pmid=null;
 	protected String authors="";
 	protected String year="";
 	protected String title="";
@@ -31,37 +32,11 @@ public class Ref
 	protected String city="";
 	protected String abstrct="";
 
-	public Ref() {}
+	public RefNode() {}
 	
-	public Ref(String identifier, boolean visible)
+	public RefNode(Integer id)
 	{
-		this();
-		this.identifier=identifier;
-		this.name=identifier;
-		if (MathHelper.isInteger(identifier))
-			this.pmid=Integer.parseInt(identifier);
-	}
-	
-	public Ref(int pmid, boolean visible)
-	{
-		this(String.valueOf(pmid),visible);
-		this.pmid=pmid;
-	}
-
-	public String getAbbreviation()
-	{
-		return this.name;
-	}
-	
-	public String createAbbreviation()
-	{
-		if (StringHelper.isEmpty(this.authors))
-			return this.identifier;
-		List<String> authors=StringHelper.splitAsList(this.authors,",");
-		String firstauthor=authors.get(0);
-		if (!StringHelper.isEmpty(firstauthor) && firstauthor.indexOf(' ')!=-1)
-			firstauthor=firstauthor.substring(0,firstauthor.indexOf(' '));
-		return firstauthor+" et al., "+this.year;
+		this.id=id;
 	}
 
 	public String getCitation()
@@ -94,25 +69,15 @@ public class Ref
 		return buffer.toString();
 	}
 	
-	public void dump()
-	{
-		System.out.println("ID: "+this.pmid);
-        System.out.println("Journal: "+this.journal);
-    	System.out.println("Volume: "+this.volume);
-    	System.out.println("Pages: "+this.pages);
-    	System.out.println("Year: "+this.year);
-    	System.out.println("Title: "+this.title);
-    	System.out.println("Authors: "+this.authors);
-        System.out.println("Abstract: "+this.abstrct);
-        System.out.println("--------------------------\n");
-	}
 
-	public String getHtml()
+	public String createAbbreviation()
 	{
-		StringBuilder buffer=new StringBuilder();
-		buffer.append("(<a href=\"javascript:void(0)\" onclick=\"vardb.VarDB.refPopup('").append(this.identifier).append("')\">");
-		buffer.append(this.name);
-		buffer.append("</a>)");
-		return buffer.toString();
+		if (StringHelper.isEmpty(this.authors))
+			return this.id.toString();
+		List<String> authors=StringHelper.splitAsList(this.authors,",");
+		String firstauthor=authors.get(0);
+		if (!StringHelper.isEmpty(firstauthor) && firstauthor.indexOf(' ')!=-1)
+			firstauthor=firstauthor.substring(0,firstauthor.indexOf(' '));
+		return firstauthor+" et al., "+this.year;
 	}
 }

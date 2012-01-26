@@ -1,36 +1,27 @@
 package edu.hiro.hcv.setup;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.code.morphia.query.Query;
 import com.google.common.collect.Sets;
-import com.google.common.collect.Maps;
 
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.RelationshipType;
-import org.neo4j.graphdb.DynamicRelationshipType;
-import org.neo4j.graphdb.Transaction;
-
-import edu.hiro.hcv.morphia.Ref;
 import edu.hiro.hcv.morphia.RefRepository;
 import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.morphia.SequenceRepository;
-import edu.hiro.hcv.morphia.Taxon;
 import edu.hiro.hcv.morphia.TaxonRepository;
-import edu.hiro.hcv.neo4j.TagNodeRepository;
-import edu.hiro.hcv.neo4j.TaxonNodeRepository;
+import edu.hiro.hcv.neo4j.RefNode;
+import edu.hiro.hcv.neo4j.RefNodeRepository;
 import edu.hiro.hcv.neo4j.TaxonNode;
+import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
 import edu.hiro.hcv.util.MathHelper;
 import edu.hiro.hcv.util.StringHelper;
@@ -57,6 +48,47 @@ public class SetupServiceImpl implements SetupService
 	@Autowired
 	private TaxonNodeRepository taxonNodeRepository;
 	
+	@Autowired
+	private RefNodeRepository refNodeRepository;
+	
+	@Transactional("neo4jTransactionManager")
+	public void updateTaxa()
+	{
+		Query<Sequence> query=sequenceRepository.createQuery().retrievedFields(true,"taxon");
+		Set<Integer> taxids=Sets.newHashSet();
+		for (Sequence sequence : query.asList())
+		{
+			System.out.println("taxon="+sequence.getTaxon());
+			if (sequence.getTaxon()!=null)
+				taxids.add(sequence.getTaxon());
+		}
+		System.out.println("taxonids: "+StringHelper.join(taxids,","));
+		Map<Integer,TaxonNode> taxa=TaxonBuilder.getTaxa(taxids);
+    	for (TaxonNode taxon : taxa.values())
+    	{
+    		//System.out.println("saving taxon node: "+taxon.toString());
+        	//taxonNodeRepository.save(taxon);
+    	}
+    	
+    	for (TaxonNode taxon : taxa.values())
+    	{
+    		if (taxon.getParent_id()==null)
+    			continue;
+    		TaxonNode parent=taxa.get(taxon.getParent_id());
+    		taxon.setParent(parent);
+    		parent.add(taxon);
+    		System.out.println("creating relationsip between nodes "+taxon.getId()+" and "+taxon.getParent_id());
+    	}
+    	
+    	for (TaxonNode taxon : taxa.values())
+    	{
+    		System.out.println("saving taxon node: "+taxon.toString());
+    		taxonNodeRepository.save(taxon);
+    	}
+
+	}
+	
+	/*
 	@Transactional("neo4jTransactionManager")
 	public void updateTaxa()
 	{
@@ -69,12 +101,7 @@ public class SetupServiceImpl implements SetupService
 				taxids.add(sequence.getTaxon());
 		}
 		System.out.println("taxonids: "+StringHelper.join(taxids,","));
-		Collection<Taxon> taxa=TaxonBuilder.getTaxa(taxids);
-//		for (Taxon taxon : taxa)
-//		{
-//			System.out.println("saving taxon: "+taxon.toString());
-//			taxonRepository.save(taxon);
-//		}
+		Map<Integer,TaxonNode> nodes=TaxonBuilder.getTaxa(taxids);
 		
 		Map<Integer,TaxonNode> nodes=Maps.newHashMap();
     	for (Taxon taxon : taxa)
@@ -100,12 +127,11 @@ public class SetupServiceImpl implements SetupService
     	{
     		taxonNodeRepository.save(node);
     	}
-    	for (TaxonNode node: taxonNodeRepository.findAll())
-    	{
-    		System.out.println("found node: "+node.getId());
-    	}
+
 	}
+	*/
 	
+	@Transactional("neo4jTransactionManager")
 	public void updateRefs()
 	{
 		Query<Sequence> query=sequenceRepository.createQuery();
@@ -118,11 +144,18 @@ public class SetupServiceImpl implements SetupService
 				refids.add(refid);
 			}
 		}
-		Map<Integer,Ref> map=RefBuilder.getRefs(refids);
-		for (Ref ref : map.values())
+//		Map<Integer,Ref> map=RefBuilder.getRefs(refids);
+//		for (Ref ref : map.values())
+//		{
+//			System.out.println("saving ref: "+ref.toString());
+//			refRepository.save(ref);
+//		}
+		
+		Map<Integer,RefNode> map=RefBuilder.getRefs(refids);
+		for (RefNode ref : map.values())
 		{
 			System.out.println("saving ref: "+ref.toString());
-			refRepository.save(ref);
+			refNodeRepository.save(ref);
 		}
 		System.out.println("refids: "+StringHelper.join(refids,","));
 	}

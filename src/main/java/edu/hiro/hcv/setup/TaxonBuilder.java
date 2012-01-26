@@ -1,7 +1,5 @@
 package edu.hiro.hcv.setup;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,93 +12,89 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import edu.hiro.hcv.bio.GenbankHelper;
-import edu.hiro.hcv.morphia.Taxon;
+import edu.hiro.hcv.bio.TaxonomicLevel;
+import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.util.Batcher;
 import edu.hiro.hcv.util.BeanHelper;
 import edu.hiro.hcv.util.Dom4jHelper;
 import edu.hiro.hcv.util.FileHelper;
-import edu.hiro.hcv.util.ThreadHelper;
 
 public final class TaxonBuilder
 {
 	private TaxonBuilder(){}
 	
-	public static Collection<Taxon> getTaxa(Set<Integer> ids)//, MessageWriter writer)
+	public static Map<Integer,TaxonNode> getTaxa(Set<Integer> ids)//, MessageWriter writer)
 	{
 		final List<Integer> idlist=Lists.newArrayList(ids);
 		final BeanHelper beanhelper=new BeanHelper();
-		final Map<Integer,Taxon> lookup=Maps.newHashMap();
+		final Map<Integer,TaxonNode> taxa=Maps.newHashMap();
 		
-		Batcher batcher=new Batcher(GenbankHelper.BATCHSIZE, idlist.size(),GenbankHelper.DELAY)
+		Batcher batcher=new Batcher(GenbankHelper.BATCHSIZE, idlist.size(), GenbankHelper.DELAY)
 		{
 			protected void doBatch(final int fromIndex, final int toIndex, final int batchnumber)
 			{
 				String xml=GenbankHelper.downloadTaxa(idlist.subList(fromIndex,toIndex));
-				lookup.putAll(parseTaxa(xml));
+				parseTaxa(xml,taxa);
 			}
 		};
 		batcher.doInBatches();
-		
-		List<Taxon> rootTaxa=new ArrayList<Taxon>();
-		// assemble parents
-		for (Taxon taxon : lookup.values())
-		{
-			Integer parent_id=taxon.getParent_id();
-			if (parent_id==null)
-			{
-				rootTaxa.add(taxon);
-				continue;
-			}
-			Taxon parent=(Taxon)lookup.get(parent_id);
-			if (parent==null)
-				continue;
-			parent.add((Taxon)taxon);
-		}
-		for (Taxon taxon : rootTaxa)
-		{
-			//taxon.assemble(taxon);
-			System.out.println(taxon.toString());
-		}
-		return lookup.values();
+//		
+//		List<TaxonNode> rootTaxa=new ArrayList<TaxonNode>();
+//		// assemble parents
+//		for (TaxonNode taxon : lookup.values())
+//		{
+//			Integer parent_id=taxon.getParent_id();
+//			if (parent_id==null)
+//			{
+//				rootTaxa.add(taxon);
+//				continue;
+//			}
+//			TaxonNode parent=(TaxonNode)lookup.get(parent_id);
+//			if (parent==null)
+//				continue;
+//			//parent.add((TaxonNode)taxon);
+//		}
+//		for (TaxonNode taxon : rootTaxa)
+//		{
+//			//taxon.assemble(taxon);
+//			System.out.println(taxon.toString());
+//		}
+		return taxa;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static Map<Integer,Taxon> parseTaxa(String xml)
+	public static void parseTaxa(String xml, Map<Integer,TaxonNode> taxa)
 	{
 		FileHelper.writeFile("D:\\temp\\taxa.xml",xml);
 		Document document=Dom4jHelper.parse(xml);
 		Element root=document.getRootElement();
-		Map<Integer,Taxon> map=Maps.newLinkedHashMap();
 		for (Iterator<?> iter=root.selectNodes("/TaxaSet/Taxon").iterator();iter.hasNext();)
 		{
 			Element element=(Element)iter.next();
-			parseTaxon(element,map);
+			parseTaxon(element,taxa);
 		}
-		//List<Taxon> taxa=new ArrayList<Taxon>();
-		//taxa.addAll(map.values());
-		return map;
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	private static void parseTaxon(Element taxonnode, Map<Integer,Taxon> taxa)
+	private static void parseTaxon(Element taxonnode, Map<Integer,TaxonNode> taxa)
 	{
-		Taxon taxon=new Taxon(Dom4jHelper.getValue(taxonnode,"TaxId"));
+		TaxonNode taxon=new TaxonNode(Dom4jHelper.getIntValue(taxonnode,"TaxId"));
 		taxon.setName(Dom4jHelper.getValue(taxonnode,"ScientificName"));
-		taxon.setLevel(Taxon.TaxonomicLevel.lookup(Dom4jHelper.getValue(taxonnode,"Rank")));
-		taxon.setParent_id(Integer.parseInt(Dom4jHelper.getValue(taxonnode,"ParentTaxId")));
+		taxon.setLevel(TaxonomicLevel.lookup(Dom4jHelper.getValue(taxonnode,"Rank")));
+		taxon.setParent_id(Dom4jHelper.getIntValue(taxonnode,"ParentTaxId"));
 		taxa.put(taxon.getId(),taxon);
 		
-		Taxon parent=null;
+		TaxonNode parent=null;
 		for (Iterator<?> iter=taxonnode.selectNodes("LineageEx/Taxon").iterator();iter.hasNext();)
 		{
 			Element element=(Element)iter.next();
-			int taxid=Integer.parseInt(Dom4jHelper.getValue(element,"TaxId"));
+			int taxid=Dom4jHelper.getIntValue(element,"TaxId");
 			if (!taxa.containsKey(taxid))
 			{
-				Taxon ancestor=new Taxon(taxid);
+				TaxonNode ancestor=new TaxonNode(taxid);
 				ancestor.setName(Dom4jHelper.getValue(element,"ScientificName"));
-				ancestor.setLevel(Taxon.TaxonomicLevel.lookup(Dom4jHelper.getValue(element,"Rank")));
+				ancestor.setLevel(TaxonomicLevel.lookup(Dom4jHelper.getValue(element,"Rank")));
 				taxa.put(taxid,ancestor);
 				if (parent!=null)
 					ancestor.setParent_id(parent.getId());

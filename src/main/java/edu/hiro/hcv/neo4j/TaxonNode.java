@@ -6,28 +6,30 @@ import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
-import org.springframework.data.neo4j.fieldaccess.DynamicProperties;
-import org.springframework.data.neo4j.fieldaccess.DynamicPropertiesContainer;
-import org.springframework.roo.addon.equals.RooEquals;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import com.google.common.collect.Sets;
 
+import edu.hiro.hcv.bio.TaxonomicLevel;
+
 /**
  */
 @RooJavaBean
-@RooToString
+@RooToString(excludeFields={"parent","children"})
 @NodeEntity
 public class TaxonNode
 {   
-    @GraphId protected Long id;
-    protected Integer taxid;
+    @GraphId protected Long nodeId;
+    @Indexed protected Integer id;
     protected String name="";
-    //protected DynamicProperties properties = new DynamicPropertiesContainer();
-	
+	protected TaxonomicLevel level=TaxonomicLevel.UNKNOWN;
+	protected Integer parent_id;
+
+	@RelatedTo(type = "LINEAGE")
     protected TaxonNode parent;
     
 	@RelatedTo(type = "LINEAGE")
@@ -37,15 +39,14 @@ public class TaxonNode
     {
     }
     
-    public TaxonNode(Integer taxid, String name)
+    public TaxonNode(Integer id)
     {
-    	this.taxid=taxid;
-        this.name=name;
+    	this.id=id;
     }   
     
     /////////////////////////////////////////////////////////////
     
-    public void addChild(TaxonNode taxon)
+    public void add(TaxonNode taxon)
     {
     	children.add(taxon);
     }
@@ -69,4 +70,6 @@ public class TaxonNode
     public int hashCode() {
         return new HashCodeBuilder().append(id).toHashCode();
     }
+    
+   
 }

@@ -13,7 +13,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import edu.hiro.hcv.bio.GenbankHelper;
-import edu.hiro.hcv.morphia.Ref;
+import edu.hiro.hcv.neo4j.RefNode;
+import edu.hiro.hcv.neo4j.TaxonNode;
+import edu.hiro.hcv.util.Batcher;
 import edu.hiro.hcv.util.Dom4jHelper;
 import edu.hiro.hcv.util.MathHelper;
 import edu.hiro.hcv.util.StringHelper;
@@ -23,49 +25,63 @@ public final class RefBuilder
 {
 	private RefBuilder(){}
 	
-	public static Map<Integer,Ref> getRefs(Set<Integer> ids)//, MessageWriter writer)
-	{
-		Map<Integer,Ref> map=Maps.newHashMap();
-		List<Integer> idlist=Lists.newArrayList(ids);
-		int numids=idlist.size();
-		int numbatches=MathHelper.getNumbatches(numids,GenbankHelper.BATCHSIZE);		
-		for (int batchnumber=0;batchnumber<numbatches;batchnumber++)
-		{
-			int fromIndex=batchnumber*GenbankHelper.BATCHSIZE;
-			int toIndex=fromIndex+GenbankHelper.BATCHSIZE;
-			if (toIndex>=numids)
-				toIndex=numids;
-			System.out.println("batch load ids - from "+fromIndex+" to "+toIndex);
-			List<Integer> sublist=idlist.subList(fromIndex,toIndex);
-			String xml=GenbankHelper.downloadRefs(sublist);
-			List<Ref> refs=parseRefs(xml);
-			for (Ref ref : refs)
-			{
-				map.put(ref.getId(),ref);
-			}
-			if (batchnumber<numbatches-1)
-				ThreadHelper.sleep(GenbankHelper.DELAY);
-		}
-		return map;
-	}
+//	public static Map<Integer,RefNode> getRefs(Set<Integer> ids)//, MessageWriter writer)
+//	{
+//		Map<Integer,RefNode> map=Maps.newHashMap();
+//		List<Integer> idlist=Lists.newArrayList(ids);
+//		int numids=idlist.size();
+//		int numbatches=MathHelper.getNumbatches(numids,GenbankHelper.BATCHSIZE);		
+//		for (int batchnumber=0;batchnumber<numbatches;batchnumber++)
+//		{
+//			int fromIndex=batchnumber*GenbankHelper.BATCHSIZE;
+//			int toIndex=fromIndex+GenbankHelper.BATCHSIZE;
+//			if (toIndex>=numids)
+//				toIndex=numids;
+//			System.out.println("batch load ids - from "+fromIndex+" to "+toIndex);
+//			List<Integer> sublist=idlist.subList(fromIndex,toIndex);
+//			String xml=GenbankHelper.downloadRefs(sublist);
+//			List<RefNode> refs=parseRefs(xml);
+//			for (RefNode ref : refs)
+//			{
+//				map.put(ref.getId(),ref);
+//			}
+//			if (batchnumber<numbatches-1)
+//				ThreadHelper.sleep(GenbankHelper.DELAY);
+//		}
+//		return map;
+//	}
 	
-    public static List<Ref> parseRefs(String xml)
+	public static Map<Integer,RefNode> getRefs(Set<Integer> ids)//, MessageWriter writer)
 	{
-		Document document=Dom4jHelper.parse(xml);
-		Element root=document.getRootElement();
-		List<Ref> refs=new ArrayList<Ref>();
-		for (Iterator<?> iter=root.selectNodes("/PubmedArticleSet/PubmedArticle").iterator();iter.hasNext();)
+		final Map<Integer,RefNode> refs=Maps.newHashMap();
+		final List<Integer> idlist=Lists.newArrayList(ids);
+		Batcher batcher=new Batcher(GenbankHelper.BATCHSIZE, idlist.size(), GenbankHelper.DELAY)
 		{
-			Element element=(Element)iter.next();
-			Ref ref=parseRef(element);
-			refs.add(ref);
-		}
+			protected void doBatch(final int fromIndex, final int toIndex, final int batchnumber)
+			{
+				String xml=GenbankHelper.downloadRefs(idlist.subList(fromIndex,toIndex));
+				parseRefs(xml,refs);
+			}
+		};
+		batcher.doInBatches();
 		return refs;
 	}
 	
-	private static Ref parseRef(Element refnode)
+    public static void parseRefs(String xml, Map<Integer,RefNode> refs)
+	{
+		Document document=Dom4jHelper.parse(xml);
+		Element root=document.getRootElement();
+		for (Iterator<?> iter=root.selectNodes("/PubmedArticleSet/PubmedArticle").iterator();iter.hasNext();)
+		{
+			Element element=(Element)iter.next();
+			RefNode ref=parseRef(element);
+			refs.put(ref.getId(),ref);
+		}
+	}
+	
+	private static RefNode parseRef(Element refnode)
 	{	
-		Ref ref=new Ref(Integer.valueOf(Dom4jHelper.getValue(refnode,"MedlineCitation/PMID")));
+		RefNode ref=new RefNode(Dom4jHelper.getIntValue(refnode,"MedlineCitation/PMID"));
 		Element article=(Element)refnode.selectSingleNode("MedlineCitation/Article");
 		ref.setAuthors(getAuthors(article));
     	ref.setTitle(Dom4jHelper.getValue(article,"ArticleTitle"));
