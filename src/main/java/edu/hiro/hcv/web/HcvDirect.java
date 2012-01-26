@@ -16,10 +16,10 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
 
 import com.google.common.collect.Lists;
 
-import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.morphia.Suggestion;
 import edu.hiro.hcv.neo4j.RefNode;
 import edu.hiro.hcv.neo4j.RefNodeRepository;
+import edu.hiro.hcv.neo4j.SequenceNode;
 import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
@@ -60,11 +60,20 @@ public class HcvDirect {
 		setupService.updateRefs();
 	}
 	
+	/*
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
 	public ExtDirectStoreResponse<Sequence> getSequences(ExtDirectStoreReadRequest request) {
 		System.out.println("request1: "+request.toString());
 		List<Sequence> sequences=sequenceService.getSequences();
 		return new ExtDirectStoreResponse<Sequence>(sequences.size(), sequences);
+	}
+	*/
+	
+	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
+	public ExtDirectStoreResponse<SequenceNode> getSequences(ExtDirectStoreReadRequest request) {
+		System.out.println("request1: "+request.toString());
+		List<SequenceNode> sequences=sequenceService.getSequences();
+		return new ExtDirectStoreResponse<SequenceNode>(sequences.size(), sequences);
 	}
 
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)

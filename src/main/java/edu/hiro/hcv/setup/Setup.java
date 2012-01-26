@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
 
-import edu.hiro.hcv.morphia.Sequence;
+import edu.hiro.hcv.neo4j.SequenceNode;
 
 //import groovy.lang.GroovyShell;
 
@@ -24,8 +24,8 @@ public class Setup {
 		//String filename="d:/temp/AB435162.2.gb";
 		//String filename="d:/temp/NC_004102.1.gb";
 		String filename="h:/hcvdatabase.etc/sequence.gb";
-		List<Sequence> sequences=GenbankSequenceBuilder.parseFile(filename);
-		Sequence sequence=sequences.get(0);
+		List<SequenceNode> sequences=GenbankSequenceBuilder.parseFile(filename);
+		SequenceNode sequence=sequences.get(0);
 		//sequenceRepository.save(sequence);
 		System.out.println("sequence="+sequence.toString());
 		

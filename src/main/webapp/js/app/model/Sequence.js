@@ -6,7 +6,7 @@ Ext.define('Hcv.model.Sequence', {
 		{name: 'accession'},
 		{name: 'length', type: 'int'},
 		{name: 'gi', type: 'int'},
-		{name: 'taxon', type: 'int'},
+		{name: 'taxon_id', type: 'int'},
 		{name: 'description'},
 		{name: 'sequence'}
 	]

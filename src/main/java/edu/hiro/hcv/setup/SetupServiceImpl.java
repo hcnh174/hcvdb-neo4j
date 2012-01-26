@@ -20,6 +20,8 @@ import edu.hiro.hcv.morphia.SequenceRepository;
 import edu.hiro.hcv.morphia.TaxonRepository;
 import edu.hiro.hcv.neo4j.RefNode;
 import edu.hiro.hcv.neo4j.RefNodeRepository;
+import edu.hiro.hcv.neo4j.SequenceNode;
+import edu.hiro.hcv.neo4j.SequenceNodeRepository;
 import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
@@ -27,7 +29,7 @@ import edu.hiro.hcv.util.MathHelper;
 import edu.hiro.hcv.util.StringHelper;
 
 @Service("setupService")
-//@Transactional
+@Transactional("neo4jTransactionManager")
 public class SetupServiceImpl implements SetupService
 {	
 	@Resource(name="sequenceService")
@@ -46,30 +48,26 @@ public class SetupServiceImpl implements SetupService
 	private GraphDatabaseService graphDatabaseService;
 	
 	@Autowired
+	private SequenceNodeRepository sequenceNodeRepository;
+	
+	@Autowired
 	private TaxonNodeRepository taxonNodeRepository;
 	
 	@Autowired
 	private RefNodeRepository refNodeRepository;
 	
-	@Transactional("neo4jTransactionManager")
 	public void updateTaxa()
 	{
 		Query<Sequence> query=sequenceRepository.createQuery().retrievedFields(true,"taxon");
 		Set<Integer> taxids=Sets.newHashSet();
 		for (Sequence sequence : query.asList())
 		{
-			System.out.println("taxon="+sequence.getTaxon());
-			if (sequence.getTaxon()!=null)
-				taxids.add(sequence.getTaxon());
+			System.out.println("taxon="+sequence.getTaxon_id());
+			if (sequence.getTaxon_id()!=null)
+				taxids.add(sequence.getTaxon_id());
 		}
 		System.out.println("taxonids: "+StringHelper.join(taxids,","));
-		Map<Integer,TaxonNode> taxa=TaxonBuilder.getTaxa(taxids);
-    	for (TaxonNode taxon : taxa.values())
-    	{
-    		//System.out.println("saving taxon node: "+taxon.toString());
-        	//taxonNodeRepository.save(taxon);
-    	}
-    	
+		Map<Integer,TaxonNode> taxa=TaxonBuilder.getTaxa(taxids);    	
     	for (TaxonNode taxon : taxa.values())
     	{
     		if (taxon.getParent_id()==null)
@@ -87,51 +85,7 @@ public class SetupServiceImpl implements SetupService
     	}
 
 	}
-	
-	/*
-	@Transactional("neo4jTransactionManager")
-	public void updateTaxa()
-	{
-		Query<Sequence> query=sequenceRepository.createQuery().retrievedFields(true,"taxon");//.filter("foo >", 12);
-		Set<Integer> taxids=Sets.newHashSet();
-		for (Sequence sequence : query.asList())
-		{
-			System.out.println("taxon="+sequence.getTaxon());
-			if (sequence.getTaxon()!=null)
-				taxids.add(sequence.getTaxon());
-		}
-		System.out.println("taxonids: "+StringHelper.join(taxids,","));
-		Map<Integer,TaxonNode> nodes=TaxonBuilder.getTaxa(taxids);
-		
-		Map<Integer,TaxonNode> nodes=Maps.newHashMap();
-    	for (Taxon taxon : taxa)
-    	{
-    		TaxonNode node = new TaxonNode(taxon.getId(), taxon.getName());
-    		System.out.println("creating taxon node: "+node.toString());
-        	nodes.put(taxon.getId(),node);
-        	taxonNodeRepository.save(node);
-    	}
-    	
-    	for (Taxon taxon : taxa)
-    	{
-    		if (taxon.getParent_id()==null)
-    			continue;
-    		TaxonNode node=nodes.get(taxon.getId());
-    		TaxonNode parent=nodes.get(taxon.getParent_id());
-    		node.setParent(parent);
-    		parent.addChild(node);
-    		System.out.println("creating relationsip between nodes "+taxon.getId()+" and "+taxon.getParent_id());
-    	}
-    	
-    	for (TaxonNode node : nodes.values())
-    	{
-    		taxonNodeRepository.save(node);
-    	}
 
-	}
-	*/
-	
-	@Transactional("neo4jTransactionManager")
 	public void updateRefs()
 	{
 		Query<Sequence> query=sequenceRepository.createQuery();
@@ -144,12 +98,6 @@ public class SetupServiceImpl implements SetupService
 				refids.add(refid);
 			}
 		}
-//		Map<Integer,Ref> map=RefBuilder.getRefs(refids);
-//		for (Ref ref : map.values())
-//		{
-//			System.out.println("saving ref: "+ref.toString());
-//			refRepository.save(ref);
-//		}
 		
 		Map<Integer,RefNode> map=RefBuilder.getRefs(refids);
 		for (RefNode ref : map.values())
@@ -162,11 +110,11 @@ public class SetupServiceImpl implements SetupService
 	
 	public void loadGenbankFile(String filename)
 	{
-		List<Sequence> sequences=GenbankSequenceBuilder.parseFile(filename);
-		for (Sequence sequence : sequences)
+		List<SequenceNode> sequences=GenbankSequenceBuilder.parseFile(filename);
+		for (SequenceNode sequence : sequences)
 		{
 			System.out.println("saving sequene: "+sequence.getAccession());
-			sequenceRepository.save(sequence);
+			sequenceNodeRepository.save(sequence);
 		}
 		System.out.println("finished loading");
 	}
@@ -176,7 +124,7 @@ public class SetupServiceImpl implements SetupService
 		System.out.println("Loading sample data");
 		for (int i=0;i<num; i++)
 		{			
-			sequenceRepository.save(new Sequence("S"+MathHelper.randomInteger(1000),"acgtcttgctgtgctgctgctacctgtgctgctgctactgctactgctgctacctgctgctgctacgttgctgctgcttgctgctgctacaccacgtctcgtc"));
+			sequenceNodeRepository.save(new SequenceNode("S"+MathHelper.randomInteger(1000),"acgtcttgctgtgctgctgctacctgtgctgctgctactgctactgctgctacctgctgctgctacgttgctgctgcttgctgctgctacaccacgtctcgtc"));
 		}
 		System.out.println("Finished");
 	}

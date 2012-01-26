@@ -26,7 +26,7 @@ public class Sequence
 	protected Integer length;
 	protected Integer gi;
 	protected String description="";
-	protected Integer taxon;
+	protected Integer taxon_id;
 
 	@Embedded protected List<String> comments=Lists.newArrayList();
 	@Embedded protected Set<Feature> features=Sets.newHashSet();	
