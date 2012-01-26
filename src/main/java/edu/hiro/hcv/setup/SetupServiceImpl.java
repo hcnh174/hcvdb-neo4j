@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
 import edu.hiro.hcv.util.MathHelper;
+import edu.hiro.hcv.util.Neo4jHelper;
 import edu.hiro.hcv.util.StringHelper;
 
 @Service("setupService")
@@ -38,14 +40,17 @@ public class SetupServiceImpl implements SetupService
 	@Resource(name="sequenceRepository")
 	private SequenceRepository sequenceRepository;
 	
-	@Resource(name="refRepository")
-	private RefRepository refRepository;
-	
-	@Resource(name="taxonRepository")
-	private TaxonRepository taxonRepository;
+//	@Resource(name="refRepository")
+//	private RefRepository refRepository;
+//	
+//	@Resource(name="taxonRepository")
+//	private TaxonRepository taxonRepository;
 	
 	@Resource(name="graphDatabaseService")
 	private GraphDatabaseService graphDatabaseService;
+
+	@Autowired
+	private Neo4jTemplate neo4jTemplate;
 	
 	@Autowired
 	private SequenceNodeRepository sequenceNodeRepository;
@@ -55,6 +60,7 @@ public class SetupServiceImpl implements SetupService
 	
 	@Autowired
 	private RefNodeRepository refNodeRepository;
+
 	
 	public void updateTaxa()
 	{
@@ -128,6 +134,11 @@ public class SetupServiceImpl implements SetupService
 		}
 		System.out.println("Finished");
 	}
+	
+	public void clearDatabase()
+    {
+		Neo4jHelper.clearDatabase(neo4jTemplate);
+    }
 	
 	/*
 	public void loadSequences(String filename) {

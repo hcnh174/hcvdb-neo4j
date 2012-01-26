@@ -7,4 +7,5 @@ public interface SetupService
 	void updateRefs();
 	void loadGenbankFile(String filename);
 	void loadSampleData(int num);
+	void clearDatabase();
 }

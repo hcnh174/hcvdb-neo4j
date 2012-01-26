@@ -60,6 +60,11 @@ public class HcvDirect {
 		setupService.updateRefs();
 	}
 	
+	@ExtDirectMethod
+	public void clearDatabase() {
+		setupService.clearDatabase();
+	}
+	
 	/*
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
 	public ExtDirectStoreResponse<Sequence> getSequences(ExtDirectStoreReadRequest request) {

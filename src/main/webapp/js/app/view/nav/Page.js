@@ -3,32 +3,29 @@ Ext.define('Hcv.view.nav.Page' ,{
 	alias: 'widget.page',
 	layout: 'fit',
 	store: 'Pages',
-	title: 'Page',
+	title: 'Page',	
+	tabConfig:
+	{
+		closable: true
+	},
 	
 	initComponent: function() {
 
 		this.itemTpl=new Ext.XTemplate(
 			'<tpl for=".">',
-				'<h1>{title} ({id})</h1>',
+				'<h1>{title}</h1>',
 				'<p>{text}</p>',
 			'</tpl>'
 		);
 		this.callParent(arguments);
 	},
 	
-	loadPage: function(pageid)
+	loadPage: function(pageid, callback)
 	{
 		this.store.load({
 			id: pageid,
-			scope   : this,
-			callback: function(records, operation, success) {
-				console.log(records);
-				var container=Ext.getCmp('centerContainer');
-				var panel=Ext.getCmp('centerPanel');
-				container.remove(panel,true);
-				container.add(this);
-				container.doLayout();
-			}
+			scope: this,
+			callback: callback
 		});
 	}
 });

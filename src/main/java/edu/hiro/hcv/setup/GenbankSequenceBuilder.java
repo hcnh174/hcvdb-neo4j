@@ -15,7 +15,7 @@ import org.biojavax.bio.seq.RichSequenceIterator;
 import com.google.common.collect.Lists;
 
 import edu.hiro.hcv.bio.BiojavaHelper;
-import edu.hiro.hcv.morphia.Feature;
+import edu.hiro.hcv.neo4j.FeatureNode;
 import edu.hiro.hcv.neo4j.SequenceNode;
 import edu.hiro.hcv.util.CException;
 import edu.hiro.hcv.util.FileHelper;
@@ -96,26 +96,22 @@ public class GenbankSequenceBuilder
 		{
 			sequence.addRef(ref);
 		}
-		/*
 		for (Iterator<?> i = richsequence.features();i.hasNext();)
 		{
 			RichFeature richfeature = (RichFeature)i.next();
-			Feature feature=convertFeature(sequence,richsequence,richfeature);
+			FeatureNode feature=convertFeature(sequence,richsequence,richfeature);
 			sequence.addFeature(feature);
 		}
-		*/
 		return sequence;
 	}
 	
-	/*
-	private static Feature convertFeature(SequenceNode sequence, RichSequence richsequence, RichFeature richfeature)
+	private static FeatureNode convertFeature(SequenceNode sequence, RichSequence richsequence, RichFeature richfeature)
 	{
-		//BiojavaHelper.display(richfeature);
 		String featuretype=richfeature.getType();		
 		int start=richfeature.getLocation().getMin();
 		int end=richfeature.getLocation().getMax();
 		String seq=BiojavaHelper.extractSubsequence(richsequence,richfeature);
-		Feature feature=new Feature(featuretype,start,end,seq);
+		FeatureNode feature=new FeatureNode(featuretype,start,end,seq);
 		
 		Map<String,String> annotations=BiojavaHelper.getAnnotations(richfeature);		
 		for (String annotation : annotations.keySet())
@@ -130,5 +126,4 @@ public class GenbankSequenceBuilder
 		}
 		return feature;
 	}
-	*/
 }

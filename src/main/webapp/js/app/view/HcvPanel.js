@@ -27,10 +27,6 @@ Ext.define('Hcv.view.HcvPanel' ,{
 							collapsible: false,
 							title: 'Navigation',
 							width: 150
-						},
-						{
-							xtype: 'page',
-							region: 'center'
 						}
 					]
 				}

@@ -15,6 +15,7 @@ import edu.hiro.hcv.morphia.SequenceRepository;
 import edu.hiro.hcv.neo4j.SequenceNode;
 import edu.hiro.hcv.neo4j.SequenceNodeRepository;
 import edu.hiro.hcv.util.Neo4jHelper;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 
 @Service("sequenceService")
 @Transactional
@@ -31,13 +32,15 @@ public class SequenceServiceImpl implements SequenceService
 	
 	@Autowired
 	private SequenceNodeRepository sequenceNodeRepository;
-	
+
 	public List<SequenceNode> getSequences()
 	{
 		List<SequenceNode> sequences = Neo4jHelper.asList(sequenceNodeRepository.findAll());
 		//System.out.println("ids: "+ids);
 		return sequences;
 	}
+	
+
 	
 	/*
 	public Page<Sequence> getSequences(Pageable pageable)

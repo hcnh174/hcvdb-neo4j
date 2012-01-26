@@ -2,12 +2,16 @@ package edu.hiro.hcv.neo4j;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.google.common.collect.Sets;
 
 import edu.hiro.hcv.util.StringHelper;
 
@@ -29,14 +33,12 @@ public class SequenceNode
 	protected String description="";
 	protected Integer taxon_id;
 	protected String comments;
-	protected String refs;
+	protected String ref_ids;
+	//protected Taxon taxon;
+	
+	@RelatedTo(type="FEATURE") //, direction = Direction.BOTH
+	protected Set<FeatureNode> features=Sets.newHashSet();
 
-//	protected List<String> comments=Lists.newArrayList();
-//	protected Set<Feature> features=Sets.newHashSet();	
-//	protected Set<Integer> refs=Sets.newHashSet();
-//	protected Set<String> tags=Sets.newHashSet();
-	//protected DynamicProperties properties = new DynamicPropertiesContainer();
-		
 	//@RelatedTo(type = "TAG") //, direction = Direction.BOTH
 	//protected Set<TagNode> tags=Sets.newHashSet();
 
@@ -44,18 +46,24 @@ public class SequenceNode
     {
     }
     
-    public SequenceNode(String accession)
-    {
-        this.accession = accession;
-    }  
+//    public SequenceNode(String accession)
+//    {
+//        this.accession = accession;
+//    }  
     
     public SequenceNode(String accession, String sequence)
     {
-    	this(accession);
+    	this.accession = accession;
         this.sequence = sequence;
+        this.length=sequence.length();
     }   
     
     /////////////////////////////////////////////////////////////
+    
+    public void addFeature(FeatureNode feature)
+    {
+    	this.features.add(feature);
+    }
     
     public void addComment(String comment)
     {
@@ -66,9 +74,9 @@ public class SequenceNode
     
     public void addRef(Integer ref)
     {
-    	List<Integer> arr=StringHelper.splitInts(this.refs,REF_DELIMITER);
+    	List<Integer> arr=StringHelper.splitInts(this.ref_ids,REF_DELIMITER);
     	arr.add(ref);
-    	this.refs=StringHelper.join(arr,REF_DELIMITER);
+    	this.ref_ids=StringHelper.join(arr,REF_DELIMITER);
     }
     
     /*

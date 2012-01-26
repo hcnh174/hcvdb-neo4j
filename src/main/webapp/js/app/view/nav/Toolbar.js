@@ -144,15 +144,15 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 					},
 					{
 						text: 'Page',
-						//action: 'page',
-						scope: this,
-						handler: function()
-						{
-							console.log('trying to update page');
-							//Hcv.util.Util.clearExtjsComponent(panel);
-							var view = Ext.widget('page',{pageid: 'welcome'});
-							view.loadPage(1);					
-						}
+						action: 'page'
+//						scope: this,
+//						handler: function()
+//						{
+//							console.log('trying to update page');
+//							//Hcv.util.Util.clearExtjsComponent(panel);
+//							var view = Ext.widget('page',{pageid: 'welcome'});
+//							view.loadPage(1);					
+//						}
 					},
 					{
 						text: 'Term',
@@ -166,21 +166,12 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 					{
 						text: 'Announcements',
 						action: 'announcements'
-//						handler: function()
-//						{
-//							var view = Ext.widget('announcements');
-//							var container=Ext.getCmp('centerContainer');
-//							var panel=Ext.getCmp('centerPanel');
-//							container.remove(panel,true);
-//							container.add(view);
-//							container.doLayout();
-//						}
 					},
 					{
 						text: 'Load genbank file',
 						handler: function()
 						{
-							var filename='g:/hcvdatabase.etc/sequence.gb';
+							var filename='d:/temp/sequence.gb';
 							hcvDirect.loadGenbankFile(filename,function(result)
 							{
 								Ext.MessageBox.alert("loaded genbank data: ", result);
@@ -209,22 +200,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 					},
 					{
 						text: 'Refs',
-						action: 'refs',
-						handler: function()
-						{
-							//var view = Ext.widget('refs');
-//							var container=Ext.getCmp('centerContainer');
-//							var panel=Ext.getCmp('centerPanel');
-//							container.remove(panel,true);
-//							container.add(view);
-//							container.doLayout();		
-							/*
-							hcvDirect.getRefs(function(result)
-							{
-								Ext.MessageBox.alert("Result", result);
-							});
-							*/
-						}
+						action: 'refs'
 					},
 					{
 						text: 'Get taxids',
@@ -236,6 +212,16 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 							});
 						}
 					},
+					{
+						text: 'Clear database',
+						handler: function()
+						{
+							hcvDirect.clearDatabase(function(result)
+							{
+								Ext.MessageBox.alert("database cleared",result);
+							});
+						}
+					}
 				]
 			}
 		};

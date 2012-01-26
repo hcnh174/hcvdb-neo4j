@@ -27,20 +27,33 @@ Ext.define('Hcv.controller.Pages', {
 				click: function()
 				{
 					var view = Ext.widget('refs');
-					//var tabpanel = Ext.ComponentQuery.query('viewport hcvpanel tabpanel')[0];
-					this.getHcvtabpanel().add(view);
-					this.getHcvtabpanel().setActiveTab(view);
+					this.addTab(view);
 				}
 			},
 			'navbar menuitem[action=announcements]': {
 				click: function()
 				{
 					var view = Ext.widget('announcements');
-					this.getHcvtabpanel().add(view);
-					this.getHcvtabpanel().setActiveTab(view);
+					this.addTab(view);
 				}
-			}			
+			},
+			'navbar menuitem[action=page]': {
+				click: function()
+				{
+					var view = Ext.widget('page',{pageid: 'welcome'});
+					var self=this;
+					view.loadPage(1, function(){
+						self.addTab(view);
+					});
+				}
+			}
 		});
+	},
+	
+	addTab: function(tab)
+	{
+		this.getHcvtabpanel().add(tab);
+		this.getHcvtabpanel().setActiveTab(tab);
 	}
 });
 
