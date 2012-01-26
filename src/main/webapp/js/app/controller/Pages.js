@@ -1,7 +1,7 @@
 Ext.define('Hcv.controller.Pages', {
 	extend: 'Ext.app.Controller',
-	stores: ['Pages'],	
-	models: ['Page'],
+	stores: ['Pages','Refs'],
+	models: ['Page','Ref'],
 	views:
 	[
 		'nav.Toolbar',
@@ -10,6 +10,10 @@ Ext.define('Hcv.controller.Pages', {
 	],
 	refs:
 	[
+		{
+		    ref: 'hcvtabpanel',
+		    selector: 'viewport hcvpanel tabpanel'
+		}
 	],
 	
 	init: function() {
@@ -23,11 +27,19 @@ Ext.define('Hcv.controller.Pages', {
 				click: function()
 				{
 					var view = Ext.widget('refs');
-					var tabpanel = Ext.ComponentQuery.query('viewport hcvpanel tabpanel')[0];
-					tabpanel.add(view);
-					tabpanel.setActiveTab(view);
+					//var tabpanel = Ext.ComponentQuery.query('viewport hcvpanel tabpanel')[0];
+					this.getHcvtabpanel().add(view);
+					this.getHcvtabpanel().setActiveTab(view);
 				}
-			}
+			},
+			'navbar menuitem[action=announcements]': {
+				click: function()
+				{
+					var view = Ext.widget('announcements');
+					this.getHcvtabpanel().add(view);
+					this.getHcvtabpanel().setActiveTab(view);
+				}
+			}			
 		});
 	}
 });

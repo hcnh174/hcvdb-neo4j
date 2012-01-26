@@ -1,0 +1,10 @@
+http://docs.neo4j.org/chunked/snapshot/query-match.html#match-variable-length-relationships
+
+#cypher queries
+START a=node(3)
+MATCH a-[:FRIEND*1..3]->x
+RETURN a,x
+
+
+MATCH a-[:FRIEND*3..3]->x
+

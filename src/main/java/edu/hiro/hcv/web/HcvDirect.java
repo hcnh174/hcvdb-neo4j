@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.neo4j.helpers.collection.IteratorUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
@@ -16,10 +17,9 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
 import com.google.common.collect.Lists;
 
 import edu.hiro.hcv.morphia.Sequence;
-import edu.hiro.hcv.morphia.SequenceRepository;
-import edu.hiro.hcv.morphia.Ref;
-import edu.hiro.hcv.morphia.RefRepository;
 import edu.hiro.hcv.morphia.Suggestion;
+import edu.hiro.hcv.neo4j.RefNode;
+import edu.hiro.hcv.neo4j.RefNodeRepository;
 import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
@@ -35,7 +35,7 @@ public class HcvDirect {
 	private SetupService setupService;
 	
 	@Autowired
-	private RefRepository refRepository;
+	private RefNodeRepository refNodeRepository;
 	
 	@Autowired
 	private TaxonNodeRepository taxonNodeRepository;
@@ -68,8 +68,8 @@ public class HcvDirect {
 	}
 
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
-	public List<Ref> getRefs() {
-		List<Ref> refs=refRepository.find().asList();
+	public List<RefNode> getRefs() {
+		List<RefNode> refs=Lists.newArrayList(IteratorUtil.asCollection(refNodeRepository.findAll()));
 		return refs;
 	}
 	

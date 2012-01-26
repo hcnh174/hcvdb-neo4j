@@ -11,20 +11,20 @@ Ext.define('Hcv.view.grids.Refs' ,{
 //	collapsible: false,
 //	pagesize: 20,
 	
-//	plugins: [{
-//		ptype: 'rowexpander',
-//		rowBodyTpl : [			
-//			'<p style="background-color:white;padding: 5px;">',
-//			'<div class="references">{citation}</div>',
-//			'<br/>',
-//			'<div style="padding:2px;">{abstrct}</div>',
-//			'</p>'
-//		]
-//	}],
+	plugins: [{
+		ptype: 'rowexpander',
+		rowBodyTpl : [			
+			'<p style="background-color:white;padding: 5px;">',
+			'<div class="references">{citation}</div>',
+			'<br/>',
+			'<div style="padding:2px;">{abstrct}</div>',
+			'</p>'
+		]
+	}],
 
 	initComponent: function() {
 		this.columns = [
-			{header: "Name", width: 125, sortable: true, dataIndex: 'name'},
+			{header: "Authors", width: 125, sortable: true, dataIndex: 'authors'},
 			{header: "Title", width: 230, sortable: true, dataIndex: 'title'},
 			{header: "Year", width: 60, sortable: true, dataIndex: 'year'},
 			{header: "PubMed", width: 60, sortable: true, dataIndex: 'id', align: 'right', renderer: this.renderPmid}
@@ -43,7 +43,7 @@ Ext.define('Hcv.view.grids.Refs' ,{
 	renderPmid:function(value, p, record)
 	{
 		var href='http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&list_uids={0}&query_hl=22&itool=pubmed_docsum';
-		return String.format('<span class="pmid"><a href="'+href+'" target="_blank">{0}</a></span>',value);
+		return Ext.String.format('<span class="pmid"><a href="'+href+'" target="_blank">{0}</a></span>',value);
 	}
 	
 	//initComponent:function()

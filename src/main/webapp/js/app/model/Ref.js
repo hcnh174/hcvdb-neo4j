@@ -13,6 +13,7 @@ Ext.define('Hcv.model.Ref', {
 		{name: 'pages'},
 		{name: 'publisher'},
 		{name: 'city'},
-		{name: 'abstrct'}
+		{name: 'abstrct'},
+		{name: 'citation'}
 	]
 });

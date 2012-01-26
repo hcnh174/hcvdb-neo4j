@@ -165,15 +165,16 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 					},
 					{
 						text: 'Announcements',
-						handler: function()
-						{
-							var view = Ext.widget('announcements');
-							var container=Ext.getCmp('centerContainer');
-							var panel=Ext.getCmp('centerPanel');
-							container.remove(panel,true);
-							container.add(view);
-							container.doLayout();
-						}
+						action: 'announcements'
+//						handler: function()
+//						{
+//							var view = Ext.widget('announcements');
+//							var container=Ext.getCmp('centerContainer');
+//							var panel=Ext.getCmp('centerPanel');
+//							container.remove(panel,true);
+//							container.add(view);
+//							container.doLayout();
+//						}
 					},
 					{
 						text: 'Load genbank file',
