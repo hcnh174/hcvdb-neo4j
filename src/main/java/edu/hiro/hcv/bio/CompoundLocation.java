@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.StringHelper;
 
 public class CompoundLocation
 {

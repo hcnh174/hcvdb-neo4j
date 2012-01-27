@@ -11,14 +11,8 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
-	<!-- Turns on support for mapping requests to Spring MVC @Controller methods
-	     Also registers default Formatters and Validators for use across all @Controllers-->
 	<mvc:annotation-driven conversion-service="neo4jConversionService"/>
 
-	<!-- 
-	<bean id="applicationConversionService" class="edu.hiro.hcv.web.ApplicationConversionServiceFactoryBean"/>
-	 -->
-	 
 	<context:component-scan base-package="ch.ralscha.extdirectspring"/>
 
 	<context:component-scan base-package="edu.hiro.hcv.web" use-default-filters="false">

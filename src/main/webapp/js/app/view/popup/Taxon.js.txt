@@ -1,0 +1,55 @@
+/*global Ext, vardb */
+Ext.ux.vardb.TaxonPopup = Ext.extend(Ext.ux.vardb.Popup,
+{
+	initComponent:function()
+	{
+		var tabs=[];		
+		tabs.push(this.createPropertyTab(this.data));
+		tabs.push(this.createLineageTab(this.data));
+		tabs.push(this.createSequenceTab(this.data));
+
+		var config=
+		{
+			title: 'Taxon: '+this.data.name,
+			items: this.createTabPanel(tabs)
+		};
+		Ext.apply(this, Ext.apply(this.initialConfig, config));
+		Ext.ux.vardb.TaxonPopup.superclass.initComponent.apply(this, arguments);
+	},
+	
+	createPropertyTab:function(data)
+	{
+		var fields=[];	
+		this.addField(fields,data,'Identifier','identifier');
+		this.addField(fields,data,'Name','name');
+		this.addField(fields,data,'Level','level');
+		this.addField(fields,data,'NCBI ID','taxid',this.renderTaxid);
+		return this.createPropertyGrid(fields,data);
+	},
+	
+	renderTaxid:function(value, p, r)
+	{
+		return String.format('<a href="http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id={0}&lvl=3&lin=f&keep=1&srchmode=1&unlock" target="_blank">{0}</a>',value);
+	},
+	
+	createLineageTab:function(taxon)
+	{
+		var lineage=taxon.lineage.split(',').join(' &#187; '); 
+		var tab={};
+		tab.title='Lineage';
+		tab.html=lineage;
+		tab.autoScroll=true;
+		return tab;
+	},
+	
+	createSequenceTab:function(data)
+	{
+		var grid=new Ext.ux.vardb.SequenceGrid(
+		{
+			resource: {type: 'TAXON', id: data.id},
+			filter: 'taxon='+data.identifier,
+			pagesize: 10
+		});
+		return grid;
+	}
+});

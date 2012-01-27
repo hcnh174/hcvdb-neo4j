@@ -3,7 +3,7 @@ package edu.hiro.hcv.bio;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.hiro.hcv.util.CException;
+import edu.hiro.util.CException;
 
 public enum Codon
 {	

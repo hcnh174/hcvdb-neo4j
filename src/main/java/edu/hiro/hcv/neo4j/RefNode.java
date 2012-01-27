@@ -9,7 +9,7 @@ import org.springframework.roo.addon.equals.RooEquals;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.StringHelper;
 
 @RooJavaBean
 @RooToString

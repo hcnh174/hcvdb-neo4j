@@ -9,7 +9,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.StringHelper;
 
 @RooJavaBean
 @RooToString

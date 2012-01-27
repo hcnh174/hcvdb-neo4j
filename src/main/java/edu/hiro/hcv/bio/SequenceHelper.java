@@ -15,25 +15,107 @@ import org.biojava.bio.symbol.SymbolList;
 import org.biojava.bio.symbol.SymbolListViews;
 import org.biojava.bio.symbol.TranslationTable;
 
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.StringHelper;
 
 public class SequenceHelper
 {
+	private SequenceHelper(){}
+	
 	public static final String NEWLINE=System.getProperty("line.separator");
 	public static final int DEFAULT_CHUNKSIZE=80;
 	public static final String GAP="-";
+	
+	public static String getCodingSequence(String accession, String spliced, String sequence)
+	{
+		if (!StringHelper.hasContent(spliced))
+			spliced=sequence;
+		if (!StringHelper.hasContent(spliced))
+			return null;
+		spliced=removeStopCodon(spliced);
+		if (spliced.length()%3!=0) // length not a multiple of 3
+			spliced=spliced.substring(0,spliced.length()-spliced.length()%3);
+		return spliced;
+	}
+	
+	public static String removeStopCodon(String sequence)
+	{
+		if (Codon.isStopCodon(sequence.substring(sequence.length()-3)))
+			return sequence.substring(0,sequence.length()-3);
+		else return sequence;
+	}
+
+	
+	public static class Address
+	{
+		private static final String DOTDOT="..";
+		private static final String DOT=".";
+		protected String locus;
+		protected Integer start;
+		protected Integer end;
+		
+		public Address(String identifier)
+		{
+			int index=identifier.indexOf(DOTDOT);
+			if (index==-1)
+				throw new CException("cannot find start..stop pattern in identifier "+identifier);
+			this.end=Integer.parseInt(identifier.substring(index+DOTDOT.length()));
+			String substr=identifier.substring(0,index);
+			index=substr.lastIndexOf(DOT);
+			if (index==-1)
+				throw new CException("cannot find accession.start delimiter in identifier "+identifier);
+			this.locus=substr.substring(0,index);
+			this.start=Integer.parseInt(substr.substring(index+DOT.length()));
+			//System.out.println("locus="+this.locus+", start="+this.start+", end="+this.end);
+		}
+		
+		public String getLocus(){return this.locus;}
+		public void setLocus(final String locus){this.locus=locus;}
+
+		public Integer getStart(){return this.start;}
+		public void setStart(final Integer start){this.start=start;}
+
+		public Integer getEnd(){return this.end;}
+		public void setEnd(final Integer end){this.end=end;}
+		
+		public static List<String> removeLocations(Collection<String> list)
+		{
+			List<String> accessions=new ArrayList<String>();
+			for (String accession : list)
+			{
+				accession=removeLocation(accession);
+				if (!accessions.contains(accession))
+					accessions.add(accession);
+			}
+			return accessions;
+		}
+		
+		public static String removeLocation(String identifier)
+		{
+			int index=identifier.indexOf(DOTDOT);
+			if (index==-1)
+				return identifier;
+			String substr=identifier.substring(0,index);
+			index=substr.lastIndexOf(DOT);
+			if (index==-1)
+				return substr;
+			else return substr.substring(0,index);
+		}
+		
+		public static boolean hasLocation(String identifier)
+		{
+			return (identifier.indexOf(DOTDOT)!=-1);
+		}
+	}
+	
+	/*
+	
 	public static final String FASTA_SUFFIX=".fasta";
 	public static final String GENBANK_SUFFIX=".gbk";
 	public static final String GENPEPT_SUFFIX=".gpt";
 	public static final String UDATE_PATTERN="d'-'MM'-'yy";
 	
-	public enum FastaType
-	{
-		AA,
-		NT,
-		CDS
-	}
+	public enum FastaType {AA, NT, CDS}
 	
 	public enum SequenceFileType
 	{
@@ -51,24 +133,8 @@ public class SequenceHelper
 		public String getExtension(){return this.extension;}
 	}
 	
-	private SequenceHelper(){}
-	
-	/*
-	public static ISequence copy(ISequence sequence)
-	{
-		try
-		{
-			ISequence copy=sequence.getClass().newInstance();
-			CBeanHelper beanhelper=new CBeanHelper();
-			beanhelper.copyProperties(copy,sequence);
-			return sequence;
-		}
-		catch(Exception e)
-		{
-			throw new CException(e);
-		}
-	}
-	*/
+
+
 	
 	//find numcolumns
 	public static int getNumcolumns(Collection<String> sequences)
@@ -148,57 +214,6 @@ public class SequenceHelper
 			return sequence;
 		return sequence+StringHelper.repeatString(SequenceHelper.GAP,length-sequence.length());
 	}
-	
-	/*
-	//removes positions with only gaps 
-	public static List<Integer> removeEmptyColumns(Map<String,String> sequences)
-	{
-		Consensus consensus=new Consensus(sequences);
-		List<Integer> columns=new ArrayList<Integer>();
-		for (CConsensus.Position position : consensus.getPositions())
-		{
-			if (position.isEmpty())
-				columns.add(position.getNumber()-1);
-		}
-		
-		System.out.println("empty columns="+StringHelper.join(columns,","));
-		//for (String accession : sequences.keySet())
-		for (Map.Entry<String,String> entry : sequences.entrySet())
-		{
-			String accession=entry.getKey();
-			String sequence=entry.getValue();
-			StringBuilder buffer=new StringBuilder();
-			for (int index=0;index<sequence.length();index++)
-			{
-				String aa=sequence.substring(index,index+1);
-				boolean skip=false;
-				for (int column : columns)
-				{
-					if (column==index)
-						skip=true;
-				}
-				if (!skip)
-					buffer.append(aa);
-				//else //System.out.println("skipping column "+(index));
-			}
-			sequences.put(accession,buffer.toString());
-		}
-		List<Integer> gaps=new ArrayList<Integer>();
-		int column=0;
-		for (int index=0;index<columns.size();index++) // positions: 15, 40, 45, 70
-		{
-			int next_column=columns.get(index);
-			int num_ungapped=next_column-column;
-			for (int i=0;i<num_ungapped;i++)
-			{
-				gaps.add(0);
-			}
-			gaps.add(1);
-		}
-		System.out.println("gap profile="+StringHelper.join(gaps,","));
-		return gaps;
-	}
-	*/
 	
 	public static List<Map<String,String>> subset(Map<String,String> alignment, SimpleLocation location)
 	{
@@ -302,81 +317,12 @@ public class SequenceHelper
 		return StringHelper.replace(sequence,SequenceHelper.GAP,"");
 	}
 	
-	/*
-	public static Map<String,String> getMap(List<ISequence> seqs, CSequenceType type)
-	{
-		Map<String,String> map=new LinkedHashMap<String,String>();
-		for (ISequence seq : seqs)
-		{
-			map.put(seq.getName(),seq.getSequence(type));
-		}
-		return map;
-	}
-		
-	public static Map<String,Integer> mapIdsToIdentifiers(List<ISequence> sequences)
-	{
-		Map<String,Integer> ids=new HashMap<String,Integer>();
-		for (ISequence sequence : sequences)
-		{
-			ids.put(sequence.getIdentifier(),sequence.getId());
-		}
-		return ids;
-	}
-	
-	public static boolean isEmpty(ISequence sequence)
-	{
-		if (sequence==null || sequence.getAligned()==null || sequence.getSequence().length()==0)
-			return true;
-		return false;
-	}
-	*/	
 	
 	public static String getUnaligned(String sequence)
 	{
 		return StringHelper.replace(sequence,SequenceHelper.GAP,"");
 	}
-	
-	/*
-	public static String getFasta(Collection<ISequence> sequences)
-	{
-		StringBuilder buffer=new StringBuilder();
-		for (ISequence sequence : sequences)
-		{
-			sequence.getFasta().getSequence(buffer);
-		}
-		return buffer.toString();
-	}
-	*/
-	
-	/*
-	public static String getFastChunkedSequences(Collection<? extends ISequence> sequences)
-	{
-		StringBuilder buffer=new StringBuilder();
-		for (ISequence seq : sequences)
-		{
-			String sequence=seq.getSequence();
-			if (!StringHelper.hasContent(sequence))
-				continue;
-			SequenceHelper.getFastaChunked(seq.getAccession(),sequence,buffer);
-			buffer.append("\n");
-		}
-		return buffer.toString();
-	}
-	
-	public static String getFastChunkedTranslations(Collection<? extends ISequence> sequences)
-	{
-		StringBuilder buffer=new StringBuilder();
-		for (ISequence seq : sequences)
-		{
-			String sequence=seq.getTranslation();
-			if (!StringHelper.hasContent(sequence))
-				continue;				
-			SequenceHelper.getFastaChunked(seq.getAccession(),sequence,buffer);
-			buffer.append("\n");
-		}
-		return buffer.toString();
-	}
-*/
+
 	
 	public static String getFastaChunked(String name, String sequence)
 	{
@@ -436,74 +382,7 @@ public class SequenceHelper
 			buffer.append(NEWLINE);
 		}
 	}
-	
-	/*
-	public static String getFasta(CTable table, String column)
-	{
-		Integer col=table.findColumn(column);
-		if (col==null)
-			throw new CException("can't find column: "+column);
-		Integer pseudogenecol=table.findColumn("pseudogene");
-		StringBuilder buffer=new StringBuilder();
-		for (CTable.Row row : table.getRows())
-		{
-			String accession=row.getValue(0);
-			String sequence=row.getValue(col);
-			if (pseudogenecol!=null && row.getValue(pseudogenecol).equalsIgnoreCase("TRUE"))
-				continue;
-			if (!StringHelper.hasContent(sequence))
-				continue;
-			getFastaChunked(accession, sequence, buffer);
-			buffer.append(NEWLINE);
-		}
-		return buffer.toString();
-	}
-	*/
-	
-	/*
-	public static List<Integer> getIds(List<ISequence> sequences)
-	{
-		//System.out.println("getting sequence ids");
-		List<Integer> idlist=new ArrayList<Integer>(); 
-		for (ISequence sequence : sequences)
-		{
-			idlist.add(sequence.getId());
-		}
-		return idlist;
-	}
-	
-	public static List<String> getSubAlignments(List<ISequence> sequences)
-	{
-		Map<Integer,StringBuilder> buffers=new HashMap<Integer,StringBuilder>();
-		for (ISequence seq : sequences)
-		{
-			CSequence sequence=(CSequence)seq;
-			if (!StringHelper.hasContent(sequence.getTranslation()))
-				continue;
-			Integer alignment_id=sequence.getAlignment_id();
-			if (alignment_id==null)
-				alignment_id=0;	
-			String aligned=sequence.getAligned();
-			if (!StringHelper.hasContent(aligned))
-				aligned=sequence.getTranslation();
-			StringBuilder buffer=buffers.get(alignment_id);
-			if (buffer==null)
-			{
-				buffer=new StringBuilder();
-				buffers.put(alignment_id,buffer);
-			}
-			buffer.append(">"+sequence.getAccession()+NEWLINE+aligned+NEWLINE);
-		}
-		
-		List<String> alignments=new ArrayList<String>();
-		for (StringBuilder buffer : buffers.values())
-		{
-			alignments.add(buffer.toString());
-		}
-		return alignments;
-	}
-	*/
-	
+
 	////////////////////////////////////////////////////
 	
 	public static List<String> getExons(String sequence, String splicing,
@@ -582,41 +461,9 @@ public class SequenceHelper
 		return spliced;
 	}
 	
-	public static String getCodingSequence(String accession, String spliced, String sequence)
-	{
-		if (!StringHelper.hasContent(spliced))
-			spliced=sequence;
-		if (!StringHelper.hasContent(spliced))
-			return null;
-		spliced=removeStopCodon(spliced);
-		if (spliced.length()%3!=0)
-		{
-			//System.out.println("sequence "+accession+" does not have a length that is a multiple of 3: "+spliced.length());
-			//throw new CException("sequence "+accession+" does not have a length that is a mulitple of 3: "+spliced.length());
-			//return null;
-			spliced=spliced.substring(0,spliced.length()-spliced.length()%3);
-		}
-		return spliced;
-	}
 	
-	public static String removeStopCodon(String sequence)
-	{
-		//if (sequence.length()<3)
-		//	throw new CException("can't remove stop codon: "+sequence);
-		if (Codon.isStopCodon(sequence.substring(sequence.length()-3)))
-			return sequence.substring(0,sequence.length()-3);
-		else return sequence;
-	}
 	
-	/*
-	public static boolean isStopCodon(String codon)
-	{
-		boolean stopcodon=(codon.equals("TGA") || codon.equals("TAA") || codon.equals("TAG"));
-		//System.out.println("lastcodon="+codon+" isStopCodon="+stopcodon);
-		return stopcodon;
-	}
-	*/
-	
+
 	private static final String GAP_ENCODING_SEPARATOR=",";
 	private static final String GAP_ENCODING_COUNT_TOKEN="+";
 	
@@ -773,23 +620,7 @@ public class SequenceHelper
 		verifyNumSequences(sequences.size());
 		verifySequenceLength(sequences.values().iterator().next());
 	}
-	
-	/*
-	// check to make sure there are enough sequences to align and that they are all of the minimum length
-	public static void verifyAlignableSequences(List<ISequence> sequences)
-	{
-		int count=0;
-		for (ISequence sequence : sequences)
-		{ 
-			String translation=sequence.getTranslation();
-			if (translation==null)
-				continue;
-			count++;
-			verifySequenceLength(translation);
-		}
-		verifyNumSequences(count);		
-	}
-	*/
+
 	
 	public static void verifyNumSequences(int num)
 	{
@@ -811,66 +642,228 @@ public class SequenceHelper
 		List<String> names=domains.getArchitecture();
 		return StringHelper.join(names,";");
 	}
+	*/
 	
-	public static class Address
+	/*
+
+	*/
+	
+	/*
+	//removes positions with only gaps 
+	public static List<Integer> removeEmptyColumns(Map<String,String> sequences)
 	{
-		private static final String DOTDOT="..";
-		private static final String DOT=".";
-		protected String locus;
-		protected Integer start;
-		protected Integer end;
-		
-		public Address(String identifier)
+		Consensus consensus=new Consensus(sequences);
+		List<Integer> columns=new ArrayList<Integer>();
+		for (CConsensus.Position position : consensus.getPositions())
 		{
-			int index=identifier.indexOf(DOTDOT);
-			if (index==-1)
-				throw new CException("cannot find start..stop pattern in identifier "+identifier);
-			this.end=Integer.parseInt(identifier.substring(index+DOTDOT.length()));
-			String substr=identifier.substring(0,index);
-			index=substr.lastIndexOf(DOT);
-			if (index==-1)
-				throw new CException("cannot find accession.start delimiter in identifier "+identifier);
-			this.locus=substr.substring(0,index);
-			this.start=Integer.parseInt(substr.substring(index+DOT.length()));
-			//System.out.println("locus="+this.locus+", start="+this.start+", end="+this.end);
+			if (position.isEmpty())
+				columns.add(position.getNumber()-1);
 		}
 		
-		public String getLocus(){return this.locus;}
-		public void setLocus(final String locus){this.locus=locus;}
-
-		public Integer getStart(){return this.start;}
-		public void setStart(final Integer start){this.start=start;}
-
-		public Integer getEnd(){return this.end;}
-		public void setEnd(final Integer end){this.end=end;}
-		
-		public static List<String> removeLocations(Collection<String> list)
+		System.out.println("empty columns="+StringHelper.join(columns,","));
+		//for (String accession : sequences.keySet())
+		for (Map.Entry<String,String> entry : sequences.entrySet())
 		{
-			List<String> accessions=new ArrayList<String>();
-			for (String accession : list)
+			String accession=entry.getKey();
+			String sequence=entry.getValue();
+			StringBuilder buffer=new StringBuilder();
+			for (int index=0;index<sequence.length();index++)
 			{
-				accession=removeLocation(accession);
-				if (!accessions.contains(accession))
-					accessions.add(accession);
+				String aa=sequence.substring(index,index+1);
+				boolean skip=false;
+				for (int column : columns)
+				{
+					if (column==index)
+						skip=true;
+				}
+				if (!skip)
+					buffer.append(aa);
+				//else //System.out.println("skipping column "+(index));
 			}
-			return accessions;
+			sequences.put(accession,buffer.toString());
+		}
+		List<Integer> gaps=new ArrayList<Integer>();
+		int column=0;
+		for (int index=0;index<columns.size();index++) // positions: 15, 40, 45, 70
+		{
+			int next_column=columns.get(index);
+			int num_ungapped=next_column-column;
+			for (int i=0;i<num_ungapped;i++)
+			{
+				gaps.add(0);
+			}
+			gaps.add(1);
+		}
+		System.out.println("gap profile="+StringHelper.join(gaps,","));
+		return gaps;
+	}
+
+	// check to make sure there are enough sequences to align and that they are all of the minimum length
+	public static void verifyAlignableSequences(List<ISequence> sequences)
+	{
+		int count=0;
+		for (ISequence sequence : sequences)
+		{ 
+			String translation=sequence.getTranslation();
+			if (translation==null)
+				continue;
+			count++;
+			verifySequenceLength(translation);
+		}
+		verifyNumSequences(count);		
+	}
+
+	public static String getFasta(CTable table, String column)
+	{
+		Integer col=table.findColumn(column);
+		if (col==null)
+			throw new CException("can't find column: "+column);
+		Integer pseudogenecol=table.findColumn("pseudogene");
+		StringBuilder buffer=new StringBuilder();
+		for (CTable.Row row : table.getRows())
+		{
+			String accession=row.getValue(0);
+			String sequence=row.getValue(col);
+			if (pseudogenecol!=null && row.getValue(pseudogenecol).equalsIgnoreCase("TRUE"))
+				continue;
+			if (!StringHelper.hasContent(sequence))
+				continue;
+			getFastaChunked(accession, sequence, buffer);
+			buffer.append(NEWLINE);
+		}
+		return buffer.toString();
+	}
+
+	public static List<Integer> getIds(List<ISequence> sequences)
+	{
+		//System.out.println("getting sequence ids");
+		List<Integer> idlist=new ArrayList<Integer>(); 
+		for (ISequence sequence : sequences)
+		{
+			idlist.add(sequence.getId());
+		}
+		return idlist;
+	}
+	
+	public static List<String> getSubAlignments(List<ISequence> sequences)
+	{
+		Map<Integer,StringBuilder> buffers=new HashMap<Integer,StringBuilder>();
+		for (ISequence seq : sequences)
+		{
+			CSequence sequence=(CSequence)seq;
+			if (!StringHelper.hasContent(sequence.getTranslation()))
+				continue;
+			Integer alignment_id=sequence.getAlignment_id();
+			if (alignment_id==null)
+				alignment_id=0;	
+			String aligned=sequence.getAligned();
+			if (!StringHelper.hasContent(aligned))
+				aligned=sequence.getTranslation();
+			StringBuilder buffer=buffers.get(alignment_id);
+			if (buffer==null)
+			{
+				buffer=new StringBuilder();
+				buffers.put(alignment_id,buffer);
+			}
+			buffer.append(">"+sequence.getAccession()+NEWLINE+aligned+NEWLINE);
 		}
 		
-		public static String removeLocation(String identifier)
+		List<String> alignments=new ArrayList<String>();
+		for (StringBuilder buffer : buffers.values())
 		{
-			int index=identifier.indexOf(DOTDOT);
-			if (index==-1)
-				return identifier;
-			String substr=identifier.substring(0,index);
-			index=substr.lastIndexOf(DOT);
-			if (index==-1)
-				return substr;
-			else return substr.substring(0,index);
+			alignments.add(buffer.toString());
 		}
-		
-		public static boolean hasLocation(String identifier)
+		return alignments;
+	}
+
+	public static ISequence copy(ISequence sequence)
+	{
+		try
 		{
-			return (identifier.indexOf(DOTDOT)!=-1);
+			ISequence copy=sequence.getClass().newInstance();
+			CBeanHelper beanhelper=new CBeanHelper();
+			beanhelper.copyProperties(copy,sequence);
+			return sequence;
+		}
+		catch(Exception e)
+		{
+			throw new CException(e);
 		}
 	}
+
+	public static Map<String,String> getMap(List<ISequence> seqs, CSequenceType type)
+	{
+		Map<String,String> map=new LinkedHashMap<String,String>();
+		for (ISequence seq : seqs)
+		{
+			map.put(seq.getName(),seq.getSequence(type));
+		}
+		return map;
+	}
+		
+	public static Map<String,Integer> mapIdsToIdentifiers(List<ISequence> sequences)
+	{
+		Map<String,Integer> ids=new HashMap<String,Integer>();
+		for (ISequence sequence : sequences)
+		{
+			ids.put(sequence.getIdentifier(),sequence.getId());
+		}
+		return ids;
+	}
+	
+	public static boolean isEmpty(ISequence sequence)
+	{
+		if (sequence==null || sequence.getAligned()==null || sequence.getSequence().length()==0)
+			return true;
+		return false;
+	}
+
+	public static String getFasta(Collection<ISequence> sequences)
+	{
+		StringBuilder buffer=new StringBuilder();
+		for (ISequence sequence : sequences)
+		{
+			sequence.getFasta().getSequence(buffer);
+		}
+		return buffer.toString();
+	}
+
+	public static String getFastChunkedSequences(Collection<? extends ISequence> sequences)
+	{
+		StringBuilder buffer=new StringBuilder();
+		for (ISequence seq : sequences)
+		{
+			String sequence=seq.getSequence();
+			if (!StringHelper.hasContent(sequence))
+				continue;
+			SequenceHelper.getFastaChunked(seq.getAccession(),sequence,buffer);
+			buffer.append("\n");
+		}
+		return buffer.toString();
+	}
+	
+	public static String getFastChunkedTranslations(Collection<? extends ISequence> sequences)
+	{
+		StringBuilder buffer=new StringBuilder();
+		for (ISequence seq : sequences)
+		{
+			String sequence=seq.getTranslation();
+			if (!StringHelper.hasContent(sequence))
+				continue;				
+			SequenceHelper.getFastaChunked(seq.getAccession(),sequence,buffer);
+			buffer.append("\n");
+		}
+		return buffer.toString();
+	}
+
+
+	public static boolean isStopCodon(String codon)
+	{
+		boolean stopcodon=(codon.equals("TGA") || codon.equals("TAA") || codon.equals("TAG"));
+		//System.out.println("lastcodon="+codon+" isStopCodon="+stopcodon);
+		return stopcodon;
+	}
+	*/
+	
+	
 }

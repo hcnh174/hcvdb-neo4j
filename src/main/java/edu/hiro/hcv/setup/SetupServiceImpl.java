@@ -26,9 +26,9 @@ import edu.hiro.hcv.neo4j.SequenceNodeRepository;
 import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
-import edu.hiro.hcv.util.MathHelper;
-import edu.hiro.hcv.util.Neo4jHelper;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.MathHelper;
+import edu.hiro.util.Neo4jHelper;
+import edu.hiro.util.StringHelper;
 
 @Service("setupService")
 @Transactional("neo4jTransactionManager")

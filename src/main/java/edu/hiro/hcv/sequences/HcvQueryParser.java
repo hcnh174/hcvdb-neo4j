@@ -2,14 +2,14 @@ package edu.hiro.hcv.sequences;
 
 import org.antlr.runtime.tree.CommonTree;
 
-import edu.hiro.hcv.util.AntlrHelper;
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.CFilter.CompositeFilter;
-import edu.hiro.hcv.util.CFilter.ElementaryFilter;
-import edu.hiro.hcv.util.CFilter.FieldOperator;
-import edu.hiro.hcv.util.CFilter.Filter;
-import edu.hiro.hcv.util.CFilter.LogicalOperator;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.AntlrHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.CFilter.CompositeFilter;
+import edu.hiro.util.CFilter.ElementaryFilter;
+import edu.hiro.util.CFilter.FieldOperator;
+import edu.hiro.util.CFilter.Filter;
+import edu.hiro.util.CFilter.LogicalOperator;
+import edu.hiro.util.StringHelper;
 
 public class HcvQueryParser
 {	

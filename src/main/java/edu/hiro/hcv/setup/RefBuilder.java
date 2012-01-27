@@ -15,11 +15,11 @@ import com.google.common.collect.Maps;
 import edu.hiro.hcv.bio.GenbankHelper;
 import edu.hiro.hcv.neo4j.RefNode;
 import edu.hiro.hcv.neo4j.TaxonNode;
-import edu.hiro.hcv.util.Batcher;
-import edu.hiro.hcv.util.Dom4jHelper;
-import edu.hiro.hcv.util.MathHelper;
-import edu.hiro.hcv.util.StringHelper;
-import edu.hiro.hcv.util.ThreadHelper;
+import edu.hiro.util.Batcher;
+import edu.hiro.util.Dom4jHelper;
+import edu.hiro.util.MathHelper;
+import edu.hiro.util.StringHelper;
+import edu.hiro.util.ThreadHelper;
 
 public final class RefBuilder
 {

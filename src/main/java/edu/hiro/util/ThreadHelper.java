@@ -1,4 +1,4 @@
-package edu.hiro.hcv.util;
+package edu.hiro.util;
 
 import com.google.common.base.Stopwatch;
 

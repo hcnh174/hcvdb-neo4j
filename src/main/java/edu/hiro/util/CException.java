@@ -1,4 +1,4 @@
-package edu.hiro.hcv.util;
+package edu.hiro.util;
 
 @SuppressWarnings("serial")
 public class CException extends RuntimeException

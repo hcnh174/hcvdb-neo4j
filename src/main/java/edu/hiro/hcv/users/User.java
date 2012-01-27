@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.google.common.collect.Lists;
 
-import edu.hiro.hcv.util.MathHelper;
+import edu.hiro.util.MathHelper;
 
 /**
  */

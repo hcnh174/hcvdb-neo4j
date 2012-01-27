@@ -221,7 +221,15 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 								Ext.MessageBox.alert("database cleared",result);
 							});
 						}
-					}
+					},
+					{
+						text: 'Reference',
+						scope: this,
+						handler: function()
+						{
+							var view = Ext.widget('refpopup',{data: {pmid: 12345}});
+						}
+					},
 				]
 			}
 		};

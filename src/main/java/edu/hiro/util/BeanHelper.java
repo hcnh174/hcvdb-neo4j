@@ -1,4 +1,4 @@
-package edu.hiro.hcv.util;
+package edu.hiro.util;
 
 import java.beans.PropertyDescriptor;
 import java.text.SimpleDateFormat;

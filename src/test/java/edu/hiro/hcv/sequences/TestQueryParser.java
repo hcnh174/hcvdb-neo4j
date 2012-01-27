@@ -1,7 +1,7 @@
 package edu.hiro.hcv.sequences;
 
 import org.junit.Test;
-import edu.hiro.hcv.util.CFilter.Filter;
+import edu.hiro.util.CFilter.Filter;
 
 public class TestQueryParser
 {	

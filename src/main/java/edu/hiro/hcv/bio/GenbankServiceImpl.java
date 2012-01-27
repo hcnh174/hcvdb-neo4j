@@ -8,13 +8,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Required;
 
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.FileHelper;
-import edu.hiro.hcv.util.HttpHelper;
-import edu.hiro.hcv.util.MathHelper;
-import edu.hiro.hcv.util.MessageWriter;
-import edu.hiro.hcv.util.StringHelper;
-import edu.hiro.hcv.util.ThreadHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.FileHelper;
+import edu.hiro.util.HttpHelper;
+import edu.hiro.util.MathHelper;
+import edu.hiro.util.MessageWriter;
+import edu.hiro.util.StringHelper;
+import edu.hiro.util.ThreadHelper;
 
 public class GenbankServiceImpl implements GenbankService
 {

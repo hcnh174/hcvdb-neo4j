@@ -10,10 +10,10 @@ import org.biojava.bio.structure.PDBHeader;
 import org.biojava.bio.structure.Structure;
 import org.biojava.bio.structure.io.PDBFileReader;
 
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.FileHelper;
-import edu.hiro.hcv.util.HttpHelper;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.FileHelper;
+import edu.hiro.util.HttpHelper;
+import edu.hiro.util.StringHelper;
 
 public final class PdbHelper
 {	

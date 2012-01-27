@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.StringHelper;
 
 public class SimpleLocation
 {

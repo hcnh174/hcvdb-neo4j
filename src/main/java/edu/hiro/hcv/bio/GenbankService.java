@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.hiro.hcv.util.MessageWriter;
+import edu.hiro.util.MessageWriter;
 
 @Transactional
 public interface GenbankService

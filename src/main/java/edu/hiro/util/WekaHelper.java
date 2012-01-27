@@ -1,4 +1,4 @@
-package edu.hiro.hcv.util;
+package edu.hiro.util;
 
 import java.awt.BorderLayout;
 import java.util.Random;

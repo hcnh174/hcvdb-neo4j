@@ -14,9 +14,9 @@ import java.util.Map;
 import org.biojava.bio.symbol.Location;
 import org.biojavax.bio.seq.RichSequence;
 
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.FileHelper;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.FileHelper;
+import edu.hiro.util.StringHelper;
 
 // use grep instead? grep -n -f patterns.txt core.gb
 public class LargeGenbankFileReader

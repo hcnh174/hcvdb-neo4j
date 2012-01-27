@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.neo4j.helpers.collection.IteratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,6 +26,8 @@ import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
 import edu.hiro.hcv.setup.SetupService;
+import edu.hiro.util.ExtDirectHelper;
+import edu.hiro.util.StringHelper;
 
 @Controller
 public class HcvDirect {
@@ -76,10 +80,29 @@ public class HcvDirect {
 	
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
 	public ExtDirectStoreResponse<SequenceNode> getSequences(ExtDirectStoreReadRequest request) {
-		System.out.println("request1: "+request.toString());
+		System.out.println("request: "+request.toString());
 		List<SequenceNode> sequences=sequenceService.getSequences();
+		for (SequenceNode sequence : sequences)
+		{
+			System.out.println(sequence.toString());
+		}
 		return new ExtDirectStoreResponse<SequenceNode>(sequences.size(), sequences);
 	}
+	
+	
+//	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
+//	public ExtDirectStoreResponse<SequenceNode> getSequences(ExtDirectStoreReadRequest request) {
+//		System.out.println("request: "+request.toString());
+//		Pageable paging=ExtDirectHelper.getPageable(request);
+//		System.out.println("paging="+StringHelper.toString(paging));
+//		Page<SequenceNode> page=sequenceService.getSequences(paging);
+//		System.out.println("page="+StringHelper.toString(page));
+//		for (SequenceNode sequence : page.getContent())
+//		{
+//			System.out.println(sequence.toString());
+//		}
+//		return ExtDirectHelper.getResponse(page);
+//	}
 
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
 	public List<RefNode> getRefs() {

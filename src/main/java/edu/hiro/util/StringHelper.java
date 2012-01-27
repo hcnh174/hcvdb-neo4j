@@ -1,4 +1,4 @@
-package edu.hiro.hcv.util;
+package edu.hiro.util;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -28,6 +29,7 @@ import org.springframework.util.StringUtils;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 //import com.oreilly.servlet.Base64Decoder;
 //import com.oreilly.servlet.Base64Encoder;
 
@@ -368,6 +370,12 @@ public final class StringHelper
 			doubles.add(Double.valueOf(item));
 		}		
 		return doubles;
+	}
+	
+	public static <T> Set<T> removeDuplicates(Collection<T> col)
+	{
+		Set<T> set=Sets.newLinkedHashSet(col);
+		return set;
 	}
 	
 	public static Collection<Collection<Integer>> split(Collection<Integer> ids, int max)

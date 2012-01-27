@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import edu.hiro.hcv.util.HttpHelper;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.HttpHelper;
+import edu.hiro.util.StringHelper;
 
 public class GenbankHelper
 {

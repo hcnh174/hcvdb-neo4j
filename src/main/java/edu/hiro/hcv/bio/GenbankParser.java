@@ -38,11 +38,11 @@ import org.biojavax.bio.taxa.NCBITaxon;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.DateHelper;
-import edu.hiro.hcv.util.FileHelper;
-import edu.hiro.hcv.util.MessageWriter;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.DateHelper;
+import edu.hiro.util.FileHelper;
+import edu.hiro.util.MessageWriter;
+import edu.hiro.util.StringHelper;
 
 public class GenbankParser
 {

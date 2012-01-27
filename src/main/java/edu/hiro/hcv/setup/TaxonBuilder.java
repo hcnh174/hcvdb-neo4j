@@ -14,10 +14,10 @@ import com.google.common.collect.Maps;
 import edu.hiro.hcv.bio.GenbankHelper;
 import edu.hiro.hcv.bio.TaxonomicLevel;
 import edu.hiro.hcv.neo4j.TaxonNode;
-import edu.hiro.hcv.util.Batcher;
-import edu.hiro.hcv.util.BeanHelper;
-import edu.hiro.hcv.util.Dom4jHelper;
-import edu.hiro.hcv.util.FileHelper;
+import edu.hiro.util.Batcher;
+import edu.hiro.util.BeanHelper;
+import edu.hiro.util.Dom4jHelper;
+import edu.hiro.util.FileHelper;
 
 public final class TaxonBuilder
 {

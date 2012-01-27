@@ -31,9 +31,9 @@ import org.biojavax.bio.seq.RichSequenceIterator;
 import org.biojavax.bio.seq.io.GenbankLocationParser;
 import org.biojavax.bio.taxa.NCBITaxon;
 
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.DateHelper;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.DateHelper;
+import edu.hiro.util.StringHelper;
 
 public class BiojavaHelper
 {

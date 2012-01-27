@@ -10,10 +10,10 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import au.com.bytecode.opencsv.CSVReader;
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.FileHelper;
-import edu.hiro.hcv.util.HttpHelper;
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.CException;
+import edu.hiro.util.FileHelper;
+import edu.hiro.util.HttpHelper;
+import edu.hiro.util.StringHelper;
 
 public class PfamHelper
 {

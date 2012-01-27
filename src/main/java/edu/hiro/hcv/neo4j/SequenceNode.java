@@ -13,7 +13,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import com.google.common.collect.Sets;
 
-import edu.hiro.hcv.util.StringHelper;
+import edu.hiro.util.StringHelper;
 
 /**
  */
@@ -34,23 +34,19 @@ public class SequenceNode
 	protected Integer taxon_id;
 	protected String comments;
 	protected String ref_ids;
-	//protected Taxon taxon;
+	protected TaxonNode taxon;
 	
 	@RelatedTo(type="FEATURE") //, direction = Direction.BOTH
 	protected Set<FeatureNode> features=Sets.newHashSet();
+	
+	@RelatedTo(type="REF") //, direction = Direction.BOTH
+	protected Set<RefNode> refs=Sets.newHashSet();
 
 	//@RelatedTo(type = "TAG") //, direction = Direction.BOTH
 	//protected Set<TagNode> tags=Sets.newHashSet();
 
-    public SequenceNode()
-    {
-    }
-    
-//    public SequenceNode(String accession)
-//    {
-//        this.accession = accession;
-//    }  
-    
+    public SequenceNode(){}
+
     public SequenceNode(String accession, String sequence)
     {
     	this.accession = accession;
@@ -75,8 +71,15 @@ public class SequenceNode
     public void addRef(Integer ref)
     {
     	List<Integer> arr=StringHelper.splitInts(this.ref_ids,REF_DELIMITER);
-    	arr.add(ref);
-    	this.ref_ids=StringHelper.join(arr,REF_DELIMITER);
+    	Set<Integer> set=StringHelper.removeDuplicates(arr);
+    	set.add(ref);
+    	this.ref_ids=StringHelper.join(set,REF_DELIMITER);
+    }
+    
+    public void addRef(RefNode ref)
+    {
+    	addRef(ref.getId());
+    	this.refs.add(ref);
     }
     
     /*

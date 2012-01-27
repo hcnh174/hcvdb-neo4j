@@ -17,10 +17,9 @@ import com.google.common.collect.Lists;
 import edu.hiro.hcv.bio.BiojavaHelper;
 import edu.hiro.hcv.neo4j.FeatureNode;
 import edu.hiro.hcv.neo4j.SequenceNode;
-import edu.hiro.hcv.util.CException;
-import edu.hiro.hcv.util.FileHelper;
-
-public class GenbankSequenceBuilder
+import edu.hiro.util.CException;
+import edu.hiro.util.FileHelper;
+ class GenbankSequenceBuilder
 {
 	private GenbankSequenceBuilder(){}
 	

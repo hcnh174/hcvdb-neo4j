@@ -1,6 +1,6 @@
 package edu.hiro.hcv.bio;
 
-import edu.hiro.hcv.util.CException;
+import edu.hiro.util.CException;
 
 public enum AminoAcidType
 {	

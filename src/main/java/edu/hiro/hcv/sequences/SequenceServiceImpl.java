@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +16,7 @@ import com.mongodb.Mongo;
 import edu.hiro.hcv.morphia.SequenceRepository;
 import edu.hiro.hcv.neo4j.SequenceNode;
 import edu.hiro.hcv.neo4j.SequenceNodeRepository;
-import edu.hiro.hcv.util.Neo4jHelper;
-import org.springframework.data.neo4j.support.Neo4jTemplate;
+import edu.hiro.util.Neo4jHelper;
 
 @Service("sequenceService")
 @Transactional
@@ -35,12 +36,13 @@ public class SequenceServiceImpl implements SequenceService
 
 	public List<SequenceNode> getSequences()
 	{
-		List<SequenceNode> sequences = Neo4jHelper.asList(sequenceNodeRepository.findAll());
-		//System.out.println("ids: "+ids);
-		return sequences;
+		return Neo4jHelper.asList(sequenceNodeRepository.findAll());
 	}
 	
-
+	public Page<SequenceNode> getSequences(Pageable pageable)
+	{
+		return sequenceNodeRepository.findAll(pageable);
+	}
 	
 	/*
 	public Page<Sequence> getSequences(Pageable pageable)

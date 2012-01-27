@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ClassUtils;
 
-import edu.hiro.hcv.util.CException;
+import edu.hiro.util.CException;
 
 @Service("loginService")
 public class LoginServiceImpl implements LoginService
