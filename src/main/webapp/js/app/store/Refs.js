@@ -1,7 +1,7 @@
 Ext.define('Hcv.store.Refs', {
 	extend: 'Ext.data.Store',
 	model: 'Hcv.model.Ref',
-	autoLoad: true,
+	//autoLoad: true,
 	remoteSort: true,
 	pageSize: 200,
 	buffered: true,

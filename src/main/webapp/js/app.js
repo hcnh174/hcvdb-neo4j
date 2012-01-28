@@ -5,7 +5,7 @@ Ext.application({
 	controllers:
 	[
 		'Pages',
-		'Users',
+		//'Users',
 		'Sequences',
 		'Tags'
 	],

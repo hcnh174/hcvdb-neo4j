@@ -1,15 +1,16 @@
 Ext.define('Hcv.view.popup.Ref', {
-	extend: 'Ext.window.Window',
+	//extend: 'Ext.window.Window',
+	extend: 'Hcv.view.popup.AbstractPopup',
 	alias : 'widget.refpopup',
 
 	title : 'Definition',
-	layout: 'fit',
-	autoShow: true,
-	width: 600,
-	height: 360,
-	plain: true,
-	closable: true,
-	resizable: true,
+//	layout: 'fit',
+//	autoShow: true,
+//	width: 600,
+//	height: 360,
+//	plain: true,
+//	closable: true,
+//	resizable: true,
 
 	initComponent:function()
 	{
@@ -22,16 +23,16 @@ Ext.define('Hcv.view.popup.Ref', {
 			//this.createSequenceTab(this.data)
 		];		
 		this.items=this.createTabPanel(tabs);
-	
-		this.buttons=
-		[
-			{
-				text: 'Close',
-				scope: this,
-				handler: function(){this.hide();}
-			}
-		];
-		
+//	
+//		this.buttons=
+//		[
+//			{
+//				text: 'Close',
+//				scope: this,
+//				handler: function(){this.hide();}
+//			}
+//		];
+//		
 		this.callParent(arguments);
 	},
 		
@@ -77,7 +78,7 @@ Ext.define('Hcv.view.popup.Ref', {
 			autoScroll: true
 		};
 		return tab;
-	},
+	}
 	
 	/*
 	createSequenceTab:function(data)
@@ -91,44 +92,44 @@ Ext.define('Hcv.view.popup.Ref', {
 		return grid;
 	},
 	*/
-	
-	////////////////////////////////////////////////////////////////////////
-	
-	createTabPanel: function(tabs)
-	{
-		var tabpanel={
-			xtype: 'tabpanel',
-			activeTab: 0,
-			autoScroll: true,
-			defaults: {layout:'fit'},
-			//border: false,
-			items: tabs
-		};
-		return tabpanel;
-	},
-	
-	addField:function(fields,data,header,dataIndex,renderer)
-	{
-		if (!data[dataIndex] || data[dataIndex]==='')
-			{return;}
-		var field={dataIndex: dataIndex, header: header};
-		if (renderer)
-			{field.renderer=renderer;}
-		fields.push(field);
-	},
-
-	createPropertyGrid:function(fields,data)
-	{
-		var grid=new Ext.grid.property.Grid({
-			title: 'Properties',
-			autoHeight: true,
-			disableSelection: true,
-			stripeRows: true,
-			editable: false,
-			nameWidth: 100,
-			fields: fields,
-			source: data
-		});
-		return grid;
-	}
+//	
+//	////////////////////////////////////////////////////////////////////////
+//	
+//	createTabPanel: function(tabs)
+//	{
+//		var tabpanel={
+//			xtype: 'tabpanel',
+//			activeTab: 0,
+//			autoScroll: true,
+//			defaults: {layout:'fit'},
+//			//border: false,
+//			items: tabs
+//		};
+//		return tabpanel;
+//	},
+//	
+//	addField:function(fields,data,header,dataIndex,renderer)
+//	{
+//		if (!data[dataIndex] || data[dataIndex]==='')
+//			{return;}
+//		var field={dataIndex: dataIndex, header: header};
+//		if (renderer)
+//			{field.renderer=renderer;}
+//		fields.push(field);
+//	},
+//
+//	createPropertyGrid:function(fields,data)
+//	{
+//		var grid=new Ext.grid.property.Grid({
+//			title: 'Properties',
+//			autoHeight: true,
+//			disableSelection: true,
+//			stripeRows: true,
+//			editable: false,
+//			nameWidth: 100,
+//			fields: fields,
+//			source: data
+//		});
+//		return grid;
+//	}
 });

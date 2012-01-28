@@ -14,19 +14,177 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 			this.createUserMenu(),'-',
 			this.createAdminMenu(),
 			'->',
-//			this.createSearchSelect(),
-//			this.createSearchTextBox(),'-',
-//			this.createSearchButton()
-//			{
-//				xtype: 'textfield',
-//				name: 'field1',
-//				emptyText: 'enter search term'
-//			},
 			this.createSearchSuggestions(),'-',
 			this.createSearchButton()
 		];		
 		this.callParent(arguments);
 	},
+
+	
+	createHomepageMenu:function()
+	{
+		return {text: 'Homepage', action: 'homepage'};
+	},
+	
+	createTestMenu:function()
+	{
+		var menu=
+		{
+			text: 'Test',
+			enableScrolling: false,
+			menu:
+			{
+				items:
+				[
+					{text: 'Login', action: 'login'},
+					{text: 'Feedback', action: 'feedback'},
+					{text: 'Page', action: 'page'},
+					{text: 'Term', action: 'term'},
+					{text: 'Announcements',	action: 'announcements'},
+					{text: 'Refs', action: 'refs'},
+					{text: 'Load genbank file',	action: 'loadgenbankfile'},
+					{text: 'Clear database', action: 'cleardb'},
+					{text: 'Ref', action: 'ref'},
+					{text: 'Sequence', action: 'sequence'},
+					{text: 'Get taxids', action: 'gettaxids'},
+					{text: 'Get refids', action: 'getrefids'},
+					{text: 'Get taxa', action: 'gettaxa'}
+				]
+			}
+		};
+		return menu;
+	},
+		
+	createResourceMenu:function()
+	{
+		var menu=
+		{
+			text: 'Resources',
+			enableScrolling: false,
+			menu:
+			{
+				items:
+				[
+					{text: 'Pathogens', action: ''},
+					{text: 'Families', action: ''},
+					{text: 'Diseases', action: ''},
+					{text: 'Pfam motifs', action: ''},
+					{text: 'Structures', action: ''},
+					{text: 'Genomes', action: ''},
+					{text: 'Map', action: ''},
+					{text: 'Alignments', action: ''},
+					{text: 'Clinical data', action: ''},
+					'-',
+					{text: 'Tutorials', action: ''},
+					{text: 'Antigenic variation', action: ''},
+					{text: 'Database construction', action: ''},
+					{text: 'Terms', action: ''},
+					{text: 'Links', action: ''},
+					{text: 'Images', action: ''},
+					{text: 'References', action: ''}
+				]
+			}
+		};
+		return menu;
+	},
+	
+	createBlastMenu:function()
+	{	
+		var menu=
+		{
+			text: 'BLAST',
+			menu:
+			{
+				items:
+				[
+					{text: 'PSI', action: ''},
+					{text: 'PSI-BLAST', action: ''},
+					{text: 'PHI-BLAST', action: ''},
+					{text: 'Netblast', action: ''}
+				]
+			}
+		};
+		return menu;
+	},
+	
+	createToolMenu:function()
+	{
+		var menu=
+		{
+			text: 'Tools',
+			menu:
+			{
+				items:
+				[
+					{text: 'Search sequences', action: ''},
+					{text: 'PROSITE/regex search', action: ''},
+					{text: 'MAFFT alignment tool', action: ''},
+					{text: 'Alignment viewer', action: ''},
+					{text: 'Create a codon alignment', action: ''},
+					{text: 'Gblocks', action: ''},
+					{text: 'Analyze variability', action: ''}
+				]
+			}
+		};
+		return menu;
+	},
+	
+	createUserMenu:function()
+	{
+		var items=[];
+		if (this.anonymous)
+		{
+			items.push({text: 'New account', action: ''}),
+			items.push({text: 'Login', action: ''});
+		}
+		else
+		{
+			items.push({text: 'Logout', action: ''});
+			items.push({text: 'Edit user information', action: ''});
+			//items.push({text: 'User homepage', action: ''});
+			items.push({text: 'Change password', action: ''});
+			items.push({text: 'Contact us', action: ''});
+		}
+		items.push('-');
+		items.push({text: 'Explorer', action: ''});
+		items.push('-');
+		items.push({text: 'My searches', action: ''});
+		items.push({text: 'My analyses', action: ''});
+		items.push({text: 'My sequences', action: ''});
+		items.push({text: 'My alignments', action: ''});
+		
+		var menu=
+		{
+			text: 'User',
+			menu: {items: items}
+		};
+		return menu;
+	},
+	
+	createAdminMenu:function()
+	{
+		if (!this.admin)
+			{return '';}
+		var menu=
+		{
+			text: 'Admin',
+			menu:
+			{			
+				items:
+				[
+					{text: 'Admin page', action: ''},
+					{text: 'Update XML', action: ''},
+					{text: 'Update sequences', action: ''},
+					{text: 'Update counts', action: ''},
+					{text: 'Clear cache', action: ''},
+					{text: 'Users', action: ''}
+				]
+			}
+		};
+		return menu;
+	},
+	
+	///////////////////////////////////////////////////
 	
 	createSearchSuggestions:function()
 	{
@@ -50,7 +208,7 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 		});
 
 		var store = Ext.create('Ext.data.Store', {
-			autoLoad: true,
+			//autoLoad: true,
 			model : 'Hcv.model.Suggestion',
 			baseParams: {limit:20}
 		});
@@ -90,278 +248,5 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 			}
 		};
 		return button;
-	},
-	
-	createHomepageMenu:function()
-	{
-		var menu=
-		{
-			text: 'Homepage', handler: function(){alert('/homepage.html');}
-		};
-		return menu;
-	},
-	
-	createTestMenu:function()
-	{
-		var menu=
-		{
-			text: 'Test',
-			enableScrolling: false,
-			menu:
-			{
-				items:
-				[
-					{
-						text: 'Login',
-						handler: function()
-						{
-							var view = Ext.widget('login');
-						}
-					},
-					{
-						text: 'NewUser',
-						handler: function()
-						{
-							var view = Ext.widget('newuser');
-						}
-					},
-					{
-						text: 'Feedback',
-						handler: function()
-						{
-							var view = Ext.widget('feedback');
-						}
-					},
-					{
-						text: 'Direct',
-						handler: function()
-						{
-							hcvDirect.multiply(2, function(result)
-							{
-								Ext.MessageBox.alert("Result", result);
-							});
-						}
-					},
-					{
-						text: 'Page',
-						action: 'page'
-//						scope: this,
-//						handler: function()
-//						{
-//							console.log('trying to update page');
-//							//Hcv.util.Util.clearExtjsComponent(panel);
-//							var view = Ext.widget('page',{pageid: 'welcome'});
-//							view.loadPage(1);					
-//						}
-					},
-					{
-						text: 'Term',
-						scope: this,
-						handler: function()
-						{
-							console.log('trying to update page');
-							var view = Ext.widget('termpopup',{term: 'hepatitis'});
-						}
-					},
-					{
-						text: 'Announcements',
-						action: 'announcements'
-					},
-					{
-						text: 'Load genbank file',
-						handler: function()
-						{
-							var filename='d:/temp/sequence.gb';
-							hcvDirect.loadGenbankFile(filename,function(result)
-							{
-								Ext.MessageBox.alert("loaded genbank data: ", result);
-							});
-						}
-					},
-					{
-						text: 'Get taxids',
-						handler: function()
-						{
-							hcvDirect.getTaxids(function(result)
-							{
-								Ext.MessageBox.alert("got taxids: ", result);
-							});
-						}
-					},
-					{
-						text: 'Get refids',
-						handler: function()
-						{
-							hcvDirect.getRefids(function(result)
-							{
-								Ext.MessageBox.alert("got refids: ", result);
-							});
-						}
-					},
-					{
-						text: 'Refs',
-						action: 'refs'
-					},
-					{
-						text: 'Get taxids',
-						handler: function()
-						{
-							hcvDirect.getTaxa(function(result)
-							{
-								Ext.MessageBox.alert("got taxa",result);
-							});
-						}
-					},
-					{
-						text: 'Clear database',
-						handler: function()
-						{
-							hcvDirect.clearDatabase(function(result)
-							{
-								Ext.MessageBox.alert("database cleared",result);
-							});
-						}
-					},
-					{
-						text: 'Reference',
-						scope: this,
-						handler: function()
-						{
-							var view = Ext.widget('refpopup',{data: {pmid: 12345}});
-						}
-					},
-				]
-			}
-		};
-		return menu;
-	},
-		
-	createResourceMenu:function()
-	{
-		var menu=
-		{
-			text: 'Resources',
-			enableScrolling: false,
-			menu:
-			{
-				items:
-				[
-					{text: 'Pathogens', handler: function(){alert('/pathogens.html');}},
-					{text: 'Families', handler: function(){alert('/families.html');}},
-					{text: 'Diseases', handler: function(){alert('/diseases.html');}},
-					{text: 'Pfam motifs', handler: function(){alert('/pfams.html');}},
-					{text: 'Structures', handler: function(){alert('/structures.html');}},
-					{text: 'Genomes', handler: function(){alert('/genomes.html');}},
-					{text: 'Map', handler: function(){alert('/search/map.html');}},
-					{text: 'Alignments', handler: function(){alert('/alignments.html');}},
-					{text: 'Clinical data', handler: function(){alert('/bundles.html');}},
-					'-',
-					{text: 'Tutorials', handler: function(){alert('/tutorials.html');}},
-					{text: 'Antigenic variation', handler: function(){alert('/antigenicvariation.html');}},
-					{text: 'Database construction', handler: function(){alert('/database.html');}},
-					{text: 'Terms', handler: function(){alert('/terms.html');}},
-					{text: 'Links', handler: function(){alert('/links.html');}},
-					{text: 'Images', handler: function(){alert('/images.html');}},
-					{text: 'References', handler: function(){alert('/references.html');}}
-				]
-			}
-		};
-		return menu;
-	},
-	
-	createBlastMenu:function()
-	{	
-		var menu=
-		{
-			text: 'BLAST',
-			menu:
-			{
-				items:
-				[
-					{text: 'PSI', handler: function(){alert('/blast/blast.html');}},
-					{text: 'PSI-BLAST', handler: function(){alert('/blast/psiblast.html');}},
-					{text: 'PHI-BLAST', handler: function(){alert('/blast/phiblast.html');}},
-					{text: 'Netblast', handler: function(){alert('/analysis/netblast.html');}}
-				]
-			}
-		};
-		return menu;
-	},
-	
-	createToolMenu:function()
-	{
-		var menu=
-		{
-			text: 'Tools',
-			menu:
-			{
-				items:
-				[
-					{text: 'Search sequences', handler: function(){alert('/search/sequences.html');}},
-					{text: 'PROSITE/regex search', handler: function(){alert('/regex/search.html');}},
-					{text: 'MAFFT alignment tool', handler: function(){alert('/mafft.html');}},
-					{text: 'Alignment viewer', handler: function(){alert('/alignments/view.html');}},
-					{text: 'Create a codon alignment', handler: function(){alert('/analysis/codonalign.html');}},
-					{text: 'Gblocks', handler: function(){alert('/analysis/gblocks.html');}},
-					{text: 'Analyze variability', handler: function(){alert('/analysis/variability.html');}}
-				]
-			}
-		};
-		return menu;
-	},
-	
-	createUserMenu:function()
-	{
-		var items=[];
-		if (this.anonymous)
-		{
-			items.push({text: 'New account', handler: function(){alert('/newuser.html');}});
-			items.push({text: 'Login', handler: function(){alert('/login.html');}});
-		}
-		else
-		{
-			items.push({text: 'Logout', handler: function(){alert('/logout.html');}});
-			items.push({text: 'Edit user information', handler: function(){alert('/edituser.html');}});
-			//items.push({text: 'User homepage', handler: function(){alert('/user.html');}});
-			items.push({text: 'Change password', handler: function(){alert('/changepassword.html');}});
-			items.push({text: 'Contact us', handler: function(){alert('/contact.html');}});
-		}
-		items.push('-');
-		items.push({text: 'Explorer', handler: function(){alert('/explorer.html');}});
-		items.push('-');
-		items.push({text: 'My searches', handler: function(){alert('/user/searches.html');}});
-		items.push({text: 'My analyses', handler: function(){alert('/user/analyses.html');}});
-		items.push({text: 'My sequences', handler: function(){alert('/user/sequences.html');}});
-		items.push({text: 'My alignments', handler: function(){alert('/user/alignments.html');}});	
-		
-		var menu=
-		{
-			text: 'User',
-			menu: {items: items}
-		};
-		return menu;
-	},
-	
-	createAdminMenu:function()
-	{
-		if (!this.admin)
-			{return '';}
-		var menu=
-		{
-			text: 'Admin',
-			menu:
-			{			
-				items:
-				[
-					{text: 'Admin page', handler: function(){alert('/admin/index.html');}},
-					{text: 'Update XML', handler: function(){alert('/admin/setup.html');}},
-					{text: 'Update sequences', handler: function(){alert('/admin/load/table.html');}},
-					{text: 'Update counts', handler: function(){alert('/admin/update/counts.html');}},
-					{text: 'Clear cache', handler: function(){alert('/admin/cache/clear.html');}},
-					{text: 'Users', handler: function(){alert('/admin/users.html');}}
-				]
-			}
-		};
-		return menu;
 	}
 });

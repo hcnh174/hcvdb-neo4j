@@ -14,7 +14,8 @@ Ext.define('Hcv.view.HcvPanel' ,{
 			[
 				{
 					xtype: 'sequencelist'
-				},
+				}
+				/*
 				{
 					xtype: 'container',
 					layout: 'border',
@@ -30,6 +31,7 @@ Ext.define('Hcv.view.HcvPanel' ,{
 						}
 					]
 				}
+				*/
 			]
 		}
 	]

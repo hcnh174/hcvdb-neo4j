@@ -1,7 +1,7 @@
 Ext.define('Hcv.store.Tags', {
 	extend: 'Ext.data.Store',
 	model: 'Hcv.model.Tag',
-	autoLoad: true,
+	//autoLoad: true,
 	remoteSort: true,
 	pageSize: 200,
 	buffered: true,

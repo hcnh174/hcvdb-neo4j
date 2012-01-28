@@ -15,10 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.code.morphia.query.Query;
 import com.google.common.collect.Sets;
 
-import edu.hiro.hcv.morphia.RefRepository;
 import edu.hiro.hcv.morphia.Sequence;
 import edu.hiro.hcv.morphia.SequenceRepository;
-import edu.hiro.hcv.morphia.TaxonRepository;
+import edu.hiro.hcv.neo4j.FeatureNode;
 import edu.hiro.hcv.neo4j.RefNode;
 import edu.hiro.hcv.neo4j.RefNodeRepository;
 import edu.hiro.hcv.neo4j.SequenceNode;
@@ -39,12 +38,6 @@ public class SetupServiceImpl implements SetupService
 	
 	@Resource(name="sequenceRepository")
 	private SequenceRepository sequenceRepository;
-	
-//	@Resource(name="refRepository")
-//	private RefRepository refRepository;
-//	
-//	@Resource(name="taxonRepository")
-//	private TaxonRepository taxonRepository;
 	
 	@Resource(name="graphDatabaseService")
 	private GraphDatabaseService graphDatabaseService;
@@ -119,8 +112,13 @@ public class SetupServiceImpl implements SetupService
 		List<SequenceNode> sequences=GenbankSequenceBuilder.parseFile(filename);
 		for (SequenceNode sequence : sequences)
 		{
-			System.out.println("saving sequene: "+sequence.getAccession());
-			sequenceNodeRepository.save(sequence);
+			System.out.println("saving sequence: "+sequence.getAccession());
+			neo4jTemplate.save(sequence);
+			for (FeatureNode feature : sequence.getFeatures())
+			{
+				System.out.println("saving feature: "+feature.getType());
+				neo4jTemplate.save(feature);
+			}
 		}
 		System.out.println("finished loading");
 	}

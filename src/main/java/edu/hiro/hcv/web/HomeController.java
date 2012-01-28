@@ -42,6 +42,8 @@ public class HomeController {
 	    model.addAttribute("sequences", page.getContent());
 	    */
 		model.addAttribute("title","Hiroshima Hepatitis C Virus Database");
+		//model.addAttribute("extjs_url","http://cdn.sencha.io/ext-4.0.7-gpl");
+		model.addAttribute("extjs_url","http://home.hiroshima-u.ac.jp/nhayes/static/ext-4.1.0-beta-2");
 		return "index";
 	}
 	

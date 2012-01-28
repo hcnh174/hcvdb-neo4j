@@ -17,15 +17,22 @@ Ext.define('Hcv.view.nav.Page' ,{
 				'<p>{text}</p>',
 			'</tpl>'
 		);
+
 		this.callParent(arguments);
-	},
-	
-	loadPage: function(pageid, callback)
-	{
+		
 		this.store.load({
-			id: pageid,
+			id: this.id,
 			scope: this,
-			callback: callback
+			callback: this.callback
 		});
 	}
+	
+//	loadPage: function(pageid, callback)
+//	{
+//		this.store.load({
+//			id: pageid,
+//			scope: this,
+//			callback: callback
+//		});
+//	}
 });

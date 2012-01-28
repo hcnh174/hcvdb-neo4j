@@ -1,24 +1,28 @@
-/*global Ext, vardb */
-Ext.ux.vardb.SequencePopup = Ext.extend(Ext.ux.vardb.Popup,
-{	
+Ext.define('Hcv.view.popup.Sequence', {
+	extend: 'Hcv.view.popup.AbstractPopup',
+	alias : 'widget.sequencepopup',
+	//title : 'Sequence',
+	
 	initComponent:function()
 	{
+		this.data={
+			accession: 'ABC123'	
+		};
+		
+		this.title='Sequence: '+this.data.accession;
+		
 		var tabs=[];		
 		tabs.push(this.createPropertyTab(this.data));
-		this.createNucleotideSequenceTab(this.data,tabs);
-		this.createCodingSequenceTab(this.data,tabs);
-		this.createTranslationTab(this.data,tabs);
-		this.createTagsTab(this.data,tabs);
-		this.createGcContentTab(this.data,tabs);
-		this.createImageTab(this.data,tabs);
-
-		var config=
-		{
-			title: 'Sequence: '+this.data.accession,
-			items: this.createTabPanel(tabs)
-		};
-		Ext.apply(this, Ext.apply(this.initialConfig, config));
-		Ext.ux.vardb.SequencePopup.superclass.initComponent.apply(this, arguments);
+//		this.createNucleotideSequenceTab(this.data,tabs);
+//		this.createCodingSequenceTab(this.data,tabs);
+//		this.createTranslationTab(this.data,tabs);
+//		this.createTagsTab(this.data,tabs);
+//		this.createGcContentTab(this.data,tabs);
+//		this.createImageTab(this.data,tabs);
+		
+		this.items=this.createTabPanel(tabs);
+		
+		this.callParent(arguments);
 	},
 
 	createPropertyTab:function(data)
@@ -26,7 +30,6 @@ Ext.ux.vardb.SequencePopup = Ext.extend(Ext.ux.vardb.Popup,
 		var self=this;
 		var fields=[];
 		this.addField(fields,data,'Accession','accession',this.renderAccession);
-		this.addField(fields,data,'Rating','rating');
 		this.addField(fields,data,'Taxon','taxon_name',function(value){return String.format('<a href="#" onclick="vardb.taxonPopup(\'{1}\')">{0}</a>',value,data.taxon_identifier);});
 		this.addField(fields,data,'Disease','disease_name',function(value){return String.format('<a href="#" onclick="vardb.diseasePopup(\'{1}\')">{0}</a>',value,data.disease_identifier);});
 		this.addField(fields,data,'Pathogen','pathogen_name',function(value){return String.format('<a href="#" onclick="vardb.pathogenPopup(\'{1}\')">{0}</a>',value,data.pathogen_identifier);});
@@ -83,9 +86,8 @@ Ext.ux.vardb.SequencePopup = Ext.extend(Ext.ux.vardb.Popup,
 	
 	renderAccession:function(value, p, record)
 	{
-		return String.format('<a href="'+vardb.webapp+'/sequences/{1}.html" target="_new">{0}</a>',
-			value,value);
-	},
+		return Ext.String.format('<a href="/sequences/{1}.html" target="_new">{0}</a>',value,value);
+	}
 	
 	/*
 	formatTaxon:function(value, taxon_identifier)
@@ -131,6 +133,7 @@ Ext.ux.vardb.SequencePopup = Ext.extend(Ext.ux.vardb.Popup,
 	},
 	*/
 
+	/*
 	formatSequence:function(accession,sequence)
 	{
 		var template=new Ext.XTemplate(
@@ -255,5 +258,6 @@ Ext.ux.vardb.SequencePopup = Ext.extend(Ext.ux.vardb.Popup,
 		var tab=new Ext.ux.vardb.GcChart({sequence: sequence.sequence, title: 'GC Content'});
 		tabs.push(tab);
 	}
+	*/
 });
 

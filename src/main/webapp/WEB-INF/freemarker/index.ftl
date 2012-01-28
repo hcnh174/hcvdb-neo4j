@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
-<title>Hiroshima Hepatitis C Virus Database</title>
+<title>${title}</title>
 <meta charset="utf-8" />
-<link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.0.7-gpl/resources/css/ext-all.css"/>
+<link rel="stylesheet" type="text/css" href="${extjs_url}/resources/css/ext-all.css"/>
 <link rel="stylesheet" type="text/css" href="wro/hcv.css"/>
 
-<script src="http://cdn.sencha.io/ext-4.0.7-gpl/ext-all-debug.js"></script>
-<script src="http://cdn.sencha.io/ext-4.0.7-gpl/examples/ux/RowExpander.js"></script>
+<script src="${extjs_url}/ext-all-debug.js"></script>
+<script src="${extjs_url}/examples/ux/RowExpander.js"></script>
 
 <script src="api-debug.js"></script>
 <script>

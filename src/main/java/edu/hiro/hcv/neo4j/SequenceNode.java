@@ -4,6 +4,8 @@ package edu.hiro.hcv.neo4j;
 import java.util.List;
 import java.util.Set;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -20,6 +22,7 @@ import edu.hiro.util.StringHelper;
 @RooJavaBean
 @RooToString
 @NodeEntity
+@JsonIgnoreProperties({"features","refs","taxon","tags"})
 public class SequenceNode
 {   
 	private static final String COMMENT_DELIMITER="\n";
@@ -28,22 +31,22 @@ public class SequenceNode
     @GraphId protected Long nodeId;
     @Indexed protected String accession="";
     protected String sequence="";
-	protected Integer length;
-	protected Integer gi;
+	protected Integer length=null;
+	protected Integer gi=null;
 	protected String description="";
 	protected Integer taxon_id;
-	protected String comments;
-	protected String ref_ids;
-	protected TaxonNode taxon;
+	protected String comments="";
+	protected String ref_ids="";
+	protected TaxonNode taxon=null;
 	
-	@RelatedTo(type="FEATURE") //, direction = Direction.BOTH
+	@RelatedTo(type="FEATURE", direction = Direction.OUTGOING)
 	protected Set<FeatureNode> features=Sets.newHashSet();
 	
-	@RelatedTo(type="REF") //, direction = Direction.BOTH
+	@RelatedTo(type="REF")
 	protected Set<RefNode> refs=Sets.newHashSet();
 
-	//@RelatedTo(type = "TAG") //, direction = Direction.BOTH
-	//protected Set<TagNode> tags=Sets.newHashSet();
+	@RelatedTo(type = "TAG")
+	protected Set<TagNode> tags=Sets.newHashSet();
 
     public SequenceNode(){}
 

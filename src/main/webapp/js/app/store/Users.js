@@ -1,7 +1,7 @@
 Ext.define('Hcv.store.Users', {
 	extend: 'Ext.data.Store',
 	model: 'Hcv.model.User',
-	autoLoad: true,
+	//autoLoad: true,
 
 	proxy: {
 		type: 'ajax',

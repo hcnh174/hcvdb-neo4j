@@ -1,6 +1,7 @@
 package edu.hiro.hcv.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -17,6 +18,7 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import edu.hiro.hcv.morphia.Suggestion;
 import edu.hiro.hcv.neo4j.RefNode;
@@ -47,6 +49,15 @@ public class HcvDirect {
 	@ExtDirectMethod
 	public long multiply(long num) {
 		return num * 8;
+	}
+	
+	@ExtDirectMethod
+	public Map<String,String> getPage(String id) {
+		Map<String,String> map=Maps.newHashMap();
+		map.put("id",id);
+		map.put("title","Sample page");
+		map.put("text","Loaded from server with id: "+id);
+		return map;
 	}
 
 	@ExtDirectMethod
@@ -90,19 +101,19 @@ public class HcvDirect {
 	}
 	
 	
-//	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
-//	public ExtDirectStoreResponse<SequenceNode> getSequences(ExtDirectStoreReadRequest request) {
-//		System.out.println("request: "+request.toString());
-//		Pageable paging=ExtDirectHelper.getPageable(request);
-//		System.out.println("paging="+StringHelper.toString(paging));
-//		Page<SequenceNode> page=sequenceService.getSequences(paging);
-//		System.out.println("page="+StringHelper.toString(page));
-//		for (SequenceNode sequence : page.getContent())
-//		{
-//			System.out.println(sequence.toString());
-//		}
-//		return ExtDirectHelper.getResponse(page);
-//	}
+	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
+	public ExtDirectStoreResponse<SequenceNode> getSequencesWithPaging(ExtDirectStoreReadRequest request) {
+		System.out.println("request: "+request.toString());
+		Pageable paging=ExtDirectHelper.getPageable(request);
+		System.out.println("paging="+StringHelper.toString(paging));
+		Page<SequenceNode> page=sequenceService.getSequences(paging);
+		System.out.println("page="+StringHelper.toString(page));
+		for (SequenceNode sequence : page.getContent())
+		{
+			System.out.println(sequence.toString());
+		}
+		return ExtDirectHelper.getResponse(page);
+	}
 
 	@ExtDirectMethod(ExtDirectMethodType.STORE_READ)
 	public List<RefNode> getRefs() {
