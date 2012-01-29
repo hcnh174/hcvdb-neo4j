@@ -16,6 +16,7 @@
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/sequence/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/user/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/tags/*.js</js>
+	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/test/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/view/tools/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/controller/*.js</js>
 	<js>file:../../../workspace/hcvdb-neo4j/src/main/webapp/js/app/*.js</js>

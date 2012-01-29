@@ -1,19 +1,28 @@
 package edu.hiro.hcv.web;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.neo4j.helpers.collection.IteratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import ch.ralscha.extdirectspring.bean.ExtDirectResponse;
+import ch.ralscha.extdirectspring.bean.ExtDirectResponseBuilder;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
 
@@ -146,5 +155,42 @@ public class HcvDirect {
 		suggestions.add(new Suggestion("hcv","HCV"));
 		suggestions.add(new Suggestion("hbv","HBV"));
 		return suggestions;
+	}
+	
+	@ExtDirectMethod(ExtDirectMethodType.FORM_LOAD)
+	public BasicInfo loadForm(@RequestParam(value = "uid") long userId) {
+		BasicInfo basicInfo = new BasicInfo();
+		return basicInfo;
+	}
+	
+	@ExtDirectMethod(ExtDirectMethodType.FORM_POST)
+	@ResponseBody
+	@RequestMapping(value = "/updateForm", method = RequestMethod.POST)
+	public ExtDirectResponse updateForm(HttpServletRequest request, @Valid BasicInfo basicInfo, BindingResult result) {
+		
+		if (!result.hasErrors()) {
+			if (basicInfo.getEmail().equals("aaron@extjs.com")) {
+				result.rejectValue("email", null, "email already taken");
+			}
+		}
+		ExtDirectResponseBuilder builder = new ExtDirectResponseBuilder(request);
+		builder.addErrors(result);
+		return builder.build();	
+	}
+	
+	public static class BasicInfo
+	{
+		protected String name="name";
+		protected String email="email";
+		protected String company="company";
+		
+		public String getName(){return this.name;}
+		public void setName(final String name){this.name=name;}
+
+		public String getEmail(){return this.email;}
+		public void setEmail(final String email){this.email=email;}
+
+		public String getCompany(){return this.company;}
+		public void setCompany(final String company){this.company=company;}
 	}
 }

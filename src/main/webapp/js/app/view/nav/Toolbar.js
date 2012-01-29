@@ -48,7 +48,8 @@ Ext.define('Hcv.view.nav.Toolbar' ,{
 					{text: 'Sequence', action: 'sequence'},
 					{text: 'Get taxids', action: 'gettaxids'},
 					{text: 'Get refids', action: 'getrefids'},
-					{text: 'Get taxa', action: 'gettaxa'}
+					{text: 'Get taxa', action: 'gettaxa'},
+					{text: 'Test Direct form', action: 'testdirectform'}
 				]
 			}
 		};

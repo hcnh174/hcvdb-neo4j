@@ -28,7 +28,7 @@ public class ExtDirectHelper
 		 }
 		 Sort sort=new Sort(sorters);
 		 //System.out.println("sorts: "+sort.toString());
-		 Pageable pageable=new PageRequest(request.getPage(),request.getLimit(), sort);
+		 Pageable pageable=new PageRequest(request.getPage()-1,request.getLimit(), sort);
 		 return pageable;
 	 }
 	 

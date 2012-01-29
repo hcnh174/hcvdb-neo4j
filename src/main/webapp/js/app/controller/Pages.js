@@ -6,7 +6,8 @@ Ext.define('Hcv.controller.Pages', {
 	[
 		'nav.Toolbar',
 		'nav.Page',
-		'nav.Navpanel'
+		'nav.Navpanel',
+		'test.TestDirectForm'
 	],
 	refs:
 	[
@@ -122,6 +123,12 @@ Ext.define('Hcv.controller.Pages', {
 					{
 						Ext.MessageBox.alert("got taxa",result);
 					});
+				}
+			},
+			'navbar menuitem[action=testdirectform]': {
+				click: function()
+				{
+					Ext.widget('testdirectform');
 				}
 			}
 		});
