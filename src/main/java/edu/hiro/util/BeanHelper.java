@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.ConfigurablePropertyAccessor;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 
@@ -28,7 +29,8 @@ public class BeanHelper
 		}
 		catch(Exception e)
 		{
-			FileHelper.appendFile(logfile,e.getMessage());
+			System.err.println(e.getMessage());
+			//FileHelper.appendFile(logfile,e.getMessage());
 		}
 	}
 	
@@ -41,8 +43,25 @@ public class BeanHelper
 		}
 		catch(Exception e)
 		{
-			FileHelper.appendFile(logfile,e.getMessage());
+			System.err.println(e.getMessage());
+			//FileHelper.appendFile(logfile,e.getMessage());
 			return null;
+		}
+	}
+	
+	public boolean setProperty(Object target, String property, Object value)
+	{
+		try
+		{
+			BeanWrapper wrapper=PropertyAccessorFactory.forBeanPropertyAccess(target);
+			wrapper.setPropertyValue(property,value);
+			return true;
+		}
+		catch(Exception e)
+		{
+			System.err.println(e.getMessage());
+			//FileHelper.appendFile(logfile,e.getMessage());
+			return false;
 		}
 	}
 	
@@ -57,7 +76,8 @@ public class BeanHelper
 		}
 		catch(Exception e)
 		{
-			FileHelper.appendFile(logfile,e.getMessage());
+			System.err.println(e.getMessage());
+			//FileHelper.appendFile(logfile,e.getMessage());
 			return false;
 		}
 	}
@@ -74,8 +94,40 @@ public class BeanHelper
 		}
 		catch(Exception e)
 		{
-			FileHelper.appendFile(logfile,e.getMessage());
+			System.err.println(e.getMessage());
+			//FileHelper.appendFile(logfile,e.getMessage());
 			return false;
+		}
+	}
+	
+	public boolean setField(Object target, String property, Object value)
+	{
+		try
+		{
+			ConfigurablePropertyAccessor accessor=PropertyAccessorFactory.forDirectFieldAccess(this);
+			accessor.setPropertyValue(property,value);
+			return true;
+		}
+		catch(Exception e)
+		{
+			throw(new CException(e));
+			//System.err.println(e.getMessage());
+			//return false;
+		}
+	}
+	
+	public Object getField(Object target, String property)
+	{
+		try
+		{
+			ConfigurablePropertyAccessor accessor=PropertyAccessorFactory.forDirectFieldAccess(this);
+			return accessor.getPropertyValue(property);
+		}
+		catch(Exception e)
+		{
+			throw(new CException(e));
+			//System.err.println(e.getMessage());
+			//return null;
 		}
 	}
 	

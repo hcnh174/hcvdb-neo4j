@@ -1,0 +1,3 @@
+net use z: \\someshare\folder
+
+chcp 65001
