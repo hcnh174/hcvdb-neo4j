@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.google.common.collect.Lists;
 
-import edu.hiro.util.MathHelper;
+import edu.hiro.util.RandomHelper;
 
 /**
  */
@@ -51,7 +51,7 @@ public class User implements UserDetails
     }
 
     private String createSalt() {
-        String salt = String.valueOf(MathHelper.randomInteger(1000000));
+        String salt = String.valueOf(RandomHelper.randomInteger(1000000));
         System.out.println("salt=" + salt);
         return salt;
     }

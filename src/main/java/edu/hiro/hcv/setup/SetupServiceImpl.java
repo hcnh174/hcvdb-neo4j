@@ -25,8 +25,8 @@ import edu.hiro.hcv.neo4j.SequenceNodeRepository;
 import edu.hiro.hcv.neo4j.TaxonNode;
 import edu.hiro.hcv.neo4j.TaxonNodeRepository;
 import edu.hiro.hcv.sequences.SequenceService;
-import edu.hiro.util.MathHelper;
 import edu.hiro.util.Neo4jHelper;
+import edu.hiro.util.RandomHelper;
 import edu.hiro.util.StringHelper;
 
 @Service("setupService")
@@ -128,7 +128,7 @@ public class SetupServiceImpl implements SetupService
 		System.out.println("Loading sample data");
 		for (int i=0;i<num; i++)
 		{			
-			sequenceNodeRepository.save(new SequenceNode("S"+MathHelper.randomInteger(1000),"acgtcttgctgtgctgctgctacctgtgctgctgctactgctactgctgctacctgctgctgctacgttgctgctgcttgctgctgctacaccacgtctcgtc"));
+			sequenceNodeRepository.save(new SequenceNode("S"+RandomHelper.randomInteger(1000),"acgtcttgctgtgctgctgctacctgtgctgctgctactgctactgctgctacctgctgctgctacgttgctgctgcttgctgctgctacaccacgtctcgtc"));
 		}
 		System.out.println("Finished");
 	}
