@@ -8,8 +8,6 @@ import edu.hiro.hcv.neo4j.SequenceNode;
 
 //import groovy.lang.GroovyShell;
 
-
-
 public class Setup {
 	
 	// mvn test -Psetup -e

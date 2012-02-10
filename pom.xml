@@ -1,140 +1,204 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-	    <groupId>edu.hiro</groupId>
-    	<artifactId>hiro-parent</artifactId>
-	    <version>0.1.0.BUILD-SNAPSHOT</version>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>edu.hiro</groupId>
+		<artifactId>hiro-parent</artifactId>
+		<version>0.1.0.BUILD-SNAPSHOT</version>
   	</parent>
-    <groupId>edu.hiro</groupId>
-    <artifactId>hcvdb-neo4j</artifactId>
-    <packaging>war</packaging>
-    <version>0.1.0.BUILD-SNAPSHOT</version>
-    <name>hcvdb-neo4j</name>
-    <properties>
-    </properties>
-    <repositories>
-    </repositories>
-    <dependencies>
-    	<dependency>
+	<groupId>edu.hiro</groupId>
+	<artifactId>hcvdb-neo4j</artifactId>
+	<packaging>war</packaging>
+	<version>0.1.0.BUILD-SNAPSHOT</version>
+	<name>hcvdb-neo4j</name>
+	<properties>
+	</properties>
+	<repositories>
+		<repository>
+			<id>biojava-maven-repo</id>
+			<name>BioJava repository</name>
+			<url>http://www.biojava.org/download/maven/</url>	
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
 			<groupId>edu.hiro</groupId>
 			<artifactId>hiro-util</artifactId>
 			<version>0.1.0.BUILD-SNAPSHOT</version>
 		</dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <!--  added for heroku support -->
-            <plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-dependency-plugin</artifactId>
-			    <version>2.3</version>
-			    <executions>
-			        <execution>
-			            <phase>package</phase>
-			            <goals><goal>copy</goal></goals>
-			            <configuration>
-			                <artifactItems>
-			                    <artifactItem>
-			                        <groupId>org.mortbay.jetty</groupId>
-			                        <artifactId>jetty-runner</artifactId>
-			                        <version>7.4.5.v20110725</version>
-			                        <destFileName>jetty-runner.jar</destFileName>
-			                    </artifactItem>
-			                </artifactItems>
-			            </configuration>
-			        </execution>
-			    </executions>
+		
+		<!-- biojava -->
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>core</artifactId>
+			<version>${biojava.legacy.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>sequencing</artifactId>
+			<version>${biojava.legacy.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>gui</artifactId>
+			<version>${biojava.legacy.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava3-core</artifactId>
+			<version>${biojava.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava3-alignment</artifactId>
+			<version>${biojava.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava3-genome</artifactId>
+			<version>${biojava.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava3-structure</artifactId>
+			<version>${biojava.version}</version>
+		</dependency>
+		
+		<!-- batik dependencies -->
+		<dependency>
+		    <groupId>xml-apis</groupId>
+		    <artifactId>xml-apis-ext</artifactId>
+		    <version>1.3.04</version>
+		</dependency>
+		<dependency>
+		    <groupId>xml-apis</groupId>
+		    <artifactId>xml-apis</artifactId>
+		    <version>1.3.04</version>
+		</dependency>
+		<dependency>
+		    <groupId>batik</groupId>
+		    <artifactId>batik-rasterizer</artifactId>
+		    <version>1.6</version>
+		</dependency>
+		<dependency>
+		    <groupId>batik</groupId>
+		    <artifactId>batik-swing</artifactId>
+		    <version>1.6</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<!--  added for heroku support -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals><goal>copy</goal></goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.mortbay.jetty</groupId>
+									<artifactId>jetty-runner</artifactId>
+									<version>7.4.5.v20110725</version>
+									<destFileName>jetty-runner.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>			
-            <plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>appassembler-maven-plugin</artifactId>
 				<version>1.1.1</version>
 				<executions>
 				  <execution>
-				    <phase>package</phase>
-				    <goals><goal>assemble</goal></goals>
-				    <configuration>
-				      <assembleDirectory>target</assembleDirectory>
-				      <extraJvmArguments>-Xmx512m</extraJvmArguments>
-				      <programs>
-				        <program>
-				          <mainClass>Main</mainClass>
-				          <name>webapp</name>
-				        </program>
-				      </programs>
-				    </configuration>
+					<phase>package</phase>
+					<goals><goal>assemble</goal></goals>
+					<configuration>
+					  <assembleDirectory>target</assembleDirectory>
+					  <extraJvmArguments>-Xmx512m</extraJvmArguments>
+					  <programs>
+						<program>
+						  <mainClass>Main</mainClass>
+						  <name>webapp</name>
+						</program>
+					  </programs>
+					</configuration>
 				  </execution>
 				</executions>
 		</plugin>
 		<plugin>
-				    <groupId>ro.isdc.wro4j</groupId>
-				    <artifactId>wro4j-maven-plugin</artifactId>
-				    <version>${wro4j.version}</version>
-				    <executions>
-				      <execution>
-				        <phase>compile</phase>
-				        <goals>
-				          <goal>jshint</goal>
-				        </goals>
-				      </execution>
-				    </executions>
-				    <configuration>
-				    	<options>devel,browser,debug,asi,expr,smarttabs</options>
-				    	<failNever>true</failNever>
-				      <!-- <options>devel,evil,noarg</options> undef,-->
-				    </configuration>
+					<groupId>ro.isdc.wro4j</groupId>
+					<artifactId>wro4j-maven-plugin</artifactId>
+					<version>${wro4j.version}</version>
+					<executions>
+					  <execution>
+						<phase>compile</phase>
+						<goals>
+						  <goal>jshint</goal>
+						</goals>
+					  </execution>
+					</executions>
+					<configuration>
+						<options>devel,browser,debug,asi,expr,smarttabs</options>
+						<failNever>true</failNever>
+					  <!-- <options>devel,evil,noarg</options> undef,-->
+					</configuration>
 				  </plugin>
 				  <!-- 
 				  <plugin>
-			        <groupId>org.codehaus.mojo</groupId>
-			        <artifactId>antlr3-maven-plugin</artifactId>
-			        <version>1.0</version>
-			        <executions>
-			          <execution>
-			            <goals>
-			              <goal>antlr</goal>
-			            </goals>
-			          </execution>
-			        </executions>
-			      </plugin>
-			       -->
-        </plugins>
-        <pluginManagement>
-        	<plugins>
-        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        		<plugin>
-        			<groupId>org.eclipse.m2e</groupId>
-        			<artifactId>lifecycle-mapping</artifactId>
-        			<version>1.0.0</version>
-        			<configuration>
-        				<lifecycleMappingMetadata>
-        					<pluginExecutions>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>ro.isdc.wro4j</groupId>
-        								<artifactId>
-        									wro4j-maven-plugin
-        								</artifactId>
-        								<versionRange>
-        									[1.4.3,)
-        								</versionRange>
-        								<goals>
-        									<goal>jshint</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<ignore></ignore>
-        							</action>
-        						</pluginExecution>
-        					</pluginExecutions>
-        				</lifecycleMappingMetadata>
-        			</configuration>
-        		</plugin>
-        	</plugins>
-        </pluginManagement>
-    </build>
-    <profiles>  
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>antlr3-maven-plugin</artifactId>
+					<version>1.0</version>
+					<executions>
+					  <execution>
+						<goals>
+						  <goal>antlr</goal>
+						</goals>
+					  </execution>
+					</executions>
+				  </plugin>
+				   -->
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>ro.isdc.wro4j</groupId>
+										<artifactId>
+											wro4j-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.4.3,)
+										</versionRange>
+										<goals>
+											<goal>jshint</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<profiles>  
 		<profile>  
 			<id>setup</id> 
 			<!--  mvn test -Psetup  -->
@@ -158,6 +222,30 @@
 										<argument>c:/workspace/vardb-hcv.etc</argument> 
 									</arguments>
 									 -->
+								</configuration>  
+							</execution>  
+						</executions>  
+					</plugin> 
+				</plugins>  
+			</build>  
+		</profile> 
+		<profile>  
+			<id>scratchpad</id> 
+			<!--  mvn test -Pscratchpad  -->
+			<build>  
+				<plugins>  
+					<plugin>  
+						<groupId>org.codehaus.mojo</groupId>  
+						<artifactId>exec-maven-plugin</artifactId>  
+						<version>1.1.1</version>  
+						<executions>  
+							<execution>  
+								<phase>test</phase>
+								<goals>  
+									<goal>java</goal> 
+								</goals>
+								<configuration>  
+									<mainClass>edu.hiro.hcv.util.Scratchpad</mainClass>
 								</configuration>  
 							</execution>  
 						</executions>  

@@ -1,0 +1,10 @@
+#start from command line
+mongod --bind_ip 127.0.0.1 --dbpath %MONGODB_HOME%\data --directoryperdb
+
+#install as a service
+mongod --bind_ip 127.0.0.1 --logpath %MONGODB_HOME%\logs\log.txt --logappend --dbpath  %MONGODB_HOME%\data --directoryperdb --install
+
+#start service
+net start "MongoDB"
+
+mongod --logpath %MONGODB_HOME%\logs\log.txt --logappend --dbpath  %MONGODB_HOME%\data --directoryperdb --remove
